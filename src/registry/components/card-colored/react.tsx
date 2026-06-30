@@ -1,0 +1,1 @@
+<div className="rounded-xl border border-transparent bg-primary text-primary-foreground shadow w-[350px] p-6"><h3 className="font-semibold">Colored Card</h3><p className="text-sm opacity-90 mt-2">Primary background color.</p></div>

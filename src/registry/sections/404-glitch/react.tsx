@@ -1,0 +1,1 @@
+<div className="flex flex-col items-center justify-center py-24 text-center bg-black text-white"><h1 className="text-8xl font-black tracking-tighter" style="text-shadow: 2px 0 red, -2px 0 blue;">404</h1><p className="text-xl mt-4 font-mono">SYSTEM_ERROR_NOT_FOUND</p></div>

@@ -1,0 +1,94 @@
+---
+title: Installation
+description: Quick start guide to using ToolMate UI in your projects.
+category: Getting Started
+---
+
+## Prerequisites
+
+Before using ToolMate UI, ensure your project is configured with Tailwind CSS.
+
+## 1. Setup Tailwind CSS
+
+ToolMate UI components are built using Tailwind CSS. If you haven't already, install it in your project:
+
+### React / Next.js / Astro / Vue
+```bash
+npm install -D tailwindcss postcss autoprefixer
+npx tailwindcss init -p
+```
+
+### Configure Tailwind
+Add the following to your \`tailwind.config.js\`:
+```javascript
+/** @type {import('tailwindcss').Config} */
+module.exports = {
+  darkMode: ["class"],
+  content: [
+    './pages/**/*.{ts,tsx,astro,html,vue}',
+    './components/**/*.{ts,tsx,astro,html,vue}',
+    './app/**/*.{ts,tsx,astro,html,vue}',
+    './src/**/*.{ts,tsx,astro,html,vue}',
+  ],
+  theme: {
+    extend: {
+      colors: {
+        border: "var(--border)",
+        input: "var(--input)",
+        ring: "var(--ring)",
+        background: "var(--background)",
+        foreground: "var(--foreground)",
+        primary: {
+          DEFAULT: "var(--primary)",
+          foreground: "var(--primary-foreground)",
+        },
+        muted: {
+          DEFAULT: "var(--muted)",
+          foreground: "var(--muted-foreground)",
+        },
+      }
+    }
+  }
+}
+```
+
+## 2. Add CSS Variables
+
+Add these basic CSS variables to your global CSS file (e.g., \`globals.css\` or \`index.css\`):
+
+```css
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  :root {
+    --background: #ffffff;
+    --foreground: #09090b;
+    --primary: #18181b;
+    --primary-foreground: #fafafa;
+    --muted: #f4f4f5;
+    --muted-foreground: #71717a;
+    --border: #e4e4e7;
+    --input: #e4e4e7;
+    --ring: #18181b;
+  }
+  .dark {
+    --background: #09090b;
+    --foreground: #fafafa;
+    --primary: #fafafa;
+    --primary-foreground: #18181b;
+    --muted: #27272a;
+    --muted-foreground: #a1a1aa;
+    --border: #27272a;
+    --input: #27272a;
+    --ring: #d4d4d8;
+  }
+}
+```
+
+## 3. Copy and Paste
+
+You are now ready to use ToolMate UI! Browse our components, sections, and templates, copy the code, and paste it directly into your project.
+
+No heavy npm packages, no hidden dependencies. You own the code!

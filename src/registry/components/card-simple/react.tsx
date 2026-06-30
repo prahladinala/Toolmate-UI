@@ -1,0 +1,1 @@
+<div className="rounded-xl border border-border bg-card text-card-foreground shadow w-[350px] p-6"><h3 className="font-semibold text-lg">Simple Card</h3><p className="text-sm text-muted-foreground mt-2">Just a basic card with some text.</p></div>

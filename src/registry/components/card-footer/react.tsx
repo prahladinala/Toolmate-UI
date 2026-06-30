@@ -1,0 +1,1 @@
+<div className="rounded-xl border border-border bg-card text-card-foreground shadow w-[350px]"><div className="p-6"><h3 className="font-semibold text-lg">Main Content</h3></div><div className="p-6 pt-0 flex justify-end"><button className="bg-primary text-primary-foreground px-4 py-2 rounded-md text-sm">Action</button></div></div>

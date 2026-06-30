@@ -1,0 +1,1 @@
+<div className="rounded-xl border border-border bg-card text-card-foreground shadow w-[350px] p-6 text-center"><img src="https://i.pravatar.cc/150?u=a" className="w-20 h-20 rounded-full mx-auto mb-4" /><h3 className="font-semibold text-lg">John Doe</h3><p className="text-sm text-muted-foreground">Software Engineer</p></div>

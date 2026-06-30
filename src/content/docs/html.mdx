@@ -1,0 +1,69 @@
+---
+title: HTML Setup
+description: How to use ToolMate UI with plain HTML.
+category: Frameworks
+---
+
+Using ToolMate UI with Vanilla HTML is the simplest way to build a prototype. You don't need a bundler, a framework, or anything complex.
+
+## 1. Setup via CDN
+
+The fastest way to get started is to use the Tailwind Play CDN. Add this to your `<head>`:
+
+```html
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>ToolMate UI</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script>
+    tailwind.config = {
+      darkMode: 'class',
+      theme: {
+        extend: {
+          colors: {
+            background: "var(--background)",
+            foreground: "var(--foreground)",
+            primary: {
+              DEFAULT: "var(--primary)",
+              foreground: "var(--primary-foreground)",
+            },
+            muted: {
+              DEFAULT: "var(--muted)",
+              foreground: "var(--muted-foreground)",
+            },
+            border: "var(--border)",
+            input: "var(--input)",
+            ring: "var(--ring)",
+          }
+        }
+      }
+    }
+  </script>
+  <style>
+    @layer base {
+      :root {
+        --background: #ffffff;
+        --foreground: #09090b;
+        --primary: #18181b;
+        --primary-foreground: #fafafa;
+        --muted: #f4f4f5;
+        --muted-foreground: #71717a;
+        --border: #e4e4e7;
+        --input: #e4e4e7;
+        --ring: #18181b;
+      }
+    }
+  </style>
+</head>
+<body class="bg-background text-foreground">
+  <!-- Paste ToolMate UI HTML Components Here -->
+</body>
+</html>
+```
+
+## 2. Copy & Paste
+
+Select the "HTML" tab for any component or section in our library and paste it directly into your `body`. It will immediately style itself perfectly.

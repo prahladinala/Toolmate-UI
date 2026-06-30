@@ -1,0 +1,1 @@
+<div className="relative inline-block"><span className="relative flex h-10 w-10 shrink-0 overflow-hidden rounded-full"><img className="aspect-square h-full w-full" src="https://i.pravatar.cc/150?u=9" /></span><span className="absolute bottom-0 right-0 block h-2.5 w-2.5 rounded-full bg-red-500 ring-2 ring-background"></span></div>

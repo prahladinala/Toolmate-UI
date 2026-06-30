@@ -1,17 +1,183 @@
 ---
-
+import BaseLayout from '../layouts/BaseLayout.astro';
 ---
 
-<html lang="en">
-	<head>
-		<meta charset="utf-8" />
-		<link rel="icon" type="image/svg+xml" href="/favicon.svg" />
-		<link rel="icon" href="/favicon.ico" />
-		<meta name="viewport" content="width=device-width" />
-		<meta name="generator" content={Astro.generator} />
-		<title>Astro</title>
-	</head>
-	<body>
-		<h1>Astro</h1>
-	</body>
-</html>
+<BaseLayout title="ToolMate UI - Production-Ready Tailwind CSS Components">
+  <main class="flex-1">
+    <section class="space-y-6 pb-8 pt-16 md:pb-12 md:pt-24 lg:py-32 overflow-hidden">
+      <div class="container mx-auto max-w-screen-xl flex flex-col items-center gap-8 text-center px-4 animate-in fade-in slide-in-from-bottom-8 duration-1000 fill-mode-both">
+        <a href="/docs" class="inline-flex items-center rounded-full border border-border bg-muted/50 px-3 py-1 text-sm font-medium transition-transform hover:scale-105">
+          <span class="flex h-2 w-2 rounded-full bg-primary mr-2 animate-pulse"></span>
+          Introducing ToolMate UI v2.0
+        </a>
+        <h1 class="text-4xl font-bold tracking-tight sm:text-5xl md:text-6xl lg:text-7xl max-w-3xl">
+          Production-Ready Tailwind Components & Templates
+        </h1>
+        <p class="max-w-[42rem] leading-normal text-muted-foreground sm:text-xl sm:leading-8 delay-150 animate-in fade-in slide-in-from-bottom-4 duration-1000 fill-mode-both">
+          Copy, customize and ship complete interfaces in minutes. No dependencies. No setup. Just plain Tailwind CSS.
+        </p>
+        <div class="flex flex-col sm:flex-row gap-4 delay-300 animate-in fade-in slide-in-from-bottom-4 duration-1000 fill-mode-both">
+          <a href="/components" class="inline-flex h-11 items-center justify-center rounded-md bg-primary px-8 text-sm font-medium text-primary-foreground shadow transition-transform hover:scale-105 hover:bg-primary/90">
+            Browse Components
+          </a>
+          <a href="/templates" class="inline-flex h-11 items-center justify-center rounded-md border border-input bg-background px-8 text-sm font-medium shadow-sm transition-transform hover:scale-105 hover:bg-accent hover:text-accent-foreground">
+            Explore Templates
+          </a>
+        </div>
+      </div>
+    </section>
+
+    <section class="container mx-auto max-w-screen-xl py-12 md:py-24 lg:py-32 px-4 border-t border-border/40">
+      <div class="grid grid-cols-2 md:grid-cols-4 gap-8 text-center delay-150 animate-in fade-in slide-in-from-bottom-8 duration-1000 fill-mode-both">
+        <div class="flex flex-col items-center justify-center space-y-2 p-6 rounded-2xl bg-muted/30 border border-border/50 hover:bg-muted/50 transition-colors">
+          <h3 class="text-4xl font-bold text-primary stat-counter" data-target="200">0</h3>
+          <p class="text-muted-foreground font-medium">Components</p>
+        </div>
+        <div class="flex flex-col items-center justify-center space-y-2 p-6 rounded-2xl bg-muted/30 border border-border/50 hover:bg-muted/50 transition-colors">
+          <h3 class="text-4xl font-bold text-primary stat-counter" data-target="100">0</h3>
+          <p class="text-muted-foreground font-medium">Sections</p>
+        </div>
+        <div class="flex flex-col items-center justify-center space-y-2 p-6 rounded-2xl bg-muted/30 border border-border/50 hover:bg-muted/50 transition-colors">
+          <h3 class="text-4xl font-bold text-primary stat-counter" data-target="50">0</h3>
+          <p class="text-muted-foreground font-medium">Pages</p>
+        </div>
+        <div class="flex flex-col items-center justify-center space-y-2 p-6 rounded-2xl bg-muted/30 border border-border/50 hover:bg-muted/50 transition-colors">
+          <h3 class="text-4xl font-bold text-primary stat-counter" data-target="20">0</h3>
+          <p class="text-muted-foreground font-medium">Templates</p>
+        </div>
+      </div>
+    </section>
+
+    <section class="container mx-auto max-w-screen-xl py-12 md:py-24 lg:py-32 px-4 border-t border-border/40">
+      <div class="mx-auto flex max-w-[58rem] flex-col items-center space-y-4 text-center delay-150 animate-in fade-in slide-in-from-bottom-8 duration-1000 fill-mode-both">
+        <h2 class="font-bold text-3xl leading-[1.1] sm:text-3xl md:text-5xl">Features</h2>
+        <p class="max-w-[85%] leading-normal text-muted-foreground sm:text-lg sm:leading-7">
+          Everything you need to build stunning websites fast.
+        </p>
+      </div>
+      <div class="mx-auto grid justify-center gap-4 sm:grid-cols-2 md:max-w-[64rem] md:grid-cols-3 mt-12">
+        <div class="group relative overflow-hidden rounded-lg border bg-background p-2 transition-transform hover:-translate-y-1 hover:shadow-lg">
+          <div class="flex h-[200px] flex-col justify-between rounded-md p-6">
+            <div class="space-y-4">
+              <div class="inline-flex h-10 w-10 items-center justify-center rounded-lg bg-primary/10 text-primary transition-colors group-hover:bg-primary group-hover:text-primary-foreground">
+                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect width="14" height="14" x="8" y="8" rx="2" ry="2"/><path d="M4 16c-1.1 0-2-.9-2-2V4c0-1.1.9-2 2-2h10c1.1 0 2 .9 2 2"/></svg>
+              </div>
+              <div>
+                <h3 class="font-bold text-lg">Copy & Paste</h3>
+                <p class="text-sm text-muted-foreground mt-2">Production-ready code you can drop straight into your project without fighting dependencies.</p>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="group relative overflow-hidden rounded-lg border bg-background p-2 transition-transform hover:-translate-y-1 hover:shadow-lg delay-100">
+          <div class="flex h-[200px] flex-col justify-between rounded-md p-6">
+            <div class="space-y-4">
+              <div class="inline-flex h-10 w-10 items-center justify-center rounded-lg bg-primary/10 text-primary transition-colors group-hover:bg-primary group-hover:text-primary-foreground">
+                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m18 16 4-4-4-4"/><path d="m6 8-4 4 4 4"/><path d="m14.5 4-5 16"/></svg>
+              </div>
+              <div>
+                <h3 class="font-bold text-lg">Multi Framework</h3>
+                <p class="text-sm text-muted-foreground mt-2">HTML, React, Astro, Vue, Svelte, and Next.js are fully supported out of the box.</p>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="group relative overflow-hidden rounded-lg border bg-background p-2 transition-transform hover:-translate-y-1 hover:shadow-lg delay-200">
+          <div class="flex h-[200px] flex-col justify-between rounded-md p-6">
+            <div class="space-y-4">
+              <div class="inline-flex h-10 w-10 items-center justify-center rounded-lg bg-primary/10 text-primary transition-colors group-hover:bg-primary group-hover:text-primary-foreground">
+                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="4"/><path d="M12 2v2"/><path d="M12 20v2"/><path d="m4.93 4.93 1.41 1.41"/><path d="m17.66 17.66 1.41 1.41"/><path d="M2 12h2"/><path d="M20 12h2"/><path d="m6.34 17.66-1.41 1.41"/><path d="m19.07 4.93-1.41 1.41"/></svg>
+              </div>
+              <div>
+                <h3 class="font-bold text-lg">Dark Mode Ready</h3>
+                <p class="text-sm text-muted-foreground mt-2">Every component supports dark mode gracefully via our minimal CSS variable theme system.</p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <footer class="border-t border-border bg-background py-12 md:py-16">
+    <div class="container mx-auto max-w-screen-xl px-4 md:px-6">
+      <div class="grid grid-cols-2 gap-8 md:grid-cols-4 lg:grid-cols-5">
+        <div class="col-span-2 lg:col-span-2">
+          <a href="#" class="font-bold text-xl flex items-center space-x-2">
+            <span class="h-6 w-6 rounded-md bg-primary text-primary-foreground flex items-center justify-center text-xs">T</span>
+            <span>ToolMate UI</span>
+          </a>
+          <p class="text-sm text-muted-foreground mt-4 max-w-xs leading-relaxed">
+            Building the web faster with beautiful, accessible, and highly customizable UI components and templates.
+          </p>
+        </div>
+        <div>
+          <h3 class="font-semibold mb-4 text-foreground">Resources</h3>
+          <ul class="space-y-3 text-sm text-muted-foreground">
+            <li><a href="/docs" class="hover:text-foreground transition-colors">Documentation</a></li>
+            <li><a href="/components" class="hover:text-foreground transition-colors">Components</a></li>
+            <li><a href="/templates" class="hover:text-foreground transition-colors">Templates</a></li>
+          </ul>
+        </div>
+        <div>
+          <h3 class="font-semibold mb-4 text-foreground">Community</h3>
+          <ul class="space-y-3 text-sm text-muted-foreground">
+            <li><a href="#" class="hover:text-foreground transition-colors">GitHub</a></li>
+            <li><a href="#" class="hover:text-foreground transition-colors">Twitter</a></li>
+            <li><a href="#" class="hover:text-foreground transition-colors">Discord</a></li>
+          </ul>
+        </div>
+        <div>
+          <h3 class="font-semibold mb-4 text-foreground">Legal</h3>
+          <ul class="space-y-3 text-sm text-muted-foreground">
+            <li><a href="#" class="hover:text-foreground transition-colors">Privacy Policy</a></li>
+            <li><a href="#" class="hover:text-foreground transition-colors">Terms of Service</a></li>
+          </ul>
+        </div>
+      </div>
+      <div class="mt-12 border-t border-border pt-8 flex flex-col md:flex-row justify-between items-center text-sm text-muted-foreground">
+        <p>© 2026 ToolMate UI. All rights reserved.</p>
+        <p class="mt-4 md:mt-0 flex items-center space-x-1">
+          <span>Crafted with</span>
+          <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="currentColor" class="text-red-500"><path d="M19 14c1.49-1.46 3-3.21 3-5.5A5.5 5.5 0 0 0 16.5 3c-1.76 0-3 .5-4.5 2-1.5-1.5-2.74-2-4.5-2A5.5 5.5 0 0 0 2 8.5c0 2.3 1.5 4.05 3 5.5l7 7Z"/></svg>
+          <span>for developers</span>
+        </p>
+      </div>
+    </div>
+  </footer>
+
+  <script>
+    // Animated Stats Counter
+    const counters = document.querySelectorAll('.stat-counter');
+    const speed = 200; // The lower the slower
+
+    const animateCounters = () => {
+      counters.forEach(counter => {
+        const target = +counter.getAttribute('data-target');
+        const count = +counter.innerText.replace('+', '');
+        const inc = target / speed;
+
+        if (count < target) {
+          counter.innerText = Math.ceil(count + inc) + '+';
+          setTimeout(animateCounters, 20);
+        } else {
+          counter.innerText = target + '+';
+        }
+      });
+    };
+
+    // Intersection Observer to trigger animation when in view
+    const observer = new IntersectionObserver((entries) => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) {
+          animateCounters();
+          observer.unobserve(entry.target);
+        }
+      });
+    }, { threshold: 0.5 });
+
+    counters.forEach(counter => {
+      observer.observe(counter);
+    });
+  </script>
+</BaseLayout>

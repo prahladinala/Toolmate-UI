@@ -1,0 +1,1 @@
+<footer className="border-t py-8"><div className="container mx-auto px-4 flex justify-between items-center"><p className="text-sm text-muted-foreground">© 2026 Logo Inc.</p><div className="flex gap-4"><a href="#" className="text-muted-foreground hover:text-foreground">Twitter</a><a href="#" className="text-muted-foreground hover:text-foreground">GitHub</a></div></div></footer>

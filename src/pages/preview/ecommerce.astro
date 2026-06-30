@@ -1,0 +1,113 @@
+---
+import '../../styles/global.css';
+---
+<!DOCTYPE html>
+<html lang="en" class="antialiased">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Modern eCommerce | ToolMate UI</title>
+</head>
+<body class="bg-background text-foreground min-h-screen">
+  <header class="border-b border-border bg-background/95 backdrop-blur sticky top-0 z-50">
+  <div class="container mx-auto flex h-16 items-center justify-between px-4">
+    <a href="#" class="font-bold text-xl flex items-center gap-2">
+      <div class="h-8 w-8 rounded bg-primary text-primary-foreground flex items-center justify-center font-bold">T</div>
+      ToolMate
+    </a>
+    <nav class="hidden md:flex space-x-6 text-sm font-medium">
+      <a href="#" class="text-foreground hover:text-primary">Home</a>
+      <a href="#" class="text-muted-foreground hover:text-foreground">Features</a>
+      <a href="#" class="text-muted-foreground hover:text-foreground">Pricing</a>
+      <a href="#" class="text-muted-foreground hover:text-foreground">Contact</a>
+    </nav>
+    <div class="flex items-center space-x-4">
+      <button class="text-sm font-medium hover:text-primary">Log In</button>
+      <button class="bg-primary text-primary-foreground h-9 px-4 rounded-md text-sm font-medium hidden md:block">Sign Up</button>
+      <button class="md:hidden">
+        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="3" y1="12" x2="21" y2="12"></line><line x1="3" y1="6" x2="21" y2="6"></line><line x1="3" y1="18" x2="21" y2="18"></line></svg>
+      </button>
+    </div>
+  </div>
+</header>
+    <main>
+      <section class="bg-muted/30 py-20">
+        <div class="container mx-auto px-4 flex flex-col md:flex-row items-center gap-12">
+          <div class="md:w-1/2">
+            <h1 class="text-5xl font-bold tracking-tight mb-6">Summer Collection 2026</h1>
+            <p class="text-xl text-muted-foreground mb-8">Discover our new arrivals featuring lightweight materials and vibrant colors.</p>
+            <button class="bg-primary text-primary-foreground h-12 px-8 rounded-md font-medium text-lg">Shop Now</button>
+          </div>
+          <div class="md:w-1/2">
+            <img src="https://images.unsplash.com/photo-1483985988355-763728e1935b?w=800&q=80" class="rounded-2xl shadow-2xl" />
+          </div>
+        </div>
+      </section>
+      <section class="py-20">
+        <div class="container mx-auto px-4">
+          <h2 class="text-3xl font-bold mb-10">Trending Products</h2>
+          <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-8">
+            <div class="group cursor-pointer">
+              <div class="overflow-hidden rounded-xl bg-muted aspect-[3/4] mb-4">
+                <img src="https://images.unsplash.com/photo-1521572163474-6864f9cf17ab?w=400&q=80" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500" />
+              </div>
+              <h3 class="font-medium text-lg">Essential Cotton Tee</h3>
+              <p class="text-muted-foreground">$29.00</p>
+            </div>
+            <div class="group cursor-pointer">
+              <div class="overflow-hidden rounded-xl bg-muted aspect-[3/4] mb-4 relative">
+                <span class="absolute top-2 left-2 bg-red-500 text-white text-xs px-2 py-1 rounded font-bold z-10">SALE</span>
+                <img src="https://images.unsplash.com/photo-1556821840-3a63f95609a7?w=400&q=80" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500" />
+              </div>
+              <h3 class="font-medium text-lg">Classic Hoodie</h3>
+              <p class="text-muted-foreground"><span class="line-through mr-2">$89.00</span>$59.00</p>
+            </div>
+            <div class="group cursor-pointer">
+              <div class="overflow-hidden rounded-xl bg-muted aspect-[3/4] mb-4">
+                <img src="https://images.unsplash.com/photo-1576566588028-4147f3842f27?w=400&q=80" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500" />
+              </div>
+              <h3 class="font-medium text-lg">Denim Jacket</h3>
+              <p class="text-muted-foreground">$129.00</p>
+            </div>
+            <div class="group cursor-pointer">
+              <div class="overflow-hidden rounded-xl bg-muted aspect-[3/4] mb-4 relative">
+                <span class="absolute top-2 left-2 bg-primary text-primary-foreground text-xs px-2 py-1 rounded font-bold z-10">NEW</span>
+                <img src="https://images.unsplash.com/photo-1591047139829-d91aecb6caea?w=400&q=80" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500" />
+              </div>
+              <h3 class="font-medium text-lg">Leather Backpack</h3>
+              <p class="text-muted-foreground">$149.00</p>
+            </div>
+          </div>
+        </div>
+      </section>
+    </main>
+    <footer class="border-t border-border bg-muted/20 py-12">
+  <div class="container mx-auto px-4 grid grid-cols-2 md:grid-cols-4 gap-8">
+    <div class="col-span-2">
+      <a href="#" class="font-bold text-xl flex items-center gap-2 mb-4">
+        <div class="h-6 w-6 rounded bg-primary text-primary-foreground flex items-center justify-center font-bold text-xs">T</div>
+        ToolMate
+      </a>
+      <p class="text-muted-foreground max-w-xs text-sm">Building the web faster with beautiful templates and components.</p>
+    </div>
+    <div>
+      <h3 class="font-semibold mb-3">Links</h3>
+      <ul class="space-y-2 text-sm text-muted-foreground">
+        <li><a href="#" class="hover:text-primary">Home</a></li>
+        <li><a href="#" class="hover:text-primary">Pricing</a></li>
+      </ul>
+    </div>
+    <div>
+      <h3 class="font-semibold mb-3">Legal</h3>
+      <ul class="space-y-2 text-sm text-muted-foreground">
+        <li><a href="#" class="hover:text-primary">Privacy</a></li>
+        <li><a href="#" class="hover:text-primary">Terms</a></li>
+      </ul>
+    </div>
+  </div>
+  <div class="container mx-auto px-4 mt-12 pt-8 border-t border-border text-sm text-muted-foreground text-center">
+    © 2026 ToolMate UI. All rights reserved.
+  </div>
+</footer>
+</body>
+</html>

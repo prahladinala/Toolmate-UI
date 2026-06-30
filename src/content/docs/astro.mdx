@@ -1,0 +1,75 @@
+---
+title: Astro Setup
+description: How to use ToolMate UI in an Astro project.
+category: Frameworks
+---
+
+Astro and Tailwind are a perfect match for ToolMate UI.
+
+## 1. Setup Astro & Tailwind
+
+```bash
+npm create astro@latest
+npx astro add tailwind
+```
+
+## 2. Configure Tailwind
+
+Astro will automatically set up your `tailwind.config.mjs`. Add our variables:
+
+```javascript
+/** @type {import('tailwindcss').Config} */
+export default {
+  content: ['./src/**/*.{astro,html,js,jsx,md,mdx,svelte,ts,tsx,vue}'],
+  theme: {
+    extend: {
+      colors: {
+        background: "var(--background)",
+        foreground: "var(--foreground)",
+        primary: {
+          DEFAULT: "var(--primary)",
+          foreground: "var(--primary-foreground)",
+        },
+        muted: {
+          DEFAULT: "var(--muted)",
+          foreground: "var(--muted-foreground)",
+        },
+        border: "var(--border)",
+        input: "var(--input)",
+        ring: "var(--ring)",
+      }
+    },
+  },
+  plugins: [],
+}
+```
+
+## 3. Add CSS Variables
+
+Create `src/styles/global.css` and add:
+
+```css
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  :root {
+    --background: #ffffff;
+    --foreground: #09090b;
+    --primary: #18181b;
+    --primary-foreground: #fafafa;
+    --muted: #f4f4f5;
+    --muted-foreground: #71717a;
+    --border: #e4e4e7;
+    --input: #e4e4e7;
+    --ring: #18181b;
+  }
+}
+```
+
+Import it in your Astro layout: `import '../styles/global.css';`
+
+## 4. Copy & Paste
+
+You're done! Use the "HTML" or "React" tab when copying components depending on if you are using Astro `.astro` files or `.jsx` islands.

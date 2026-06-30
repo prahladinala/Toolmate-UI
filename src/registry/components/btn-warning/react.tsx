@@ -1,0 +1,1 @@
+<button className="h-10 px-4 py-2 rounded-md font-medium transition-colors hover:opacity-90 bg-yellow-500 text-white">Warning</button>

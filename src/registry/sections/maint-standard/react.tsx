@@ -1,0 +1,1 @@
+<div className="flex flex-col items-center justify-center py-24 text-center"><h1 className="text-4xl font-bold">We'll be back soon!</h1><p className="text-muted-foreground mt-4 max-w-md">Sorry for the inconvenience. We're performing some maintenance at the moment. We'll be back online shortly!</p></div>

@@ -1,0 +1,1 @@
+<button className="h-10 px-4 py-2 bg-muted text-muted-foreground rounded-md font-medium hover:bg-muted/80">Secondary</button>

@@ -1,0 +1,1 @@
+<div className="py-24 max-w-md"><span className="text-sm font-semibold text-primary">Error 404</span><h1 className="text-3xl font-bold mt-2">Page not found</h1><p className="mt-4 text-muted-foreground">The requested URL was not found on this server.</p></div>

@@ -1,0 +1,1 @@
+<a href="#" className="font-medium text-primary underline decoration-primary/30 underline-offset-4 hover:decoration-primary">Explore our documentation</a>

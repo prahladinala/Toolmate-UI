@@ -1,0 +1,1 @@
+<div className="grid md:grid-cols-2 gap-8 items-center py-24"><div className="px-8"><h1 className="text-6xl font-bold text-primary">Oops!</h1><h2 className="text-2xl font-semibold mt-4">We lost this page</h2><p className="mt-2 text-muted-foreground">We searched everywhere but couldn't find what you were looking for.</p></div><div className="h-64 bg-muted rounded-xl"></div></div>

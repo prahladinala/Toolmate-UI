@@ -1,0 +1,1 @@
+<div className="rounded-lg border p-4 text-sm bg-red-500 text-white bg-opacity-10 text-opacity-90"><h5 className="mb-1 font-medium leading-none tracking-tight">Destructive</h5><div className="text-sm opacity-90">This is a destructive alert message.</div></div>

@@ -1,0 +1,1 @@
+<div className="rounded-xl border border-border bg-card text-card-foreground shadow w-[350px]"><div className="p-6 pb-2"><h3 className="font-semibold text-lg">Header</h3></div><div className="p-6 pt-0"><p className="text-sm text-muted-foreground">Content area.</p></div></div>

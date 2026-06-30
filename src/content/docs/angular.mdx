@@ -1,0 +1,77 @@
+---
+title: Angular Setup
+description: How to use ToolMate UI in an Angular project.
+category: Frameworks
+---
+
+Integrating ToolMate UI with Angular is straightforward using Tailwind CSS.
+
+## 1. Install Tailwind CSS
+
+In your Angular project, install Tailwind CSS and its dependencies:
+
+```bash
+npm install -D tailwindcss postcss autoprefixer
+npx tailwindcss init
+```
+
+## 2. Configure Tailwind
+
+Update your `tailwind.config.js` to scan your Angular templates:
+
+```javascript
+/** @type {import('tailwindcss').Config} */
+module.exports = {
+  content: [
+    "./src/**/*.{html,ts}",
+  ],
+  theme: {
+    extend: {
+      colors: {
+        background: "var(--background)",
+        foreground: "var(--foreground)",
+        primary: {
+          DEFAULT: "var(--primary)",
+          foreground: "var(--primary-foreground)",
+        },
+        muted: {
+          DEFAULT: "var(--muted)",
+          foreground: "var(--muted-foreground)",
+        },
+        border: "var(--border)",
+        input: "var(--input)",
+        ring: "var(--ring)",
+      }
+    },
+  },
+  plugins: [],
+}
+```
+
+## 3. Add CSS Variables
+
+Add the Tailwind directives and our CSS variables to your `src/styles.css` (or `.scss`):
+
+```css
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  :root {
+    --background: #ffffff;
+    --foreground: #09090b;
+    --primary: #18181b;
+    --primary-foreground: #fafafa;
+    --muted: #f4f4f5;
+    --muted-foreground: #71717a;
+    --border: #e4e4e7;
+    --input: #e4e4e7;
+    --ring: #18181b;
+  }
+}
+```
+
+## 4. Copy & Paste
+
+You're done! Use the "HTML" tab when copying components and paste them directly into your Angular `.html` templates. Angular supports standard HTML attributes like `class`.

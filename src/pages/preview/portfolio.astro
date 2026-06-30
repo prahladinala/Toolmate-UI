@@ -1,0 +1,93 @@
+---
+import '../../styles/global.css';
+---
+<!DOCTYPE html>
+<html lang="en" class="antialiased">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Creative Portfolio | ToolMate UI</title>
+</head>
+<body class="bg-background text-foreground min-h-screen">
+  <header class="border-b border-border bg-background/95 backdrop-blur sticky top-0 z-50">
+  <div class="container mx-auto flex h-16 items-center justify-between px-4">
+    <a href="#" class="font-bold text-xl flex items-center gap-2">
+      <div class="h-8 w-8 rounded bg-primary text-primary-foreground flex items-center justify-center font-bold">T</div>
+      ToolMate
+    </a>
+    <nav class="hidden md:flex space-x-6 text-sm font-medium">
+      <a href="#" class="text-foreground hover:text-primary">Home</a>
+      <a href="#" class="text-muted-foreground hover:text-foreground">Features</a>
+      <a href="#" class="text-muted-foreground hover:text-foreground">Pricing</a>
+      <a href="#" class="text-muted-foreground hover:text-foreground">Contact</a>
+    </nav>
+    <div class="flex items-center space-x-4">
+      <button class="text-sm font-medium hover:text-primary">Log In</button>
+      <button class="bg-primary text-primary-foreground h-9 px-4 rounded-md text-sm font-medium hidden md:block">Sign Up</button>
+      <button class="md:hidden">
+        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="3" y1="12" x2="21" y2="12"></line><line x1="3" y1="6" x2="21" y2="6"></line><line x1="3" y1="18" x2="21" y2="18"></line></svg>
+      </button>
+    </div>
+  </div>
+</header>
+    <main class="bg-background min-h-screen font-sans">
+      <section class="py-32 container mx-auto px-4 max-w-4xl text-center">
+        <div class="inline-block p-1 rounded-full bg-gradient-to-r from-pink-500 via-purple-500 to-indigo-500 mb-8">
+          <img src="https://i.pravatar.cc/150?u=12" class="w-24 h-24 rounded-full border-4 border-background" />
+        </div>
+        <h1 class="text-5xl md:text-7xl font-bold tracking-tighter mb-6">Creative Developer & Digital Designer</h1>
+        <p class="text-xl text-muted-foreground mb-10 max-w-2xl mx-auto">Hi, I'm Alex. I craft beautiful, accessible, and high-performance web experiences.</p>
+        <button class="bg-foreground text-background px-8 py-4 rounded-full font-bold hover:scale-105 transition-transform">Say Hello</button>
+      </section>
+      <section class="py-20 bg-muted/30">
+        <div class="container mx-auto px-4">
+          <h2 class="text-3xl font-bold mb-12 text-center tracking-tight">Selected Works</h2>
+          <div class="grid md:grid-cols-2 gap-8">
+            <div class="group relative overflow-hidden rounded-2xl aspect-[4/3] bg-muted cursor-pointer">
+              <img src="https://images.unsplash.com/photo-1551288049-bebda4e38f71?w=800&q=80" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700" />
+              <div class="absolute inset-0 bg-gradient-to-t from-black/80 via-black/20 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500 flex flex-col justify-end p-8">
+                <h3 class="text-white text-2xl font-bold mb-2 translate-y-4 group-hover:translate-y-0 transition-transform duration-500">Fintech Dashboard</h3>
+                <p class="text-white/80 translate-y-4 group-hover:translate-y-0 transition-transform duration-500 delay-75">UI/UX Design & React Development</p>
+              </div>
+            </div>
+            <div class="group relative overflow-hidden rounded-2xl aspect-[4/3] bg-muted cursor-pointer">
+              <img src="https://images.unsplash.com/photo-1498050108023-c5249f4df085?w=800&q=80" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700" />
+              <div class="absolute inset-0 bg-gradient-to-t from-black/80 via-black/20 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500 flex flex-col justify-end p-8">
+                <h3 class="text-white text-2xl font-bold mb-2 translate-y-4 group-hover:translate-y-0 transition-transform duration-500">E-Commerce Platform</h3>
+                <p class="text-white/80 translate-y-4 group-hover:translate-y-0 transition-transform duration-500 delay-75">Full-stack Next.js</p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+    </main>
+    <footer class="border-t border-border bg-muted/20 py-12">
+  <div class="container mx-auto px-4 grid grid-cols-2 md:grid-cols-4 gap-8">
+    <div class="col-span-2">
+      <a href="#" class="font-bold text-xl flex items-center gap-2 mb-4">
+        <div class="h-6 w-6 rounded bg-primary text-primary-foreground flex items-center justify-center font-bold text-xs">T</div>
+        ToolMate
+      </a>
+      <p class="text-muted-foreground max-w-xs text-sm">Building the web faster with beautiful templates and components.</p>
+    </div>
+    <div>
+      <h3 class="font-semibold mb-3">Links</h3>
+      <ul class="space-y-2 text-sm text-muted-foreground">
+        <li><a href="#" class="hover:text-primary">Home</a></li>
+        <li><a href="#" class="hover:text-primary">Pricing</a></li>
+      </ul>
+    </div>
+    <div>
+      <h3 class="font-semibold mb-3">Legal</h3>
+      <ul class="space-y-2 text-sm text-muted-foreground">
+        <li><a href="#" class="hover:text-primary">Privacy</a></li>
+        <li><a href="#" class="hover:text-primary">Terms</a></li>
+      </ul>
+    </div>
+  </div>
+  <div class="container mx-auto px-4 mt-12 pt-8 border-t border-border text-sm text-muted-foreground text-center">
+    © 2026 ToolMate UI. All rights reserved.
+  </div>
+</footer>
+</body>
+</html>

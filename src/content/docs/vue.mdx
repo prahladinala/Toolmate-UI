@@ -1,0 +1,78 @@
+---
+title: Vue Setup
+description: How to use ToolMate UI in a Vue project.
+category: Frameworks
+---
+
+Integrating ToolMate UI with Vue is simple using Tailwind CSS.
+
+## 1. Install Tailwind CSS
+
+In your Vue project (e.g., created with Vite), install Tailwind CSS:
+
+```bash
+npm install -D tailwindcss postcss autoprefixer
+npx tailwindcss init -p
+```
+
+## 2. Configure Tailwind
+
+Update your `tailwind.config.js` to scan your Vue templates:
+
+```javascript
+/** @type {import('tailwindcss').Config} */
+export default {
+  content: [
+    "./index.html",
+    "./src/**/*.{vue,js,ts,jsx,tsx}",
+  ],
+  theme: {
+    extend: {
+      colors: {
+        background: "var(--background)",
+        foreground: "var(--foreground)",
+        primary: {
+          DEFAULT: "var(--primary)",
+          foreground: "var(--primary-foreground)",
+        },
+        muted: {
+          DEFAULT: "var(--muted)",
+          foreground: "var(--muted-foreground)",
+        },
+        border: "var(--border)",
+        input: "var(--input)",
+        ring: "var(--ring)",
+      }
+    },
+  },
+  plugins: [],
+}
+```
+
+## 3. Add CSS Variables
+
+Add the Tailwind directives and our CSS variables to your `src/style.css`:
+
+```css
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  :root {
+    --background: #ffffff;
+    --foreground: #09090b;
+    --primary: #18181b;
+    --primary-foreground: #fafafa;
+    --muted: #f4f4f5;
+    --muted-foreground: #71717a;
+    --border: #e4e4e7;
+    --input: #e4e4e7;
+    --ring: #18181b;
+  }
+}
+```
+
+## 4. Copy & Paste
+
+You're done! Use the "HTML" tab when copying components. Vue supports standard HTML `class` attributes seamlessly.

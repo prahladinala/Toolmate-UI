@@ -1,0 +1,1 @@
+<footer className="bg-slate-900 text-white py-16"><div className="container mx-auto px-4 text-center"><h2 className="text-3xl font-bold mb-6">Ready to get started?</h2><button className="bg-white text-slate-900 px-8 py-3 rounded-md font-bold">Sign up for free</button><p className="mt-8 text-slate-400 text-sm">© 2026 Logo Inc.</p></div></footer>

@@ -1,0 +1,1 @@
+<div className="rounded-xl border border-border bg-card text-card-foreground shadow w-[350px] overflow-hidden"><img src="https://images.unsplash.com/photo-1551288049-bebda4e38f71?w=800&q=80" className="w-full h-40 object-cover" /><div className="p-6"><h3 className="font-semibold">Image Card</h3></div></div>

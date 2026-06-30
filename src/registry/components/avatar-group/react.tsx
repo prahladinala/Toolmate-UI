@@ -1,0 +1,1 @@
+<div className="flex -space-x-4"><img className="h-10 w-10 rounded-full border-2 border-background" src="https://i.pravatar.cc/150?u=4" /><img className="h-10 w-10 rounded-full border-2 border-background" src="https://i.pravatar.cc/150?u=5" /><img className="h-10 w-10 rounded-full border-2 border-background" src="https://i.pravatar.cc/150?u=6" /></div>

@@ -1,0 +1,67 @@
+---
+import { getCollection } from 'astro:content';
+
+const components = (await getCollection('components')).sort((a, b) => a.data.title.localeCompare(b.data.title));
+const sections = (await getCollection('sections')).sort((a, b) => a.data.title.localeCompare(b.data.title));
+const templates = (await getCollection('templates')).sort((a, b) => a.data.title.localeCompare(b.data.title));
+const docs = (await getCollection('docs')).sort((a, b) => a.data.title.localeCompare(b.data.title));
+---
+
+<aside class="fixed top-14 z-30 -ml-2 h-[calc(100vh-3.5rem)] w-full shrink-0 md:sticky md:block md:w-[220px] lg:w-[240px]">
+  <div class="h-full overflow-y-auto py-6 pr-6 lg:py-8">
+    <div class="w-full">
+      <div class="pb-4">
+        <h4 class="mb-1 rounded-md px-2 py-1 text-sm font-semibold">Installation & Setup</h4>
+        <div class="grid grid-flow-row auto-rows-max text-sm">
+          {docs.map((item) => (
+            <a
+              href={`/docs/${item.id}`}
+              class="group flex w-full items-center rounded-md border border-transparent px-2 py-1 hover:underline text-muted-foreground"
+            >
+              {item.data.title}
+            </a>
+          ))}
+        </div>
+      </div>
+      <div class="pb-4">
+        <h4 class="mb-1 rounded-md px-2 py-1 text-sm font-semibold">Components</h4>
+        <div class="grid grid-flow-row auto-rows-max text-sm">
+          {components.map((item) => (
+            <a
+              href={`/components/${item.id}`}
+              class="group flex w-full items-center rounded-md border border-transparent px-2 py-1 hover:underline text-muted-foreground"
+            >
+              {item.data.title}
+            </a>
+          ))}
+        </div>
+      </div>
+      <div class="pb-4">
+        <h4 class="mb-1 rounded-md px-2 py-1 text-sm font-semibold">Sections</h4>
+        <div class="grid grid-flow-row auto-rows-max text-sm">
+          {sections.map((item) => (
+            <a
+              href={`/sections/${item.id}`}
+              class="group flex w-full items-center rounded-md border border-transparent px-2 py-1 hover:underline text-muted-foreground"
+            >
+              {item.data.title}
+            </a>
+          ))}
+        </div>
+      </div>
+      <div class="pb-4">
+        <h4 class="mb-1 rounded-md px-2 py-1 text-sm font-semibold">Templates</h4>
+        <div class="grid grid-flow-row auto-rows-max text-sm">
+          {templates.map((item) => (
+            <a
+              href={`/templates/${item.id}`}
+              class="group flex w-full items-center rounded-md border border-transparent px-2 py-1 hover:underline text-muted-foreground"
+            >
+              {item.data.title}
+            </a>
+          ))}
+        </div>
+      </div>
+    </div>
+  </div>
+</aside>

@@ -1,0 +1,1 @@
+<div className="rounded-xl border border-border bg-card text-card-foreground shadow w-[350px] p-6 text-center"><h3 className="font-semibold text-lg">Pro Plan</h3><div className="mt-4 text-4xl font-bold">$29<span className="text-lg text-muted-foreground">/mo</span></div><button className="mt-6 w-full bg-primary text-primary-foreground px-4 py-2 rounded-md">Subscribe</button></div>

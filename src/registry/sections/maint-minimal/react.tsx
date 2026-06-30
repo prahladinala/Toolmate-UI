@@ -1,0 +1,1 @@
+<div className="py-24 border-t-4 border-primary px-8 bg-muted/30"><h1 className="text-xl font-medium">Temporarily Unavailable</h1><p className="text-sm text-muted-foreground mt-2">Scheduled maintenance is currently in progress.</p></div>

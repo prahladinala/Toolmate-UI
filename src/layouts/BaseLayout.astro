@@ -1,0 +1,41 @@
+---
+import '../styles/global.css';
+import Navbar from '../components/Navbar.astro';
+import SearchDialog from '../components/SearchDialog.astro';
+
+interface Props {
+  title: string;
+  description?: string;
+}
+
+const { title, description = "Production-Ready Tailwind CSS UI Library & Documentation Platform" } = Astro.props;
+---
+
+<!doctype html>
+<html lang="en" class="dark">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width" />
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+    <meta name="generator" content={Astro.generator} />
+    <title>{title}</title>
+    <meta name="description" content={description} />
+    
+    <!-- Inline script to prevent FOUC -->
+    <script is:inline>
+      const getThemePreference = () => {
+        if (typeof localStorage !== 'undefined' && localStorage.getItem('theme')) {
+          return localStorage.getItem('theme');
+        }
+        return window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light';
+      };
+      const isDark = getThemePreference() === 'dark';
+      document.documentElement.classList[isDark ? 'add' : 'remove']('dark');
+    </script>
+  </head>
+  <body class="min-h-screen bg-background font-sans antialiased">
+    <Navbar />
+    <slot />
+    <SearchDialog />
+  </body>
+</html>

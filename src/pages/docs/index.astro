@@ -1,0 +1,23 @@
+---
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import { getCollection } from 'astro:content';
+
+const docs = await getCollection('docs');
+---
+
+<BaseLayout title="Documentation | ToolMate UI">
+  <div class="container mx-auto px-4 py-12 max-w-screen-xl">
+    <div class="mb-8">
+      <h1 class="text-4xl font-bold mb-4">Documentation</h1>
+      <p class="text-xl text-muted-foreground">Learn how to use ToolMate UI in your projects.</p>
+    </div>
+    <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+      {docs.map(item => (
+        <a href={`/docs/${item.id}`} class="block group p-6 rounded-lg border border-border bg-card hover:border-primary transition-colors">
+          <h2 class="text-xl font-semibold mb-2 group-hover:text-primary transition-colors">{item.data.title}</h2>
+          <p class="text-muted-foreground">{item.data.description}</p>
+        </a>
+      ))}
+    </div>
+  </div>
+</BaseLayout>

@@ -1,0 +1,1 @@
+<div className="rounded-xl border border-border bg-card text-card-foreground shadow w-[350px] p-6 cursor-pointer transition-colors hover:bg-muted/50"><h3 className="font-semibold">Hover me</h3></div>

@@ -1,0 +1,122 @@
+---
+import '../../styles/global.css';
+---
+<!DOCTYPE html>
+<html lang="en" class="antialiased">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Product Information | ToolMate UI</title>
+</head>
+<body class="bg-background text-foreground min-h-screen">
+  <header class="border-b border-border bg-background/95 backdrop-blur sticky top-0 z-50">
+  <div class="container mx-auto flex h-16 items-center justify-between px-4">
+    <a href="#" class="font-bold text-xl flex items-center gap-2">
+      <div class="h-8 w-8 rounded bg-primary text-primary-foreground flex items-center justify-center font-bold">T</div>
+      ToolMate
+    </a>
+    <nav class="hidden md:flex space-x-6 text-sm font-medium">
+      <a href="#" class="text-foreground hover:text-primary">Home</a>
+      <a href="#" class="text-muted-foreground hover:text-foreground">Features</a>
+      <a href="#" class="text-muted-foreground hover:text-foreground">Pricing</a>
+      <a href="#" class="text-muted-foreground hover:text-foreground">Contact</a>
+    </nav>
+    <div class="flex items-center space-x-4">
+      <button class="text-sm font-medium hover:text-primary">Log In</button>
+      <button class="bg-primary text-primary-foreground h-9 px-4 rounded-md text-sm font-medium hidden md:block">Sign Up</button>
+      <button class="md:hidden">
+        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="3" y1="12" x2="21" y2="12"></line><line x1="3" y1="6" x2="21" y2="6"></line><line x1="3" y1="18" x2="21" y2="18"></line></svg>
+      </button>
+    </div>
+  </div>
+</header>
+    <main class="bg-background">
+      <div class="container mx-auto px-4 py-12">
+        <div class="text-sm text-muted-foreground mb-8">
+          <a href="#" class="hover:text-foreground">Home</a> / <a href="#" class="hover:text-foreground">Electronics</a> / <span class="text-foreground">Premium Wireless Headphones</span>
+        </div>
+        
+        <div class="grid md:grid-cols-2 gap-12 lg:gap-20">
+          <div class="space-y-4">
+            <div class="rounded-2xl overflow-hidden bg-muted aspect-square">
+              <img src="https://images.unsplash.com/photo-1505740420928-5e560c06d30e?w=800&q=80" class="w-full h-full object-cover mix-blend-multiply" />
+            </div>
+            <div class="grid grid-cols-4 gap-4">
+              <div class="rounded-lg overflow-hidden bg-muted aspect-square cursor-pointer border-2 border-primary">
+                <img src="https://images.unsplash.com/photo-1505740420928-5e560c06d30e?w=200&q=80" class="w-full h-full object-cover" />
+              </div>
+              <div class="rounded-lg overflow-hidden bg-muted aspect-square cursor-pointer opacity-60 hover:opacity-100 transition-opacity">
+                <img src="https://images.unsplash.com/photo-1524143986875-3b098d78b363?w=200&q=80" class="w-full h-full object-cover" />
+              </div>
+            </div>
+          </div>
+          
+          <div class="flex flex-col">
+            <h1 class="text-4xl font-bold mb-2">Premium Noise-Cancelling Headphones</h1>
+            <div class="flex items-center gap-2 mb-6">
+              <div class="flex text-yellow-400">
+                <svg width="20" height="20" fill="currentColor" viewBox="0 0 20 20"><path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z"></path></svg>
+                <svg width="20" height="20" fill="currentColor" viewBox="0 0 20 20"><path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z"></path></svg>
+                <svg width="20" height="20" fill="currentColor" viewBox="0 0 20 20"><path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z"></path></svg>
+                <svg width="20" height="20" fill="currentColor" viewBox="0 0 20 20"><path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z"></path></svg>
+                <svg width="20" height="20" fill="currentColor" viewBox="0 0 20 20"><path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z"></path></svg>
+              </div>
+              <span class="text-sm font-medium">(128 Reviews)</span>
+            </div>
+            <div class="text-3xl font-bold mb-6">$349.00</div>
+            <p class="text-muted-foreground mb-8">Experience industry-leading active noise cancellation with immersive spatial audio. Designed for all-day comfort with up to 30 hours of battery life.</p>
+            
+            <div class="mb-8">
+              <h3 class="font-semibold mb-3">Color: Matte Black</h3>
+              <div class="flex gap-3">
+                <button class="w-10 h-10 rounded-full bg-black ring-2 ring-primary ring-offset-2 ring-offset-background"></button>
+                <button class="w-10 h-10 rounded-full bg-slate-200 border"></button>
+                <button class="w-10 h-10 rounded-full bg-blue-900 border"></button>
+              </div>
+            </div>
+            
+            <div class="flex gap-4 mt-auto">
+              <div class="border border-input rounded-md flex items-center">
+                <button class="px-4 py-2 hover:bg-muted">-</button>
+                <span class="px-4 font-medium">1</span>
+                <button class="px-4 py-2 hover:bg-muted">+</button>
+              </div>
+              <button class="flex-1 bg-primary text-primary-foreground font-bold rounded-md hover:bg-primary/90 transition-colors">Add to Cart</button>
+              <button class="w-12 h-12 border border-input rounded-md flex items-center justify-center hover:bg-muted">
+                <svg width="24" height="24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20.84 4.61a5.5 5.5 0 00-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 00-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 000-7.78z"></path></svg>
+              </button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </main>
+    <footer class="border-t border-border bg-muted/20 py-12">
+  <div class="container mx-auto px-4 grid grid-cols-2 md:grid-cols-4 gap-8">
+    <div class="col-span-2">
+      <a href="#" class="font-bold text-xl flex items-center gap-2 mb-4">
+        <div class="h-6 w-6 rounded bg-primary text-primary-foreground flex items-center justify-center font-bold text-xs">T</div>
+        ToolMate
+      </a>
+      <p class="text-muted-foreground max-w-xs text-sm">Building the web faster with beautiful templates and components.</p>
+    </div>
+    <div>
+      <h3 class="font-semibold mb-3">Links</h3>
+      <ul class="space-y-2 text-sm text-muted-foreground">
+        <li><a href="#" class="hover:text-primary">Home</a></li>
+        <li><a href="#" class="hover:text-primary">Pricing</a></li>
+      </ul>
+    </div>
+    <div>
+      <h3 class="font-semibold mb-3">Legal</h3>
+      <ul class="space-y-2 text-sm text-muted-foreground">
+        <li><a href="#" class="hover:text-primary">Privacy</a></li>
+        <li><a href="#" class="hover:text-primary">Terms</a></li>
+      </ul>
+    </div>
+  </div>
+  <div class="container mx-auto px-4 mt-12 pt-8 border-t border-border text-sm text-muted-foreground text-center">
+    © 2026 ToolMate UI. All rights reserved.
+  </div>
+</footer>
+</body>
+</html>

@@ -1,0 +1,19 @@
+---
+import { getCollection, render } from 'astro:content';
+import DocsLayout from '../../layouts/DocsLayout.astro';
+import ComponentPreview from '../../components/mdx/ComponentPreview.astro';
+
+export async function getStaticPaths() {
+  const sectionEntries = await getCollection('sections');
+  return sectionEntries.map(entry => ({
+    params: { slug: entry.id }, props: { entry },
+  }));
+}
+
+const { entry } = Astro.props;
+const { Content, headings } = await render(entry);
+---
+
+<DocsLayout title={entry.data.title} description={entry.data.description} headings={headings}>
+  <Content components={{ ComponentPreview }} />
+</DocsLayout>

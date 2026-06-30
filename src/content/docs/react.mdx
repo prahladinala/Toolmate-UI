@@ -1,0 +1,76 @@
+---
+title: React Setup
+description: How to use ToolMate UI in a standard React project.
+category: Frameworks
+---
+
+Using ToolMate UI in React (Vite, CRA, etc.) requires Tailwind CSS.
+
+## 1. Install Tailwind CSS
+
+```bash
+npm install -D tailwindcss postcss autoprefixer
+npx tailwindcss init -p
+```
+
+## 2. Configure Tailwind
+
+In your `tailwind.config.js`:
+
+```javascript
+/** @type {import('tailwindcss').Config} */
+export default {
+  content: [
+    "./index.html",
+    "./src/**/*.{js,ts,jsx,tsx}",
+  ],
+  theme: {
+    extend: {
+      colors: {
+        background: "var(--background)",
+        foreground: "var(--foreground)",
+        primary: {
+          DEFAULT: "var(--primary)",
+          foreground: "var(--primary-foreground)",
+        },
+        muted: {
+          DEFAULT: "var(--muted)",
+          foreground: "var(--muted-foreground)",
+        },
+        border: "var(--border)",
+        input: "var(--input)",
+        ring: "var(--ring)",
+      }
+    },
+  },
+  plugins: [],
+}
+```
+
+## 3. Add CSS Variables
+
+Add this to `src/index.css`:
+
+```css
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  :root {
+    --background: #ffffff;
+    --foreground: #09090b;
+    --primary: #18181b;
+    --primary-foreground: #fafafa;
+    --muted: #f4f4f5;
+    --muted-foreground: #71717a;
+    --border: #e4e4e7;
+    --input: #e4e4e7;
+    --ring: #18181b;
+  }
+}
+```
+
+## 4. Copy & Paste
+
+You're done! Use the "React" tab when copying components.

@@ -1,0 +1,1 @@
+<button className="h-10 px-4 py-2 border bg-transparent rounded-md font-medium hover:bg-accent hover:text-accent-foreground border-green-500 text-green-500">Success Outline</button>

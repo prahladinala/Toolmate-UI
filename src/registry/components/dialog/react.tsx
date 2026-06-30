@@ -1,0 +1,10 @@
+<div className="fixed inset-0 z-50 bg-background/80 backdrop-blur-sm flex items-center justify-center p-4">
+  <div className="w-full max-w-lg rounded-xl border border-border bg-card text-card-foreground shadow-lg p-6">
+    <h3 className="font-semibold text-lg mb-2">Edit Profile</h3>
+    <p className="text-sm text-muted-foreground mb-4">Make changes to your profile here. Click save when you're done.</p>
+    <div className="flex justify-end space-x-2 mt-6">
+      <button className="px-4 py-2 text-sm font-medium rounded-md border border-input bg-background shadow-sm hover:bg-accent">Cancel</button>
+      <button className="px-4 py-2 text-sm font-medium rounded-md bg-primary text-primary-foreground shadow hover:bg-primary/90">Save Changes</button>
+    </div>
+  </div>
+</div>

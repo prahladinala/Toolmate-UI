@@ -1,0 +1,1 @@
+<span className="relative flex h-16 w-16 shrink-0 overflow-hidden rounded-full"><img className="aspect-square h-full w-full" src="https://i.pravatar.cc/150?u=3" /></span>

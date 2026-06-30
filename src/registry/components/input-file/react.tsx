@@ -1,0 +1,1 @@
+<input type="file" className="flex h-10 w-full max-w-sm rounded-md border border-input bg-transparent px-3 py-1.5 text-sm file:border-0 file:bg-transparent file:text-sm file:font-medium text-muted-foreground" />
