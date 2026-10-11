@@ -1,6 +1,8 @@
 ---
 import BaseLayout from './BaseLayout.astro';
 import Sidebar from '../components/Sidebar.astro';
+import { getCollection } from 'astro:content';
+import { ChevronRight, ArrowLeft, ArrowRight, Menu, X } from 'lucide-astro';
 
 interface Props {
   title: string;
@@ -9,46 +11,170 @@ interface Props {
 }
 
 const { title, description, headings = [] } = Astro.props;
-const currentPath = Astro.url.pathname;
+const currentPath = Astro.url.pathname.replace(/\/$/, "");
 const segments = currentPath.split('/').filter(Boolean);
-const category = segments[0] ? segments[0].charAt(0).toUpperCase() + segments[0].slice(1) : 'Docs';
+const sectionType = segments[0] as 'components' | 'sections' | 'templates' | 'docs';
+const slug = segments[1];
+
+const categoryLabel = sectionType
+  ? sectionType.charAt(0).toUpperCase() + sectionType.slice(1)
+  : 'Documentation';
+
+// Pager calculation: Pure static build-time calculation for zero client JS overhead
+let prevItem: { title: string; href: string } | null = null;
+let nextItem: { title: string; href: string } | null = null;
+
+if (['components', 'sections', 'templates', 'docs'].includes(sectionType)) {
+  const collection = (await getCollection(sectionType as any)).sort((a: any, b: any) =>
+    a.data.title.localeCompare(b.data.title)
+  );
+  const currentIndex = collection.findIndex((item: any) => item.id === slug);
+  if (currentIndex > 0) {
+    const prev = collection[currentIndex - 1];
+    prevItem = { title: prev.data.title, href: `/${sectionType}/${prev.id}` };
+  }
+  if (currentIndex >= 0 && currentIndex < collection.length - 1) {
+    const next = collection[currentIndex + 1];
+    nextItem = { title: next.data.title, href: `/${sectionType}/${next.id}` };
+  }
+}
 ---
 
 <BaseLayout title={`${title} | ToolMate UI`} description={description}>
-  <div class="border-b md:hidden sticky top-14 z-40 bg-background/95 backdrop-blur w-full flex items-center px-4 py-2">
-    <button id="mobile-sidebar-toggle" class="flex items-center space-x-2 text-sm font-medium text-muted-foreground hover:text-foreground">
-      <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="3" y1="12" x2="21" y2="12"></line><line x1="3" y1="6" x2="21" y2="6"></line><line x1="3" y1="18" x2="21" y2="18"></line></svg>
-      <span>Menu</span>
+  <!-- Mobile Sub-Navigation Header -->
+  <div class="border-b border-border/40 md:hidden sticky top-14 z-40 bg-background/95 backdrop-blur w-full flex items-center justify-between px-4 py-2.5">
+    <button
+      id="mobile-sidebar-toggle"
+      type="button"
+      class="flex items-center gap-2 text-sm font-medium text-foreground hover:text-primary transition-colors py-1 px-2 rounded-md hover:bg-muted"
+      aria-label="Toggle sidebar menu"
+      aria-expanded="false"
+    >
+      <Menu class="h-4 w-4" />
+      <span>Browse {categoryLabel}</span>
     </button>
+    <span class="text-xs font-mono text-muted-foreground truncate max-w-[160px]">{title}</span>
   </div>
-  <div class="container mx-auto flex-1 items-start md:grid md:grid-cols-[220px_minmax(0,1fr)] md:gap-6 lg:grid-cols-[240px_minmax(0,1fr)] lg:gap-10 px-4">
-    <div id="sidebar-container" class="hidden md:block fixed inset-0 top-[6rem] z-30 bg-background md:static md:bg-transparent overflow-hidden px-4 md:px-0">
+
+  <!-- Mobile Sidebar Backdrop Overlay -->
+  <div
+    id="mobile-sidebar-backdrop"
+    class="fixed inset-0 bg-background/80 backdrop-blur-xs z-40 hidden md:hidden transition-opacity"
+  ></div>
+
+  <!-- Main Grid Layout Container -->
+  <div class="container mx-auto flex-1 items-start md:grid md:grid-cols-[220px_minmax(0,1fr)] md:gap-6 lg:grid-cols-[250px_minmax(0,1fr)] lg:gap-10 px-4">
+    <!-- Sidebar Container -->
+    <div
+      id="sidebar-container"
+      class="hidden md:block fixed inset-y-0 left-0 top-14 z-50 w-72 bg-background p-4 shadow-xl border-r border-border md:static md:w-auto md:bg-transparent md:p-0 md:shadow-none md:border-none overflow-y-auto"
+    >
+      <!-- Mobile Close Button -->
+      <div class="flex items-center justify-between pb-4 md:hidden border-b border-border mb-4">
+        <span class="font-bold text-sm">Navigation</span>
+        <button
+          id="mobile-sidebar-close"
+          type="button"
+          class="p-1.5 rounded-lg text-muted-foreground hover:text-foreground hover:bg-muted"
+          aria-label="Close menu"
+        >
+          <X class="h-4 w-4" />
+        </button>
+      </div>
       <Sidebar />
     </div>
-    <main class="relative py-6 lg:gap-10 lg:py-8 xl:grid xl:grid-cols-[1fr_300px]">
-      <div class="mx-auto w-full min-w-0">
-        <div class="mb-4 flex items-center space-x-1 text-sm text-muted-foreground">
-          <div class="overflow-hidden text-ellipsis whitespace-nowrap">{category}</div>
-          <svg width="15" height="15" viewBox="0 0 15 15" fill="none" xmlns="http://www.w3.org/2000/svg" class="h-4 w-4"><path d="M6.1584 3.13508C6.35985 2.95662 6.66436 2.97508 6.84283 3.17653L10.3428 7.17653C10.5053 7.35999 10.5053 7.64001 10.3428 7.82347L6.84283 11.8235C6.66436 12.0249 6.35985 12.0434 6.1584 11.8649C5.95694 11.6865 5.93848 11.382 6.11694 11.1805L9.31451 7.5L6.11694 3.81946C5.93848 3.618 5.95694 3.3135 6.1584 3.13508Z" fill="currentColor" fill-rule="evenodd" clip-rule="evenodd"></path></svg>
-          <div class="font-medium text-foreground">{title}</div>
-        </div>
-        <div class="space-y-2">
-          <h1 class="scroll-m-20 text-4xl font-bold tracking-tight">{title}</h1>
-          {description && <p class="text-lg text-muted-foreground">{description}</p>}
-        </div>
-        <div class="pb-12 pt-8 prose dark:prose-invert max-w-none">
+
+    <!-- Article Content -->
+    <main class="relative py-6 lg:gap-10 lg:py-8 xl:grid xl:grid-cols-[1fr_260px] max-w-full">
+      <div class="mx-auto w-full min-w-0 max-w-4xl">
+        <!-- Breadcrumbs -->
+        <nav aria-label="Breadcrumbs" class="mb-5 flex items-center space-x-1.5 text-xs text-muted-foreground">
+          <a href="/" class="hover:text-foreground transition-colors">Home</a>
+          <ChevronRight class="h-3 w-3 shrink-0" />
+          <a href={`/${sectionType}`} class="hover:text-foreground transition-colors font-medium">
+            {categoryLabel}
+          </a>
+          <ChevronRight class="h-3 w-3 shrink-0" />
+          <span class="font-semibold text-foreground truncate">{title}</span>
+        </nav>
+
+        <!-- Page Header -->
+        <header class="space-y-2 pb-6 border-b border-border/40 mb-8">
+          <div class="flex items-center gap-2.5">
+            <h1 class="scroll-m-20 text-3xl font-extrabold tracking-tight sm:text-4xl text-foreground">
+              {title}
+            </h1>
+            <span class="text-[11px] px-2.5 py-0.5 rounded-full bg-primary/10 text-primary border border-primary/20 font-medium">
+              {categoryLabel}
+            </span>
+          </div>
+          {description && (
+            <p class="text-base text-muted-foreground leading-relaxed pt-1">
+              {description}
+            </p>
+          )}
+        </header>
+
+        <!-- Rendered MDX Content -->
+        <div class="prose dark:prose-invert max-w-none text-foreground/90">
           <slot />
         </div>
+
+        <!-- Sequential Pager Navigation -->
+        {(prevItem || nextItem) && (
+          <nav aria-label="Page navigation" class="mt-14 pt-8 border-t border-border grid grid-cols-1 sm:grid-cols-2 gap-4">
+            {prevItem ? (
+              <a
+                href={prevItem.href}
+                class="group flex flex-col p-4 rounded-xl border border-border bg-card/60 hover:bg-accent/40 hover:border-primary/40 transition-all text-left shadow-2xs hover:shadow-xs"
+              >
+                <span class="text-xs text-muted-foreground flex items-center gap-1 font-medium mb-1 group-hover:text-primary transition-colors">
+                  <ArrowLeft class="h-3 w-3 group-hover:-translate-x-0.5 transition-transform" />
+                  Previous
+                </span>
+                <span class="font-semibold text-foreground group-hover:text-primary transition-colors">
+                  {prevItem.title}
+                </span>
+              </a>
+            ) : (
+              <div class="hidden sm:block" />
+            )}
+
+            {nextItem ? (
+              <a
+                href={nextItem.href}
+                class="group flex flex-col p-4 rounded-xl border border-border bg-card/60 hover:bg-accent/40 hover:border-primary/40 transition-all text-right sm:items-end shadow-2xs hover:shadow-xs"
+              >
+                <span class="text-xs text-muted-foreground flex items-center gap-1 font-medium mb-1 group-hover:text-primary transition-colors">
+                  Next
+                  <ArrowRight class="h-3 w-3 group-hover:translate-x-0.5 transition-transform" />
+                </span>
+                <span class="font-semibold text-foreground group-hover:text-primary transition-colors">
+                  {nextItem.title}
+                </span>
+              </a>
+            ) : (
+              <div class="hidden sm:block" />
+            )}
+          </nav>
+        )}
       </div>
-      <div class="hidden text-sm xl:block">
-        <div class="sticky top-16 -mt-10 pt-4">
+
+      <!-- Right Column: Table of Contents -->
+      <aside class="hidden text-sm xl:block pl-6">
+        <div class="sticky top-20 -mt-6 pt-4 space-y-4">
           {headings.length > 0 && (
-            <div class="space-y-2">
-              <p class="font-medium">On This Page</p>
-              <ul class="m-0 list-none space-y-2">
+            <div class="space-y-2 border-l border-border pl-4">
+              <p class="font-semibold text-xs uppercase tracking-wider text-muted-foreground">
+                On This Page
+              </p>
+              <ul class="m-0 list-none space-y-2 pt-1 text-xs">
                 {headings.filter(h => h.depth <= 3).map(heading => (
-                  <li class={heading.depth === 3 ? "pl-4" : ""}>
-                    <a href={`#${heading.slug}`} class="text-muted-foreground hover:text-foreground transition-colors">
+                  <li class={heading.depth === 3 ? "pl-3 text-muted-foreground" : ""}>
+                    <a
+                      href={`#${heading.slug}`}
+                      class="text-muted-foreground hover:text-foreground transition-colors block py-0.5 truncate"
+                    >
                       {heading.text}
                     </a>
                   </li>
@@ -56,45 +182,71 @@ const category = segments[0] ? segments[0].charAt(0).toUpperCase() + segments[0]
               </ul>
             </div>
           )}
+
+          <div class="pt-4 border-t border-border/40 pl-4">
+            <a
+              href="#top"
+              class="text-xs text-muted-foreground hover:text-foreground flex items-center gap-1 transition-colors"
+            >
+              <span>Back to top ↑</span>
+            </a>
+          </div>
         </div>
-      </div>
+      </aside>
     </main>
   </div>
-  <script>
-    const toggleBtn = document.getElementById('mobile-sidebar-toggle');
-    const sidebar = document.getElementById('sidebar-container');
-    if (toggleBtn && sidebar) {
-      toggleBtn.addEventListener('click', () => {
-        sidebar.classList.toggle('hidden');
-      });
-    }
 
-    // Add copy button to code blocks
+  <script>
+    // Lightweight vanilla JS for mobile drawer toggle & code-copy buttons
+    const toggleBtn = document.getElementById('mobile-sidebar-toggle');
+    const closeBtn = document.getElementById('mobile-sidebar-close');
+    const sidebar = document.getElementById('sidebar-container');
+    const backdrop = document.getElementById('mobile-sidebar-backdrop');
+
+    const openSidebar = () => {
+      sidebar?.classList.remove('hidden');
+      backdrop?.classList.remove('hidden');
+      document.body.classList.add('overflow-hidden');
+    };
+
+    const closeSidebar = () => {
+      sidebar?.classList.add('hidden');
+      backdrop?.classList.add('hidden');
+      document.body.classList.remove('overflow-hidden');
+    };
+
+    toggleBtn?.addEventListener('click', openSidebar);
+    closeBtn?.addEventListener('click', closeSidebar);
+    backdrop?.addEventListener('click', closeSidebar);
+
+    // Code copy buttons for standard prose codeblocks
     document.querySelectorAll('pre.astro-code').forEach((pre) => {
+      if (pre.parentElement?.classList.contains('code-block-wrapper')) return;
+
       const wrapper = document.createElement('div');
-      wrapper.className = 'relative group rounded-lg overflow-hidden my-6 border border-border bg-[#0d1117] dark:bg-zinc-900/50';
+      wrapper.className = 'code-block-wrapper relative group rounded-lg overflow-hidden my-6 border border-border bg-[#0d1117] dark:bg-zinc-900/60';
       pre.parentNode?.insertBefore(wrapper, pre);
       wrapper.appendChild(pre);
-      
-      // Override typography margins
+
       pre.classList.add('!my-0', '!rounded-none', '!bg-transparent', 'p-4', 'overflow-x-auto');
-      
+
       const button = document.createElement('button');
-      button.className = 'absolute top-3 right-3 h-8 w-8 inline-flex items-center justify-center rounded-md bg-white/10 hover:bg-white/20 text-zinc-300 opacity-0 group-hover:opacity-100 transition-all focus:opacity-100';
-      button.setAttribute('aria-label', 'Copy code');
-      button.innerHTML = `<svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect width="14" height="14" x="8" y="8" rx="2" ry="2"/><path d="M4 16c-1.1 0-2-.9-2-2V4c0-1.1.9-2 2-2h10c1.1 0 2 .9 2 2"/></svg>`;
-      
+      button.className = 'absolute top-3 right-3 h-7 w-7 inline-flex items-center justify-center rounded-md bg-white/10 hover:bg-white/20 text-zinc-300 opacity-80 sm:opacity-0 sm:group-hover:opacity-100 transition-all focus:opacity-100 cursor-pointer';
+      button.setAttribute('aria-label', 'Copy code snippet');
+      button.innerHTML = `<svg xmlns="http://www.w3.org/2000/svg" width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect width="14" height="14" x="8" y="8" rx="2" ry="2"/><path d="M4 16c-1.1 0-2-.9-2-2V4c0-1.1.9-2 2-2h10c1.1 0 2 .9 2 2"/></svg>`;
+
       button.onclick = async () => {
         const code = pre.querySelector('code')?.innerText || pre.innerText;
         await navigator.clipboard.writeText(code);
-        button.innerHTML = `<svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="text-green-400"><polyline points="20 6 9 17 4 12"/></svg>`;
+        button.innerHTML = `<svg xmlns="http://www.w3.org/2000/svg" width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="text-green-400"><polyline points="20 6 9 17 4 12"/></svg>`;
         setTimeout(() => {
-          button.innerHTML = `<svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect width="14" height="14" x="8" y="8" rx="2" ry="2"/><path d="M4 16c-1.1 0-2-.9-2-2V4c0-1.1.9-2 2-2h10c1.1 0 2 .9 2 2"/></svg>`;
+          button.innerHTML = `<svg xmlns="http://www.w3.org/2000/svg" width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect width="14" height="14" x="8" y="8" rx="2" ry="2"/><path d="M4 16c-1.1 0-2-.9-2-2V4c0-1.1.9-2 2-2h10c1.1 0 2 .9 2 2"/></svg>`;
         }, 2000);
       };
       wrapper.appendChild(button);
     });
   </script>
+
   <style is:global>
     .prose pre {
       margin: 0 !important;
@@ -108,7 +260,6 @@ const category = segments[0] ? segments[0].charAt(0).toUpperCase() + segments[0]
       background: transparent !important;
       color: inherit;
     }
-    /* Inline code style */
     .prose :not(pre) > code {
       background-color: var(--muted);
       color: var(--muted-foreground);

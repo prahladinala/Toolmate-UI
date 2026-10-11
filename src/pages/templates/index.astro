@@ -1,23 +1,196 @@
 ---
 import BaseLayout from '../../layouts/BaseLayout.astro';
 import { getCollection } from 'astro:content';
+import {
+  Sparkles,
+  ExternalLink,
+  ArrowRight,
+  Monitor,
+  Smartphone,
+  CheckCircle2,
+  Layers,
+  Palette
+} from 'lucide-astro';
 
-const templates = await getCollection('templates');
+const templates = (await getCollection('templates')).sort((a, b) =>
+  a.data.title.localeCompare(b.data.title)
+);
+
+// Map templates into meaningful categories
+const getTemplateCategory = (id: string) => {
+  const normalized = id.toLowerCase();
+  if (['saas-landing', 'mobile-app', 'ai-project', 'project-launch'].includes(normalized)) return 'SaaS & Apps';
+  if (['ecommerce', 'product-page', 'promotion'].includes(normalized)) return 'Commerce & Products';
+  if (['portfolio', 'gallery'].includes(normalized)) return 'Creative & Portfolio';
+  if (['charity', 'event', 'school'].includes(normalized)) return 'Community & Events';
+  return 'Landing Pages';
+};
+
+const categorizedTemplates = templates.map(t => ({
+  ...t,
+  category: getTemplateCategory(t.id)
+}));
+
+const categories = ['All', 'SaaS & Apps', 'Commerce & Products', 'Creative & Portfolio', 'Community & Events'];
 ---
 
-<BaseLayout title="Templates | ToolMate UI">
-  <div class="container mx-auto px-4 py-12 max-w-screen-xl">
-    <div class="mb-8">
-      <h1 class="text-4xl font-bold mb-4">Templates</h1>
-      <p class="text-xl text-muted-foreground">Browse complete production-ready templates.</p>
+<BaseLayout
+  title="Website Templates - Production Ready Tailwind CSS Templates"
+  description="Explore 12+ full-page, production-ready website templates designed with Tailwind CSS. Includes SaaS, E-Commerce, Portfolios, Apps, and Events with live demos and copy-paste code."
+>
+  <main class="flex-1 py-12 md:py-20">
+    <div class="container mx-auto px-4 max-w-screen-xl">
+      <!-- Templates Header -->
+      <header class="flex flex-col items-center text-center space-y-4 mb-14">
+        <div class="inline-flex items-center gap-2 px-3 py-1 rounded-full border border-border bg-muted/60 text-xs font-medium text-muted-foreground shadow-2xs">
+          <Sparkles class="h-3.5 w-3.5 text-primary" />
+          <span>12+ Full Website Templates • Production-Ready • Pure Tailwind CSS</span>
+        </div>
+        <h1 class="text-4xl sm:text-5xl md:text-6xl font-black tracking-tight text-foreground">
+          Website Templates
+        </h1>
+        <p class="text-base sm:text-lg text-muted-foreground max-w-2xl leading-relaxed">
+          Production-grade, fully responsive page templates designed for high conversion.
+          Clone them into your project, customize styling effortlessly, and launch your next project in minutes.
+        </p>
+
+        <!-- Category Filters -->
+        <div class="pt-4 flex flex-wrap justify-center gap-2" id="filter-container">
+          {categories.map((cat, idx) => (
+            <button
+              type="button"
+              class={`filter-btn px-4 py-1.5 rounded-full text-xs font-semibold transition-all border ${
+                idx === 0
+                  ? "bg-primary text-primary-foreground border-primary shadow-xs"
+                  : "bg-muted/40 text-muted-foreground border-border hover:text-foreground hover:bg-muted"
+              }`}
+              data-filter={cat}
+            >
+              {cat}
+            </button>
+          ))}
+        </div>
+      </header>
+
+      <!-- Templates Grid -->
+      <section aria-label="Template Catalog" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8" id="templates-grid">
+        {categorizedTemplates.map(item => (
+          <div
+            class="template-card group flex flex-col justify-between rounded-2xl border border-border/80 bg-card/60 hover:border-primary/50 transition-all duration-200 hover:-translate-y-1 hover:shadow-lg overflow-hidden"
+            data-category={item.category}
+          >
+            <!-- Simulated Browser Header -->
+            <div class="bg-muted/40 border-b border-border/60 px-4 py-3 flex items-center justify-between">
+              <div class="flex items-center space-x-1.5">
+                <div class="h-2.5 w-2.5 rounded-full bg-red-500/70"></div>
+                <div class="h-2.5 w-2.5 rounded-full bg-yellow-500/70"></div>
+                <div class="h-2.5 w-2.5 rounded-full bg-green-500/70"></div>
+              </div>
+              <div class="px-2.5 py-0.5 rounded-md bg-background/80 border border-border/50 text-[10px] font-mono text-muted-foreground truncate max-w-[160px]">
+                /{item.id}
+              </div>
+              <div class="flex items-center gap-1 text-muted-foreground/60">
+                <Monitor class="h-3 w-3" />
+                <Smartphone class="h-3 w-3" />
+              </div>
+            </div>
+
+            <!-- Preview Visual Banner -->
+            <div class="relative bg-gradient-to-br from-muted/30 via-muted/10 to-primary/5 p-6 min-h-[160px] flex flex-col justify-between border-b border-border/40 group-hover:from-primary/5 group-hover:to-muted/20 transition-all">
+              <div class="flex items-center justify-between">
+                <span class="text-[11px] font-semibold px-2.5 py-0.5 rounded-full bg-background/90 border border-border/70 text-foreground shadow-2xs">
+                  {item.category}
+                </span>
+                <span class="text-[11px] font-medium text-emerald-600 dark:text-emerald-400 bg-emerald-500/10 px-2 py-0.5 rounded-full border border-emerald-500/20">
+                  Ready to Deploy
+                </span>
+              </div>
+
+              <!-- Graphic wireframe badge -->
+              <div class="my-4 p-3 rounded-xl bg-background/60 backdrop-blur-xs border border-border/60 shadow-xs">
+                <div class="flex items-center justify-between mb-2">
+                  <div class="h-2 w-16 bg-primary/40 rounded-full"></div>
+                  <div class="flex gap-1">
+                    <div class="h-1.5 w-4 bg-muted-foreground/30 rounded-full"></div>
+                    <div class="h-1.5 w-4 bg-muted-foreground/30 rounded-full"></div>
+                    <div class="h-1.5 w-4 bg-muted-foreground/30 rounded-full"></div>
+                  </div>
+                </div>
+                <div class="space-y-1.5">
+                  <div class="h-2 w-3/4 bg-foreground/20 rounded-full"></div>
+                  <div class="h-1.5 w-1/2 bg-muted-foreground/20 rounded-full"></div>
+                </div>
+              </div>
+
+              <div class="flex items-center gap-2 text-[11px] text-muted-foreground">
+                <span class="inline-flex items-center gap-1"><CheckCircle2 class="h-3 w-3 text-emerald-500" /> Fully Responsive</span>
+                <span>•</span>
+                <span>Tailwind CSS</span>
+              </div>
+            </div>
+
+            <!-- Content & Actions -->
+            <div class="p-6 flex-1 flex flex-col justify-between space-y-4">
+              <div>
+                <h2 class="text-xl font-bold tracking-tight text-foreground group-hover:text-primary transition-colors">
+                  {item.data.title}
+                </h2>
+                <p class="text-sm text-muted-foreground mt-2 line-clamp-2 leading-relaxed">
+                  {item.data.description || `Production-grade ${item.data.title.toLowerCase()} landing page designed for optimal engagement.`}
+                </p>
+              </div>
+
+              <!-- CTAs -->
+              <div class="pt-4 border-t border-border/50 flex items-center justify-between gap-3">
+                <a
+                  href={`/preview/${item.id}`}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  class="flex-1 inline-flex items-center justify-center gap-1.5 px-3 py-2 rounded-lg bg-primary text-primary-foreground text-xs font-semibold hover:bg-primary/90 shadow-2xs transition-all"
+                >
+                  <ExternalLink class="h-3.5 w-3.5" />
+                  <span>Live Demo</span>
+                </a>
+                <a
+                  href={`/templates/${item.id}`}
+                  class="flex-1 inline-flex items-center justify-center gap-1.5 px-3 py-2 rounded-lg bg-muted/70 hover:bg-muted text-foreground text-xs font-semibold border border-border/60 transition-all"
+                >
+                  <span>Code & Docs</span>
+                  <ArrowRight class="h-3.5 w-3.5" />
+                </a>
+              </div>
+            </div>
+          </div>
+        ))}
+      </section>
     </div>
-    <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-      {templates.map(item => (
-        <a href={`/templates/${item.id}`} class="block group p-6 rounded-lg border border-border bg-card hover:border-primary transition-colors">
-          <h2 class="text-xl font-semibold mb-2 group-hover:text-primary transition-colors">{item.data.title}</h2>
-          <p class="text-muted-foreground">{item.data.description}</p>
-        </a>
-      ))}
-    </div>
-  </div>
+  </main>
 </BaseLayout>
+
+<script>
+  // Pure zero-dependency client filter (CSR minimized strictly to ~15 lines)
+  const filterBtns = document.querySelectorAll('.filter-btn');
+  const cards = document.querySelectorAll('.template-card');
+
+  filterBtns.forEach(btn => {
+    btn.addEventListener('click', () => {
+      const filter = btn.getAttribute('data-filter');
+
+      filterBtns.forEach(b => {
+        b.classList.remove('bg-primary', 'text-primary-foreground', 'border-primary', 'shadow-xs');
+        b.classList.add('bg-muted/40', 'text-muted-foreground', 'border-border');
+      });
+      btn.classList.add('bg-primary', 'text-primary-foreground', 'border-primary', 'shadow-xs');
+      btn.classList.remove('bg-muted/40', 'text-muted-foreground', 'border-border');
+
+      cards.forEach(card => {
+        const category = card.getAttribute('data-category');
+        if (filter === 'All' || category === filter) {
+          (card as HTMLElement).style.display = 'flex';
+        } else {
+          (card as HTMLElement).style.display = 'none';
+        }
+      });
+    });
+  });
+</script>

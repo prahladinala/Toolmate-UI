@@ -1,1 +1,1 @@
-<span className="relative flex h-10 w-10 shrink-0 overflow-hidden rounded-full ring-2 ring-primary ring-offset-2 ring-offset-background"><img className="aspect-square h-full w-full" src="https://i.pravatar.cc/150?u=10" /></span>
+<span className="relative flex h-10 w-10 shrink-0 overflow-hidden rounded-full ring-2 ring-primary ring-offset-2 ring-offset-background"><img className="aspect-square h-full w-full" src="https://i.pravatar.cc/150?u=10" / alt="Image description" width="150" height="150"></span>

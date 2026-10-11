@@ -1,23 +1,212 @@
 ---
 import BaseLayout from '../../layouts/BaseLayout.astro';
 import { getCollection } from 'astro:content';
+import {
+  BookOpen,
+  Terminal,
+  ArrowRight,
+  Sparkles,
+  Zap,
+  CheckCircle2,
+  Copy,
+  Layers,
+  Code2
+} from 'lucide-astro';
 
-const docs = await getCollection('docs');
+const docs = (await getCollection('docs')).sort((a, b) => {
+  if (a.id === 'installation') return -1;
+  if (b.id === 'installation') return 1;
+  return a.data.title.localeCompare(b.data.title);
+});
+
+// Framework guides list with detailed metadata
+const frameworks = [
+  {
+    name: 'Next.js',
+    id: 'nextjs',
+    desc: 'App Router & Pages Router support with server components and zero layout shift.',
+    badge: 'Popular',
+    tagColor: 'bg-blue-500/10 text-blue-500 border-blue-500/20'
+  },
+  {
+    name: 'React + Vite',
+    id: 'react',
+    desc: 'Lightning-fast client apps built with React 19, Vite, and PostCSS.',
+    badge: 'Recommended',
+    tagColor: 'bg-cyan-500/10 text-cyan-500 border-cyan-500/20'
+  },
+  {
+    name: 'Astro',
+    id: 'astro',
+    desc: 'Zero-JS static HTML by default with islands of interactivity when needed.',
+    badge: 'Ultra Fast',
+    tagColor: 'bg-purple-500/10 text-purple-500 border-purple-500/20'
+  },
+  {
+    name: 'Vue.js',
+    id: 'vue',
+    desc: 'Single File Components with Tailwind CSS integration using Vite.',
+    badge: 'Vue 3',
+    tagColor: 'bg-emerald-500/10 text-emerald-500 border-emerald-500/20'
+  },
+  {
+    name: 'Angular',
+    id: 'angular',
+    desc: 'Angular 17+ standalone components styled with modern Tailwind CSS.',
+    badge: 'Enterprise',
+    tagColor: 'bg-red-500/10 text-red-500 border-red-500/20'
+  },
+  {
+    name: 'HTML & CDN',
+    id: 'html',
+    desc: 'Quick prototyping with Tailwind Play CDN or standalone Tailwind CLI.',
+    badge: 'Zero Build',
+    tagColor: 'bg-amber-500/10 text-amber-500 border-amber-500/20'
+  }
+];
 ---
 
-<BaseLayout title="Documentation | ToolMate UI">
-  <div class="container mx-auto px-4 py-12 max-w-screen-xl">
-    <div class="mb-8">
-      <h1 class="text-4xl font-bold mb-4">Documentation</h1>
-      <p class="text-xl text-muted-foreground">Learn how to use ToolMate UI in your projects.</p>
+<BaseLayout
+  title="Documentation - Tailwind CSS Framework Setup Guides | ToolMate UI"
+  description="Comprehensive setup and installation guides for Next.js, React, Astro, Vue, Angular, and HTML. Learn how to copy and paste ToolMate UI components with zero configuration."
+>
+  <main class="flex-1 py-12 md:py-20">
+    <div class="container mx-auto px-4 max-w-screen-xl">
+      <!-- Documentation Hero -->
+      <header class="flex flex-col items-center text-center space-y-4 mb-16">
+        <div class="inline-flex items-center gap-2 px-3 py-1 rounded-full border border-border bg-muted/60 text-xs font-medium text-muted-foreground shadow-2xs">
+          <BookOpen class="h-3.5 w-3.5 text-primary" />
+          <span>Documentation & Integration Guides • Zero Dependencies</span>
+        </div>
+        <h1 class="text-4xl sm:text-5xl md:text-6xl font-black tracking-tight text-foreground">
+          Setup & Documentation
+        </h1>
+        <p class="text-base sm:text-lg text-muted-foreground max-w-2xl leading-relaxed">
+          Everything you need to integrate ToolMate UI into your existing or new project.
+          Select your framework below for step-by-step instructions.
+        </p>
+      </header>
+
+      <!-- Quick Start Spotlight Banner -->
+      <div class="mb-14 rounded-2xl border border-primary/30 bg-gradient-to-r from-primary/10 via-background to-primary/5 p-6 sm:p-8 relative overflow-hidden shadow-sm">
+        <div class="absolute -right-12 -top-12 h-48 w-48 rounded-full bg-primary/10 blur-3xl pointer-events-none"></div>
+        <div class="flex flex-col md:flex-row items-start md:items-center justify-between gap-6 relative z-10">
+          <div class="space-y-2 max-w-xl">
+            <div class="inline-flex items-center gap-1.5 px-2.5 py-0.5 rounded-full bg-primary/20 text-primary text-xs font-semibold">
+              <Zap class="h-3 w-3" />
+              Quick Start
+            </div>
+            <h2 class="text-2xl font-bold tracking-tight text-foreground">
+              Getting Started in 2 Minutes
+            </h2>
+            <p class="text-sm text-muted-foreground leading-relaxed">
+              ToolMate UI is not a bloated npm package. You own the code. Follow our general installation guide to configure Tailwind CSS and theme tokens in your repository.
+            </p>
+          </div>
+          <div class="flex flex-wrap items-center gap-3">
+            <a
+              href="/docs/installation"
+              class="inline-flex items-center justify-center gap-2 px-5 py-2.5 rounded-xl bg-primary text-primary-foreground text-sm font-semibold hover:bg-primary/90 shadow-xs transition-all"
+            >
+              <span>Installation Guide</span>
+              <ArrowRight class="h-4 w-4" />
+            </a>
+            <a
+              href="/components"
+              class="inline-flex items-center justify-center gap-2 px-5 py-2.5 rounded-xl bg-card hover:bg-muted text-foreground text-sm font-semibold border border-border shadow-2xs transition-all"
+            >
+              <span>Browse Components</span>
+            </a>
+          </div>
+        </div>
+      </div>
+
+      <!-- Framework Integration Grid -->
+      <section aria-labelledby="frameworks-heading" class="mb-20">
+        <div class="flex items-center justify-between mb-8">
+          <div>
+            <h2 id="frameworks-heading" class="text-2xl font-bold tracking-tight text-foreground">
+              Framework Setup Guides
+            </h2>
+            <p class="text-sm text-muted-foreground mt-1">
+              Select your framework to copy and paste the exact configuration files.
+            </p>
+          </div>
+        </div>
+
+        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+          {frameworks.map(fw => (
+            <a
+              href={`/docs/${fw.id}`}
+              class="group flex flex-col justify-between p-6 rounded-2xl border border-border/80 bg-card/60 hover:bg-accent/30 hover:border-primary/50 transition-all duration-200 hover:-translate-y-1 hover:shadow-md"
+            >
+              <div>
+                <div class="flex items-center justify-between mb-4">
+                  <span class={`text-[11px] font-semibold px-2.5 py-0.5 rounded-full border ${fw.tagColor}`}>
+                    {fw.badge}
+                  </span>
+                  <ArrowRight class="h-4 w-4 text-muted-foreground/50 group-hover:text-primary group-hover:translate-x-1 transition-all" />
+                </div>
+                <h3 class="text-xl font-bold tracking-tight text-foreground group-hover:text-primary transition-colors">
+                  {fw.name}
+                </h3>
+                <p class="text-sm text-muted-foreground mt-2 leading-relaxed">
+                  {fw.desc}
+                </p>
+              </div>
+
+              <div class="mt-6 pt-4 border-t border-border/50 flex items-center justify-between text-xs text-muted-foreground">
+                <span class="font-mono text-[11px] text-muted-foreground/70">docs/{fw.id}</span>
+                <span class="font-semibold text-primary group-hover:underline">Read Guide →</span>
+              </div>
+            </a>
+          ))}
+        </div>
+      </section>
+
+      <!-- Why ToolMate UI / Architecture Pillars -->
+      <section aria-labelledby="architecture-heading" class="border-t border-border/60 pt-16">
+        <div class="text-center max-w-2xl mx-auto mb-12">
+          <h2 id="architecture-heading" class="text-2xl sm:text-3xl font-bold tracking-tight text-foreground">
+            Built for Modern Developers
+          </h2>
+          <p class="text-sm text-muted-foreground mt-2">
+            No runtime dependencies, no vendor lock-in, and full source code ownership.
+          </p>
+        </div>
+
+        <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+          <div class="p-6 rounded-2xl border border-border/60 bg-card/40 space-y-3">
+            <div class="h-10 w-10 rounded-xl bg-primary/10 flex items-center justify-center text-primary">
+              <Code2 class="h-5 w-5" />
+            </div>
+            <h3 class="text-lg font-bold text-foreground">Copy, Paste & Own</h3>
+            <p class="text-sm text-muted-foreground leading-relaxed">
+              Every component is delivered as clean source code. You don't install an npm package that holds you back from modifying internal styles.
+            </p>
+          </div>
+
+          <div class="p-6 rounded-2xl border border-border/60 bg-card/40 space-y-3">
+            <div class="h-10 w-10 rounded-xl bg-primary/10 flex items-center justify-center text-primary">
+              <Zap class="h-5 w-5" />
+            </div>
+            <h3 class="text-lg font-bold text-foreground">Zero Runtime Bloat</h3>
+            <p class="text-sm text-muted-foreground leading-relaxed">
+              Built exclusively with utility classes. Your build output contains only the CSS classes you actually use, keeping bundle sizes minimal.
+            </p>
+          </div>
+
+          <div class="p-6 rounded-2xl border border-border/60 bg-card/40 space-y-3">
+            <div class="h-10 w-10 rounded-xl bg-primary/10 flex items-center justify-center text-primary">
+              <CheckCircle2 class="h-5 w-5" />
+            </div>
+            <h3 class="text-lg font-bold text-foreground">Multi-Framework Native</h3>
+            <p class="text-sm text-muted-foreground leading-relaxed">
+              Whether you write React JSX, Astro components, Vue Single File Components, or raw semantic HTML, the styling logic remains 100% consistent.
+            </p>
+          </div>
+        </div>
+      </section>
     </div>
-    <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-      {docs.map(item => (
-        <a href={`/docs/${item.id}`} class="block group p-6 rounded-lg border border-border bg-card hover:border-primary transition-colors">
-          <h2 class="text-xl font-semibold mb-2 group-hover:text-primary transition-colors">{item.data.title}</h2>
-          <p class="text-muted-foreground">{item.data.description}</p>
-        </a>
-      ))}
-    </div>
-  </div>
+  </main>
 </BaseLayout>

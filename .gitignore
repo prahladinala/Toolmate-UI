@@ -17,10 +17,14 @@ pnpm-debug.log*
 .env
 .env.production
 
-# macOS-specific files
+# OS / Editor files
 .DS_Store
+Thumbs.db
+.vscode/
+*.log
 
 # jetbrains setting folder
 .idea/
 
 public/pagefind
+

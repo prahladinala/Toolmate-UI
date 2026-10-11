@@ -1,23 +1,136 @@
 ---
 import BaseLayout from '../../layouts/BaseLayout.astro';
 import { getCollection } from 'astro:content';
+import {
+  Layout,
+  Layers,
+  ArrowRight,
+  Sparkles,
+  Palette
+} from 'lucide-astro';
 
-const sections = await getCollection('sections');
+const sections = (await getCollection('sections')).sort((a, b) =>
+  a.data.title.localeCompare(b.data.title)
+);
+
+const getSectionCategory = (id: string) => {
+  const normalized = id.toLowerCase();
+  if (['hero', 'features', 'pricing', 'testimonials', 'faq', 'cta'].includes(normalized)) return 'Marketing';
+  if (['navbar', 'footer', 'stats'].includes(normalized)) return 'Structure';
+  return 'Utility';
+};
+
+const categorizedSections = sections.map(s => ({
+  ...s,
+  category: getSectionCategory(s.id)
+}));
+
+const categories = ['All', 'Marketing', 'Structure', 'Utility'];
 ---
 
-<BaseLayout title="Sections | ToolMate UI">
-  <div class="container mx-auto px-4 py-12 max-w-screen-xl">
-    <div class="mb-8">
-      <h1 class="text-4xl font-bold mb-4">Sections</h1>
-      <p class="text-xl text-muted-foreground">Browse all available UI sections.</p>
+<BaseLayout
+  title="Page Sections - Tailwind CSS Section Blocks"
+  description="Explore 12+ responsive page sections with 100+ variations including Hero, Pricing, Testimonials, FAQ, Navbar, and Footer blocks."
+>
+  <main class="flex-1 py-12 md:py-20">
+    <div class="container mx-auto px-4 max-w-screen-xl">
+      <!-- Section Header -->
+      <header class="flex flex-col items-center text-center space-y-4 mb-14">
+        <div class="inline-flex items-center gap-2 px-3 py-1 rounded-full border border-border bg-muted/60 text-xs font-medium text-muted-foreground shadow-2xs">
+          <Palette class="h-3.5 w-3.5 text-primary" />
+          <span>12+ Full Sections • 100+ Variations • Responsive</span>
+        </div>
+        <h1 class="text-4xl sm:text-5xl md:text-6xl font-black tracking-tight text-foreground">
+          Page Sections
+        </h1>
+        <p class="text-base sm:text-lg text-muted-foreground max-w-2xl leading-relaxed">
+          Production-grade section layouts with multiple design variations.
+          Assemble landing pages, portfolios, SaaS apps, and marketing funnels in minutes.
+        </p>
+
+        <!-- Category Filters -->
+        <div class="pt-4 flex flex-wrap justify-center gap-2" id="filter-container">
+          {categories.map((cat, idx) => (
+            <button
+              type="button"
+              class={`filter-btn px-4 py-1.5 rounded-full text-xs font-semibold transition-all border ${
+                idx === 0
+                  ? "bg-primary text-primary-foreground border-primary shadow-xs"
+                  : "bg-muted/40 text-muted-foreground border-border hover:text-foreground hover:bg-muted"
+              }`}
+              data-filter={cat}
+            >
+              {cat}
+            </button>
+          ))}
+        </div>
+      </header>
+
+      <!-- Sections Grid -->
+      <section aria-label="Section Catalog" class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6" id="sections-grid">
+        {categorizedSections.map(item => (
+          <a
+            href={`/sections/${item.id}`}
+            class="section-card group flex flex-col justify-between p-6 rounded-2xl border border-border/80 bg-card/60 hover:bg-accent/30 hover:border-primary/50 transition-all duration-200 hover:-translate-y-1 hover:shadow-md"
+            data-category={item.category}
+          >
+            <div>
+              <div class="flex items-center justify-between mb-4">
+                <span class="text-[11px] font-semibold px-2.5 py-0.5 rounded-full bg-muted border border-border/60 text-muted-foreground group-hover:text-foreground transition-colors">
+                  {item.category}
+                </span>
+                <span class="text-xs font-medium text-emerald-600 dark:text-emerald-400 bg-emerald-500/10 px-2 py-0.5 rounded-full border border-emerald-500/20">
+                  10 Variations
+                </span>
+              </div>
+              <h2 class="text-xl font-bold tracking-tight text-foreground group-hover:text-primary transition-colors flex items-center justify-between">
+                <span>{item.data.title}</span>
+                <ArrowRight class="h-4 w-4 text-muted-foreground/50 group-hover:text-primary group-hover:translate-x-1 transition-all" />
+              </h2>
+              <p class="text-sm text-muted-foreground mt-2 line-clamp-2 leading-relaxed">
+                {item.data.description || `Responsive ${item.data.title.toLowerCase()} section with 10 high-conversion variations.`}
+              </p>
+            </div>
+
+            <!-- Frameworks & Actions -->
+            <div class="mt-6 pt-4 border-t border-border/50 flex items-center justify-between text-xs text-muted-foreground">
+              <div class="flex items-center gap-1.5 font-mono text-[10px]">
+                <span class="px-1.5 py-0.5 rounded bg-muted/60 border border-border/40">Tailwind CSS</span>
+                <span class="px-1.5 py-0.5 rounded bg-muted/60 border border-border/40">Multi-Theme</span>
+              </div>
+              <span class="text-xs font-medium text-primary group-hover:underline">Explore →</span>
+            </div>
+          </a>
+        ))}
+      </section>
     </div>
-    <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-      {sections.map(item => (
-        <a href={`/sections/${item.id}`} class="block group p-6 rounded-lg border border-border bg-card hover:border-primary transition-colors">
-          <h2 class="text-xl font-semibold mb-2 group-hover:text-primary transition-colors">{item.data.title}</h2>
-          <p class="text-muted-foreground">{item.data.description}</p>
-        </a>
-      ))}
-    </div>
-  </div>
+  </main>
 </BaseLayout>
+
+<script>
+  // Static DOM filter (pure zero-dependency JS)
+  const filterBtns = document.querySelectorAll('.filter-btn');
+  const cards = document.querySelectorAll('.section-card');
+
+  filterBtns.forEach(btn => {
+    btn.addEventListener('click', () => {
+      const filter = btn.getAttribute('data-filter');
+
+      filterBtns.forEach(b => {
+        b.classList.remove('bg-primary', 'text-primary-foreground', 'border-primary', 'shadow-xs');
+        b.classList.add('bg-muted/40', 'text-muted-foreground', 'border-border');
+      });
+      btn.classList.add('bg-primary', 'text-primary-foreground', 'border-primary', 'shadow-xs');
+      btn.classList.remove('bg-muted/40', 'text-muted-foreground', 'border-border');
+
+      cards.forEach(card => {
+        const category = card.getAttribute('data-category');
+        if (filter === 'All' || category === filter) {
+          (card as HTMLElement).style.display = 'flex';
+        } else {
+          (card as HTMLElement).style.display = 'none';
+        }
+      });
+    });
+  });
+</script>

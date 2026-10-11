@@ -7,42 +7,43 @@ interface Props {
 const { url, height = "800px" } = Astro.props;
 ---
 
-<div class="my-6 overflow-hidden rounded-lg border border-border shadow-md">
-  <div class="flex items-center space-x-2 border-b border-border bg-muted/40 px-4 py-2">
+<div class="my-6 overflow-hidden rounded-xl border border-border shadow-md bg-card">
+  <div class="flex items-center space-x-2 border-b border-border bg-muted/40 px-4 py-2.5">
     <div class="flex space-x-1.5">
       <div class="h-3 w-3 rounded-full bg-red-500/80"></div>
       <div class="h-3 w-3 rounded-full bg-yellow-500/80"></div>
       <div class="h-3 w-3 rounded-full bg-green-500/80"></div>
     </div>
     <div class="ml-4 flex-1 text-center">
-      <div class="inline-flex h-6 items-center rounded-md bg-background px-3 text-xs text-muted-foreground shadow-sm">
+      <div class="inline-flex h-6 items-center rounded-md bg-background border border-border/50 px-3 text-xs text-muted-foreground shadow-2xs font-mono">
         {url}
       </div>
     </div>
-    <div class="flex space-x-2">
-      <button class="copy-template-btn flex items-center gap-1 rounded px-2 py-1 hover:bg-accent text-xs font-medium text-muted-foreground transition-all" data-url={`/preview/${url.split('/').pop()}`}>
-        <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-copy"><rect width="14" height="14" x="8" y="8" rx="2" ry="2"/><path d="M4 16c-1.1 0-2-.9-2-2V4c0-1.1.9-2 2-2h10c1.1 0 2 .9 2 2"/></svg>
-        Copy Code
+    <div class="flex items-center space-x-1.5">
+      <button class="copy-template-btn flex items-center gap-1.5 rounded-md px-2.5 py-1 hover:bg-accent text-xs font-semibold text-muted-foreground hover:text-foreground border border-border/60 transition-all cursor-pointer" data-url={`/preview/${url.split('/').pop()}`}>
+        <svg xmlns="http://www.w3.org/2000/svg" width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-copy"><rect width="14" height="14" x="8" y="8" rx="2" ry="2"/><path d="M4 16c-1.1 0-2-.9-2-2V4c0-1.1.9-2 2-2h10c1.1 0 2 .9 2 2"/></svg>
+        <span>Copy Code</span>
       </button>
       <div class="w-px h-4 bg-border self-center mx-1"></div>
-      <button class="resize-btn rounded p-1 hover:bg-accent text-muted-foreground" data-size="mobile" title="Mobile">
-        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-smartphone"><rect width="14" height="20" x="5" y="2" rx="2" ry="2"/><path d="M12 18h.01"/></svg>
+      <button class="resize-btn rounded-md p-1.5 hover:bg-accent text-muted-foreground transition-all cursor-pointer" data-size="mobile" title="Mobile view (375px)">
+        <svg xmlns="http://www.w3.org/2000/svg" width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-smartphone"><rect width="14" height="20" x="5" y="2" rx="2" ry="2"/><path d="M12 18h.01"/></svg>
       </button>
-      <button class="resize-btn rounded p-1 hover:bg-accent text-muted-foreground" data-size="tablet" title="Tablet">
-        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-tablet"><rect width="16" height="20" x="4" y="2" rx="2" ry="2"/><line x1="12" x2="12.01" y1="18" y2="18"/></svg>
+      <button class="resize-btn rounded-md p-1.5 hover:bg-accent text-muted-foreground transition-all cursor-pointer" data-size="tablet" title="Tablet view (768px)">
+        <svg xmlns="http://www.w3.org/2000/svg" width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-tablet"><rect width="16" height="20" x="4" y="2" rx="2" ry="2"/><line x1="12" x2="12.01" y1="18" y2="18"/></svg>
       </button>
-      <button class="resize-btn rounded p-1 hover:bg-accent text-foreground bg-accent" data-size="desktop" title="Desktop">
-        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-monitor"><rect width="20" height="14" x="2" y="3" rx="2" ry="2"/><line x1="8" x2="16" y1="21" y2="21"/><line x1="12" x2="12" y1="17" y2="21"/></svg>
+      <button class="resize-btn rounded-md p-1.5 hover:bg-accent text-foreground bg-accent transition-all cursor-pointer" data-size="desktop" title="Desktop view (Full)">
+        <svg xmlns="http://www.w3.org/2000/svg" width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-monitor"><rect width="20" height="14" x="2" y="3" rx="2" ry="2"/><line x1="8" x2="16" y1="21" y2="21"/><line x1="12" x2="12" y1="17" y2="21"/></svg>
       </button>
-      <a href={url} target="_blank" rel="noreferrer" class="rounded p-1 hover:bg-accent text-muted-foreground" title="Open in new tab">
-        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-external-link"><path d="M15 3h6v6"/><path d="M10 14 21 3"/><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"/></svg>
+      <a href={url} target="_blank" rel="noreferrer" class="rounded-md p-1.5 hover:bg-accent text-muted-foreground hover:text-foreground transition-all" title="Open preview in new tab">
+        <svg xmlns="http://www.w3.org/2000/svg" width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-external-link"><path d="M15 3h6v6"/><path d="M10 14 21 3"/><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"/></svg>
+        <span class="sr-only">Open in new tab</span>
       </a>
     </div>
   </div>
-  <div class="bg-muted/10 flex justify-center transition-all duration-300">
+  <div class="bg-muted/10 flex justify-center transition-all duration-300 p-2 sm:p-4">
     <iframe
       src={url}
-      class="template-iframe w-full bg-background transition-all duration-300"
+      class="template-iframe w-full bg-background rounded-lg border border-border/50 shadow-inner transition-all duration-300"
       style={`height: ${height};`}
       loading="lazy"
     ></iframe>
@@ -50,9 +51,11 @@ const { url, height = "800px" } = Astro.props;
 </div>
 
 <script>
+  // Copy template code
   document.querySelectorAll('.copy-template-btn').forEach(btn => {
     btn.addEventListener('click', async (e) => {
-      const target = e.currentTarget as HTMLButtonElement;
+      const target = (e.currentTarget as HTMLElement).closest('.copy-template-btn') as HTMLButtonElement;
+      if (!target) return;
       const url = target.getAttribute('data-url');
       if (!url) return;
       
@@ -65,7 +68,7 @@ const { url, height = "800px" } = Astro.props;
         await navigator.clipboard.writeText(bodyContent.trim());
         
         const originalHtml = target.innerHTML;
-        target.innerHTML = '<svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-check text-green-500"><polyline points="20 6 9 17 4 12"/></svg> Copied!';
+        target.innerHTML = '<svg xmlns="http://www.w3.org/2000/svg" width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-check text-green-500"><polyline points="20 6 9 17 4 12"/></svg> <span class="text-green-500 font-semibold">Copied!</span>';
         setTimeout(() => {
           target.innerHTML = originalHtml;
         }, 2000);
@@ -75,11 +78,13 @@ const { url, height = "800px" } = Astro.props;
     });
   });
 
+  // Responsive device toggling
   document.querySelectorAll('.resize-btn').forEach(btn => {
     btn.addEventListener('click', (e) => {
-      const target = e.currentTarget as HTMLButtonElement;
+      const target = (e.currentTarget as HTMLElement).closest('.resize-btn') as HTMLButtonElement;
+      if (!target) return;
       const size = target.getAttribute('data-size');
-      const container = target.closest('.rounded-lg');
+      const container = target.closest('.rounded-xl');
       const iframe = container?.querySelector('.template-iframe') as HTMLIFrameElement;
       const allBtns = container?.querySelectorAll('.resize-btn');
       
@@ -101,4 +106,27 @@ const { url, height = "800px" } = Astro.props;
       }
     });
   });
+
+  // Automatic Theme Synchronization with embedded iframes
+  const syncThemeToIframes = () => {
+    const isDark = document.documentElement.classList.contains('dark');
+    document.querySelectorAll<HTMLIFrameElement>('.template-iframe').forEach(iframe => {
+      try {
+        if (iframe.contentDocument?.documentElement) {
+          iframe.contentDocument.documentElement.classList[isDark ? 'add' : 'remove']('dark');
+        }
+      } catch (e) {
+        // Cross-origin fallback (same origin expected in local build)
+      }
+    });
+  };
+
+  // Sync on iframe load
+  document.querySelectorAll<HTMLIFrameElement>('.template-iframe').forEach(iframe => {
+    iframe.addEventListener('load', syncThemeToIframes);
+  });
+
+  // Observe theme changes on parent document
+  const themeObserver = new MutationObserver(syncThemeToIframes);
+  themeObserver.observe(document.documentElement, { attributes: true, attributeFilter: ['class'] });
 </script>

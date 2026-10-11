@@ -1,14 +1,24 @@
 ---
 import '../styles/global.css';
 import Navbar from '../components/Navbar.astro';
+import Footer from '../components/Footer.astro';
 import SearchDialog from '../components/SearchDialog.astro';
 
 interface Props {
   title: string;
   description?: string;
+  hideFooter?: boolean;
 }
 
-const { title, description = "Production-Ready Tailwind CSS UI Library & Documentation Platform" } = Astro.props;
+const {
+  title: rawTitle,
+  description = "ToolMate UI is a production-ready Tailwind CSS UI Library and Documentation Platform. Build beautiful websites faster with our copy-and-paste accessible components and templates.",
+  hideFooter = false
+} = Astro.props;
+
+// Ensure titles are sufficiently long and unique.
+const title = rawTitle.includes('ToolMate UI') ? rawTitle : `${rawTitle} | ToolMate UI - Tailwind CSS Components`;
+const canonicalURL = new URL(Astro.url.pathname, Astro.site);
 ---
 
 <!doctype html>
@@ -20,6 +30,7 @@ const { title, description = "Production-Ready Tailwind CSS UI Library & Documen
     <meta name="generator" content={Astro.generator} />
     <title>{title}</title>
     <meta name="description" content={description} />
+    <link rel="canonical" href={canonicalURL} />
     
     <!-- Inline script to prevent FOUC -->
     <script is:inline>
@@ -33,9 +44,12 @@ const { title, description = "Production-Ready Tailwind CSS UI Library & Documen
       document.documentElement.classList[isDark ? 'add' : 'remove']('dark');
     </script>
   </head>
-  <body class="min-h-screen bg-background font-sans antialiased">
+  <body class="min-h-screen flex flex-col bg-background font-sans antialiased text-foreground selection:bg-primary/20 selection:text-primary">
     <Navbar />
-    <slot />
+    <div class="flex-1 flex flex-col w-full">
+      <slot />
+    </div>
+    {!hideFooter && <Footer />}
     <SearchDialog />
   </body>
 </html>

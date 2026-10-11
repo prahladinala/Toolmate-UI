@@ -1,67 +1,140 @@
 ---
 import { getCollection } from 'astro:content';
+import { Rocket, Boxes, Layout, Monitor } from 'lucide-astro';
+
+const currentPath = Astro.url.pathname.replace(/\/$/, "");
 
 const components = (await getCollection('components')).sort((a, b) => a.data.title.localeCompare(b.data.title));
 const sections = (await getCollection('sections')).sort((a, b) => a.data.title.localeCompare(b.data.title));
 const templates = (await getCollection('templates')).sort((a, b) => a.data.title.localeCompare(b.data.title));
 const docs = (await getCollection('docs')).sort((a, b) => a.data.title.localeCompare(b.data.title));
+
+const isActive = (href: string) => {
+  const normalized = href.replace(/\/$/, "");
+  return currentPath === normalized;
+};
 ---
 
-<aside class="fixed top-14 z-30 -ml-2 h-[calc(100vh-3.5rem)] w-full shrink-0 md:sticky md:block md:w-[220px] lg:w-[240px]">
-  <div class="h-full overflow-y-auto py-6 pr-6 lg:py-8">
-    <div class="w-full">
-      <div class="pb-4">
-        <h4 class="mb-1 rounded-md px-2 py-1 text-sm font-semibold">Installation & Setup</h4>
-        <div class="grid grid-flow-row auto-rows-max text-sm">
-          {docs.map((item) => (
-            <a
-              href={`/docs/${item.id}`}
-              class="group flex w-full items-center rounded-md border border-transparent px-2 py-1 hover:underline text-muted-foreground"
-            >
-              {item.data.title}
-            </a>
-          ))}
-        </div>
+<aside class="w-full shrink-0">
+  <div class="h-full overflow-y-auto py-6 pr-4 lg:py-8 space-y-6">
+    <!-- Category 1: Installation & Setup -->
+    <div>
+      <div class="flex items-center justify-between mb-2 px-2.5">
+        <h4 class="text-xs font-bold uppercase tracking-wider text-muted-foreground flex items-center gap-1.5">
+          <Rocket class="h-3.5 w-3.5 text-primary" />
+          <span>Installation & Setup</span>
+        </h4>
+        <span class="text-[10px] px-1.5 py-0.5 rounded-full bg-muted font-mono text-muted-foreground">{docs.length}</span>
       </div>
-      <div class="pb-4">
-        <h4 class="mb-1 rounded-md px-2 py-1 text-sm font-semibold">Components</h4>
-        <div class="grid grid-flow-row auto-rows-max text-sm">
-          {components.map((item) => (
+      <nav class="grid grid-flow-row auto-rows-max text-sm space-y-0.5">
+        {docs.map((item) => {
+          const href = `/docs/${item.id}`;
+          const active = isActive(href);
+          return (
             <a
-              href={`/components/${item.id}`}
-              class="group flex w-full items-center rounded-md border border-transparent px-2 py-1 hover:underline text-muted-foreground"
+              href={href}
+              class={`group flex w-full items-center justify-between rounded-lg px-2.5 py-1.5 text-sm transition-all ${
+                active
+                  ? "bg-primary text-primary-foreground font-semibold shadow-xs"
+                  : "text-muted-foreground hover:bg-muted/70 hover:text-foreground font-medium"
+              }`}
             >
-              {item.data.title}
+              <span class="truncate">{item.data.title}</span>
+              {active && <span class="w-1.5 h-1.5 rounded-full bg-primary-foreground"></span>}
             </a>
-          ))}
-        </div>
+          );
+        })}
+      </nav>
+    </div>
+
+    <!-- Category 2: Components -->
+    <div>
+      <div class="flex items-center justify-between mb-2 px-2.5">
+        <h4 class="text-xs font-bold uppercase tracking-wider text-muted-foreground flex items-center gap-1.5">
+          <Boxes class="h-3.5 w-3.5 text-primary" />
+          <span>Components</span>
+        </h4>
+        <span class="text-[10px] px-1.5 py-0.5 rounded-full bg-muted font-mono text-muted-foreground">{components.length}</span>
       </div>
-      <div class="pb-4">
-        <h4 class="mb-1 rounded-md px-2 py-1 text-sm font-semibold">Sections</h4>
-        <div class="grid grid-flow-row auto-rows-max text-sm">
-          {sections.map((item) => (
+      <nav class="grid grid-flow-row auto-rows-max text-sm space-y-0.5">
+        {components.map((item) => {
+          const href = `/components/${item.id}`;
+          const active = isActive(href);
+          return (
             <a
-              href={`/sections/${item.id}`}
-              class="group flex w-full items-center rounded-md border border-transparent px-2 py-1 hover:underline text-muted-foreground"
+              href={href}
+              class={`group flex w-full items-center justify-between rounded-lg px-2.5 py-1.5 text-sm transition-all ${
+                active
+                  ? "bg-primary text-primary-foreground font-semibold shadow-xs"
+                  : "text-muted-foreground hover:bg-muted/70 hover:text-foreground font-medium"
+              }`}
             >
-              {item.data.title}
+              <span class="truncate">{item.data.title}</span>
+              {active && <span class="w-1.5 h-1.5 rounded-full bg-primary-foreground"></span>}
             </a>
-          ))}
-        </div>
+          );
+        })}
+      </nav>
+    </div>
+
+    <!-- Category 3: Sections -->
+    <div>
+      <div class="flex items-center justify-between mb-2 px-2.5">
+        <h4 class="text-xs font-bold uppercase tracking-wider text-muted-foreground flex items-center gap-1.5">
+          <Layout class="h-3.5 w-3.5 text-primary" />
+          <span>Sections</span>
+        </h4>
+        <span class="text-[10px] px-1.5 py-0.5 rounded-full bg-muted font-mono text-muted-foreground">{sections.length}</span>
       </div>
-      <div class="pb-4">
-        <h4 class="mb-1 rounded-md px-2 py-1 text-sm font-semibold">Templates</h4>
-        <div class="grid grid-flow-row auto-rows-max text-sm">
-          {templates.map((item) => (
+      <nav class="grid grid-flow-row auto-rows-max text-sm space-y-0.5">
+        {sections.map((item) => {
+          const href = `/sections/${item.id}`;
+          const active = isActive(href);
+          return (
             <a
-              href={`/templates/${item.id}`}
-              class="group flex w-full items-center rounded-md border border-transparent px-2 py-1 hover:underline text-muted-foreground"
+              href={href}
+              class={`group flex w-full items-center justify-between rounded-lg px-2.5 py-1.5 text-sm transition-all ${
+                active
+                  ? "bg-primary text-primary-foreground font-semibold shadow-xs"
+                  : "text-muted-foreground hover:bg-muted/70 hover:text-foreground font-medium"
+              }`}
             >
-              {item.data.title}
+              <span class="truncate">{item.data.title}</span>
+              {active && <span class="w-1.5 h-1.5 rounded-full bg-primary-foreground"></span>}
             </a>
-          ))}
-        </div>
+          );
+        })}
+      </nav>
+    </div>
+
+    <!-- Category 4: Templates -->
+    <div>
+      <div class="flex items-center justify-between mb-2 px-2.5">
+        <h4 class="text-xs font-bold uppercase tracking-wider text-muted-foreground flex items-center gap-1.5">
+          <Monitor class="h-3.5 w-3.5 text-primary" />
+          <span>Templates</span>
+        </h4>
+        <span class="text-[10px] px-1.5 py-0.5 rounded-full bg-muted font-mono text-muted-foreground">{templates.length}</span>
       </div>
+      <nav class="grid grid-flow-row auto-rows-max text-sm space-y-0.5">
+        {templates.map((item) => {
+          const href = `/templates/${item.id}`;
+          const active = isActive(href);
+          return (
+            <a
+              href={href}
+              class={`group flex w-full items-center justify-between rounded-lg px-2.5 py-1.5 text-sm transition-all ${
+                active
+                  ? "bg-primary text-primary-foreground font-semibold shadow-xs"
+                  : "text-muted-foreground hover:bg-muted/70 hover:text-foreground font-medium"
+              }`}
+            >
+              <span class="truncate">{item.data.title}</span>
+              {active && <span class="w-1.5 h-1.5 rounded-full bg-primary-foreground"></span>}
+            </a>
+          );
+        })}
+      </nav>
     </div>
   </div>
 </aside>

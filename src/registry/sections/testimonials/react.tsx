@@ -6,7 +6,7 @@
     <div className="rounded-xl border border-border bg-card p-6 shadow-sm">
       <div className="flex items-center space-x-4 mb-4">
         <span className="relative flex h-10 w-10 shrink-0 overflow-hidden rounded-full">
-          <img className="aspect-square h-full w-full" src="https://i.pravatar.cc/150?u=a" alt="User" />
+          <img className="aspect-square h-full w-full" src="https://i.pravatar.cc/150?u=a" alt="User" / width="150" height="150">
         </span>
         <div>
           <p className="text-sm font-semibold">Sarah Jenkins</p>
@@ -19,7 +19,7 @@
     <div className="rounded-xl border border-border bg-card p-6 shadow-sm">
       <div className="flex items-center space-x-4 mb-4">
         <span className="relative flex h-10 w-10 shrink-0 overflow-hidden rounded-full">
-          <img className="aspect-square h-full w-full" src="https://i.pravatar.cc/150?u=b" alt="User" />
+          <img className="aspect-square h-full w-full" src="https://i.pravatar.cc/150?u=b" alt="User" / width="150" height="150">
         </span>
         <div>
           <p className="text-sm font-semibold">David Chen</p>

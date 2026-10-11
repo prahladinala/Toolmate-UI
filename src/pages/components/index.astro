@@ -1,23 +1,143 @@
 ---
 import BaseLayout from '../../layouts/BaseLayout.astro';
 import { getCollection } from 'astro:content';
+import {
+  Boxes,
+  Layers,
+  FormInput,
+  Eye,
+  CheckCircle2,
+  ArrowRight,
+  Sparkles
+} from 'lucide-astro';
 
-const components = await getCollection('components');
+const components = (await getCollection('components')).sort((a, b) =>
+  a.data.title.localeCompare(b.data.title)
+);
+
+// Map categories to components
+const getCategory = (item: any) => {
+  if (item.data.category) return item.data.category;
+  const id = item.id.toLowerCase();
+  if (['button', 'input', 'checkbox', 'radio', 'textarea', 'label'].includes(id)) return 'Forms';
+  if (['card', 'badge', 'avatar', 'accordion', 'image'].includes(id)) return 'Data Display';
+  if (['dialog', 'tabs', 'link', 'alert'].includes(id)) return 'Navigation & Overlay';
+  return 'Primitives';
+};
+
+const categorizedComponents = components.map(c => ({
+  ...c,
+  category: getCategory(c)
+}));
+
+const categories = ['All', 'Forms', 'Data Display', 'Navigation & Overlay'];
 ---
 
-<BaseLayout title="Components | ToolMate UI">
-  <div class="container mx-auto px-4 py-12 max-w-screen-xl">
-    <div class="mb-8">
-      <h1 class="text-4xl font-bold mb-4">Components</h1>
-      <p class="text-xl text-muted-foreground">Browse all available UI components.</p>
+<BaseLayout
+  title="UI Components - Tailwind CSS Library"
+  description="Browse 15+ accessible, production-ready Tailwind CSS UI components with multi-framework support for React, Astro, Vue, Svelte, and HTML."
+>
+  <main class="flex-1 py-12 md:py-20">
+    <div class="container mx-auto px-4 max-w-screen-xl">
+      <!-- Catalog Header -->
+      <header class="flex flex-col items-center text-center space-y-4 mb-14">
+        <div class="inline-flex items-center gap-2 px-3 py-1 rounded-full border border-border bg-muted/60 text-xs font-medium text-muted-foreground shadow-2xs">
+          <Sparkles class="h-3.5 w-3.5 text-primary" />
+          <span>15+ Core Primitives • Zero Dependencies • Copy & Paste</span>
+        </div>
+        <h1 class="text-4xl sm:text-5xl md:text-6xl font-black tracking-tight text-foreground">
+          UI Components
+        </h1>
+        <p class="text-base sm:text-lg text-muted-foreground max-w-2xl leading-relaxed">
+          Clean, accessible, and customizable building blocks crafted with modern Tailwind CSS.
+          Fully compatible with React, Astro, Vue, Svelte, and plain HTML.
+        </p>
+
+        <!-- Category Filters -->
+        <div class="pt-4 flex flex-wrap justify-center gap-2" id="filter-container">
+          {categories.map((cat, idx) => (
+            <button
+              type="button"
+              class={`filter-btn px-4 py-1.5 rounded-full text-xs font-semibold transition-all border ${
+                idx === 0
+                  ? "bg-primary text-primary-foreground border-primary shadow-xs"
+                  : "bg-muted/40 text-muted-foreground border-border hover:text-foreground hover:bg-muted"
+              }`}
+              data-filter={cat}
+            >
+              {cat}
+            </button>
+          ))}
+        </div>
+      </header>
+
+      <!-- Components Grid -->
+      <section aria-label="Component Catalog" class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6" id="components-grid">
+        {categorizedComponents.map(item => (
+          <a
+            href={`/components/${item.id}`}
+            class="component-card group flex flex-col justify-between p-6 rounded-2xl border border-border/80 bg-card/60 hover:bg-accent/30 hover:border-primary/50 transition-all duration-200 hover:-translate-y-1 hover:shadow-md"
+            data-category={item.category}
+          >
+            <div>
+              <div class="flex items-center justify-between mb-4">
+                <span class="text-[11px] font-semibold px-2.5 py-0.5 rounded-full bg-muted border border-border/60 text-muted-foreground group-hover:text-foreground transition-colors">
+                  {item.category}
+                </span>
+                <span class="text-xs text-muted-foreground/60 font-mono">
+                  v2.0
+                </span>
+              </div>
+              <h2 class="text-xl font-bold tracking-tight text-foreground group-hover:text-primary transition-colors flex items-center justify-between">
+                <span>{item.data.title}</span>
+                <ArrowRight class="h-4 w-4 text-muted-foreground/50 group-hover:text-primary group-hover:translate-x-1 transition-all" />
+              </h2>
+              <p class="text-sm text-muted-foreground mt-2 line-clamp-2 leading-relaxed">
+                {item.data.description || `Accessible, responsive ${item.data.title.toLowerCase()} component with Tailwind styling.`}
+              </p>
+            </div>
+
+            <!-- Framework pills row -->
+            <div class="mt-6 pt-4 border-t border-border/50 flex items-center justify-between text-xs text-muted-foreground">
+              <div class="flex items-center gap-1.5 font-mono text-[10px]">
+                <span class="px-1.5 py-0.5 rounded bg-muted/60 border border-border/40">HTML</span>
+                <span class="px-1.5 py-0.5 rounded bg-muted/60 border border-border/40">React</span>
+                <span class="px-1.5 py-0.5 rounded bg-muted/60 border border-border/40">Astro</span>
+                <span class="px-1.5 py-0.5 rounded bg-muted/60 border border-border/40">Vue</span>
+              </div>
+              <span class="text-xs font-medium text-primary group-hover:underline">View →</span>
+            </div>
+          </a>
+        ))}
+      </section>
     </div>
-    <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-      {components.map(item => (
-        <a href={`/components/${item.id}`} class="block group p-6 rounded-lg border border-border bg-card hover:border-primary transition-colors">
-          <h2 class="text-xl font-semibold mb-2 group-hover:text-primary transition-colors">{item.data.title}</h2>
-          <p class="text-muted-foreground">{item.data.description}</p>
-        </a>
-      ))}
-    </div>
-  </div>
+  </main>
 </BaseLayout>
+
+<script>
+  // Ultra-lightweight static DOM filter (no external library, ~15 lines)
+  const filterBtns = document.querySelectorAll('.filter-btn');
+  const cards = document.querySelectorAll('.component-card');
+
+  filterBtns.forEach(btn => {
+    btn.addEventListener('click', () => {
+      const filter = btn.getAttribute('data-filter');
+
+      filterBtns.forEach(b => {
+        b.classList.remove('bg-primary', 'text-primary-foreground', 'border-primary', 'shadow-xs');
+        b.classList.add('bg-muted/40', 'text-muted-foreground', 'border-border');
+      });
+      btn.classList.add('bg-primary', 'text-primary-foreground', 'border-primary', 'shadow-xs');
+      btn.classList.remove('bg-muted/40', 'text-muted-foreground', 'border-border');
+
+      cards.forEach(card => {
+        const category = card.getAttribute('data-category');
+        if (filter === 'All' || category === filter) {
+          (card as HTMLElement).style.display = 'flex';
+        } else {
+          (card as HTMLElement).style.display = 'none';
+        }
+      });
+    });
+  });
+</script>

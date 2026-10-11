@@ -1,159 +1,329 @@
 ---
 import BaseLayout from '../layouts/BaseLayout.astro';
+import {
+  Sparkles,
+  ArrowRight,
+  ChevronDown,
+  Layers,
+  Code2,
+  Zap,
+  CheckCircle2,
+  ExternalLink
+} from 'lucide-astro';
+
+const faqs = [
+  {
+    question: "Is ToolMate UI completely free?",
+    answer: "Yes, ToolMate UI is 100% free and open-source under the MIT license. You can use every component, section, and template in personal, freelance, and commercial projects without any fees, paywalls, or attribution requirements."
+  },
+  {
+    question: "Do I need to install an npm package or create an account?",
+    answer: "No account and no npm packages required. ToolMate UI follows a pure copy-and-paste philosophy—you copy the code directly into your codebase and own every line. No third-party lock-in and zero dependency conflicts."
+  },
+  {
+    question: "Which frontend frameworks are supported?",
+    answer: "Every component is supplied with ready-to-copy code for React, Next.js, Astro, Vue.js, Svelte, and plain HTML. All styles utilize pure Tailwind CSS utility classes."
+  },
+  {
+    question: "Does it support both Tailwind CSS v4 and v3?",
+    answer: "Yes. ToolMate UI is engineered with modern Tailwind CSS principles and standard CSS variables for theme tokens, making it fully compatible with both Tailwind v3 and v4."
+  },
+  {
+    question: "Where is my data stored?",
+    answer: "ToolMate UI is completely client-side and open-access. We do not store, track, or collect your code or data. Everything runs securely on your machine."
+  }
+];
 ---
 
-<BaseLayout title="ToolMate UI - Production-Ready Tailwind CSS Components">
+<BaseLayout
+  title="ToolMate UI - Production-Ready Tailwind CSS Components & Templates"
+  description="Free, open-source Tailwind CSS UI component and template library. Copy-and-paste accessible components for React, Next.js, Astro, Vue, Svelte, and HTML."
+>
   <main class="flex-1">
-    <section class="space-y-6 pb-8 pt-16 md:pb-12 md:pt-24 lg:py-32 overflow-hidden">
-      <div class="container mx-auto max-w-screen-xl flex flex-col items-center gap-8 text-center px-4 animate-in fade-in slide-in-from-bottom-8 duration-1000 fill-mode-both">
-        <a href="/docs" class="inline-flex items-center rounded-full border border-border bg-muted/50 px-3 py-1 text-sm font-medium transition-transform hover:scale-105">
-          <span class="flex h-2 w-2 rounded-full bg-primary mr-2 animate-pulse"></span>
-          Introducing ToolMate UI v2.0
+    <!-- Hero Section -->
+    <section class="space-y-6 pb-12 pt-16 md:pb-16 md:pt-24 lg:py-28 overflow-hidden relative">
+      <div class="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[600px] h-[350px] bg-primary/10 rounded-full blur-[140px] pointer-events-none"></div>
+
+      <div class="container mx-auto max-w-screen-xl flex flex-col items-center gap-6 text-center px-4 relative z-10">
+        <a href="/docs" class="inline-flex items-center gap-2 rounded-full border border-border/80 bg-muted/60 px-3.5 py-1 text-xs font-semibold text-muted-foreground shadow-2xs hover:border-primary/40 transition-all">
+          <span class="flex h-2 w-2 rounded-full bg-primary animate-pulse"></span>
+          <span>Introducing ToolMate UI v2.0 • 100% Free & Open Source</span>
         </a>
-        <h1 class="text-4xl font-bold tracking-tight sm:text-5xl md:text-6xl lg:text-7xl max-w-3xl">
-          Production-Ready Tailwind Components & Templates
+
+        <h1 class="text-4xl sm:text-5xl md:text-6xl lg:text-7xl font-black tracking-tight max-w-4xl text-foreground">
+          Production-Ready Tailwind <br class="hidden sm:inline" />
+          <span class="bg-gradient-to-r from-foreground via-foreground/90 to-foreground/60 bg-clip-text text-transparent">
+            Components & Templates
+          </span>
         </h1>
-        <p class="max-w-[42rem] leading-normal text-muted-foreground sm:text-xl sm:leading-8 delay-150 animate-in fade-in slide-in-from-bottom-4 duration-1000 fill-mode-both">
-          Copy, customize and ship complete interfaces in minutes. No dependencies. No setup. Just plain Tailwind CSS.
+
+        <p class="max-w-[44rem] text-muted-foreground text-base sm:text-lg leading-relaxed">
+          Copy, customize, and ship accessible interfaces in minutes. Zero npm runtime bloat. Zero setup overhead. Just beautiful, modern Tailwind CSS.
         </p>
-        <div class="flex flex-col sm:flex-row gap-4 delay-300 animate-in fade-in slide-in-from-bottom-4 duration-1000 fill-mode-both">
-          <a href="/components" class="inline-flex h-11 items-center justify-center rounded-md bg-primary px-8 text-sm font-medium text-primary-foreground shadow transition-transform hover:scale-105 hover:bg-primary/90">
-            Browse Components
+
+        <div class="flex flex-col sm:flex-row gap-3 pt-2">
+          <a
+            href="/components"
+            class="inline-flex h-11 items-center justify-center rounded-xl bg-primary px-7 text-sm font-semibold text-primary-foreground shadow-xs hover:bg-primary/90 transition-all gap-2"
+          >
+            <span>Browse Components</span>
+            <ArrowRight class="h-4 w-4" />
           </a>
-          <a href="/templates" class="inline-flex h-11 items-center justify-center rounded-md border border-input bg-background px-8 text-sm font-medium shadow-sm transition-transform hover:scale-105 hover:bg-accent hover:text-accent-foreground">
+          <a
+            href="/templates"
+            class="inline-flex h-11 items-center justify-center rounded-xl border border-border bg-card/60 hover:bg-muted px-7 text-sm font-semibold text-foreground shadow-2xs transition-all"
+          >
             Explore Templates
           </a>
         </div>
       </div>
     </section>
 
-    <section class="container mx-auto max-w-screen-xl py-12 md:py-24 lg:py-32 px-4 border-t border-border/40">
-      <div class="grid grid-cols-2 md:grid-cols-4 gap-8 text-center delay-150 animate-in fade-in slide-in-from-bottom-8 duration-1000 fill-mode-both">
-        <div class="flex flex-col items-center justify-center space-y-2 p-6 rounded-2xl bg-muted/30 border border-border/50 hover:bg-muted/50 transition-colors">
-          <h3 class="text-4xl font-bold text-primary stat-counter" data-target="200">0</h3>
-          <p class="text-muted-foreground font-medium">Components</p>
+    <!-- Stats Grid -->
+    <section class="container mx-auto max-w-screen-xl py-10 px-4 border-t border-border/40">
+      <div class="grid grid-cols-2 md:grid-cols-4 gap-4 sm:gap-6 text-center">
+        <div class="flex flex-col items-center justify-center space-y-1.5 p-6 rounded-2xl bg-card/40 border border-border/60 hover:border-primary/30 transition-colors">
+          <h3 class="text-3xl sm:text-4xl font-extrabold text-foreground stat-counter" data-target="200">200+</h3>
+          <p class="text-xs sm:text-sm text-muted-foreground font-medium">UI Components</p>
         </div>
-        <div class="flex flex-col items-center justify-center space-y-2 p-6 rounded-2xl bg-muted/30 border border-border/50 hover:bg-muted/50 transition-colors">
-          <h3 class="text-4xl font-bold text-primary stat-counter" data-target="100">0</h3>
-          <p class="text-muted-foreground font-medium">Sections</p>
+        <div class="flex flex-col items-center justify-center space-y-1.5 p-6 rounded-2xl bg-card/40 border border-border/60 hover:border-primary/30 transition-colors">
+          <h3 class="text-3xl sm:text-4xl font-extrabold text-foreground stat-counter" data-target="100">100+</h3>
+          <p class="text-xs sm:text-sm text-muted-foreground font-medium">Section Variations</p>
         </div>
-        <div class="flex flex-col items-center justify-center space-y-2 p-6 rounded-2xl bg-muted/30 border border-border/50 hover:bg-muted/50 transition-colors">
-          <h3 class="text-4xl font-bold text-primary stat-counter" data-target="50">0</h3>
-          <p class="text-muted-foreground font-medium">Pages</p>
+        <div class="flex flex-col items-center justify-center space-y-1.5 p-6 rounded-2xl bg-card/40 border border-border/60 hover:border-primary/30 transition-colors">
+          <h3 class="text-3xl sm:text-4xl font-extrabold text-foreground stat-counter" data-target="12">12+</h3>
+          <p class="text-xs sm:text-sm text-muted-foreground font-medium">Full Templates</p>
         </div>
-        <div class="flex flex-col items-center justify-center space-y-2 p-6 rounded-2xl bg-muted/30 border border-border/50 hover:bg-muted/50 transition-colors">
-          <h3 class="text-4xl font-bold text-primary stat-counter" data-target="20">0</h3>
-          <p class="text-muted-foreground font-medium">Templates</p>
+        <div class="flex flex-col items-center justify-center space-y-1.5 p-6 rounded-2xl bg-card/40 border border-border/60 hover:border-primary/30 transition-colors">
+          <h3 class="text-3xl sm:text-4xl font-extrabold text-foreground stat-counter" data-target="6">6</h3>
+          <p class="text-xs sm:text-sm text-muted-foreground font-medium">Frameworks Supported</p>
         </div>
       </div>
     </section>
 
-    <section class="container mx-auto max-w-screen-xl py-12 md:py-24 lg:py-32 px-4 border-t border-border/40">
-      <div class="mx-auto flex max-w-[58rem] flex-col items-center space-y-4 text-center delay-150 animate-in fade-in slide-in-from-bottom-8 duration-1000 fill-mode-both">
-        <h2 class="font-bold text-3xl leading-[1.1] sm:text-3xl md:text-5xl">Features</h2>
-        <p class="max-w-[85%] leading-normal text-muted-foreground sm:text-lg sm:leading-7">
-          Everything you need to build stunning websites fast.
-        </p>
+    <!-- SECTION 1: SIMPLE WORKFLOW (From Reference Image) -->
+    <section class="py-16 md:py-24 border-t border-border/40">
+      <div class="container mx-auto max-w-screen-xl px-4">
+        <!-- Section Header -->
+        <div class="text-center space-y-3 mb-14">
+          <span class="text-purple-400 font-semibold text-xs tracking-widest uppercase block">
+            SIMPLE WORKFLOW
+          </span>
+          <h2 class="text-3xl sm:text-4xl md:text-5xl font-black tracking-tight text-foreground">
+            From Blank Canvas to Production in 3 Steps
+          </h2>
+          <p class="text-sm sm:text-base text-muted-foreground max-w-lg mx-auto leading-relaxed">
+            Quick, intuitive, and frictionless developer workflow.
+          </p>
+        </div>
+
+        <!-- 3 Step Cards Grid -->
+        <div class="grid grid-cols-1 md:grid-cols-3 gap-6 max-w-5xl mx-auto">
+          <!-- Step 01 -->
+          <div class="group rounded-2xl border border-border/80 bg-card/40 dark:bg-zinc-950/60 p-8 text-center flex flex-col items-center justify-between hover:border-zinc-700 transition-all hover:-translate-y-1 hover:shadow-lg">
+            <div class="h-11 w-11 rounded-full border border-border/80 bg-muted/60 dark:bg-zinc-900 flex items-center justify-center font-mono text-xs font-bold text-foreground mb-6 shadow-inner">
+              01
+            </div>
+            <div class="space-y-3 flex-1 flex flex-col justify-center">
+              <h3 class="text-lg font-bold text-foreground">Choose a Component</h3>
+              <p class="text-xs text-muted-foreground leading-relaxed">
+                Select from 200+ accessible primitives, responsive section layouts, or complete website templates engineered for clean HTML.
+              </p>
+            </div>
+            <a href="/components" class="text-purple-400 hover:text-purple-300 text-xs font-semibold inline-flex items-center gap-1 mt-6 transition-colors group-hover:gap-1.5">
+              <span>Browse Catalog</span>
+              <ArrowRight class="h-3 w-3" />
+            </a>
+          </div>
+
+          <!-- Step 02 -->
+          <div class="group rounded-2xl border border-border/80 bg-card/40 dark:bg-zinc-950/60 p-8 text-center flex flex-col items-center justify-between hover:border-zinc-700 transition-all hover:-translate-y-1 hover:shadow-lg">
+            <div class="h-11 w-11 rounded-full border border-border/80 bg-muted/60 dark:bg-zinc-900 flex items-center justify-center font-mono text-xs font-bold text-foreground mb-6 shadow-inner">
+              02
+            </div>
+            <div class="space-y-3 flex-1 flex flex-col justify-center">
+              <h3 class="text-lg font-bold text-foreground">Copy Code or Import</h3>
+              <p class="text-xs text-muted-foreground leading-relaxed">
+                Grab copy-ready code for React, Next.js, Astro, Vue, Svelte, or plain HTML with one click. Zero npm bloat, full code ownership.
+              </p>
+            </div>
+            <a href="/docs" class="text-purple-400 hover:text-purple-300 text-xs font-semibold inline-flex items-center gap-1 mt-6 transition-colors group-hover:gap-1.5">
+              <span>Setup Guides</span>
+              <ArrowRight class="h-3 w-3" />
+            </a>
+          </div>
+
+          <!-- Step 03 -->
+          <div class="group rounded-2xl border border-border/80 bg-card/40 dark:bg-zinc-950/60 p-8 text-center flex flex-col items-center justify-between hover:border-zinc-700 transition-all hover:-translate-y-1 hover:shadow-lg">
+            <div class="h-11 w-11 rounded-full border border-border/80 bg-muted/60 dark:bg-zinc-900 flex items-center justify-center font-mono text-xs font-bold text-foreground mb-6 shadow-inner">
+              03
+            </div>
+            <div class="space-y-3 flex-1 flex flex-col justify-center">
+              <h3 class="text-lg font-bold text-foreground">Ship & Customize</h3>
+              <p class="text-xs text-muted-foreground leading-relaxed">
+                Paste directly into your project. Tweak Tailwind utilities or CSS variable tokens and deploy pixel-perfect UIs with ease.
+              </p>
+            </div>
+            <a href="/templates" class="text-purple-400 hover:text-purple-300 text-xs font-semibold inline-flex items-center gap-1 mt-6 transition-colors group-hover:gap-1.5">
+              <span>Export & Deploy</span>
+              <ArrowRight class="h-3 w-3" />
+            </a>
+          </div>
+        </div>
       </div>
-      <div class="mx-auto grid justify-center gap-4 sm:grid-cols-2 md:max-w-[64rem] md:grid-cols-3 mt-12">
-        <div class="group relative overflow-hidden rounded-lg border bg-background p-2 transition-transform hover:-translate-y-1 hover:shadow-lg">
-          <div class="flex h-[200px] flex-col justify-between rounded-md p-6">
-            <div class="space-y-4">
-              <div class="inline-flex h-10 w-10 items-center justify-center rounded-lg bg-primary/10 text-primary transition-colors group-hover:bg-primary group-hover:text-primary-foreground">
-                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect width="14" height="14" x="8" y="8" rx="2" ry="2"/><path d="M4 16c-1.1 0-2-.9-2-2V4c0-1.1.9-2 2-2h10c1.1 0 2 .9 2 2"/></svg>
+    </section>
+
+    <!-- SECTION 2: BUILT BY CREATOR CARD (From Reference Image) -->
+    <section class="py-12 md:py-16 border-t border-border/40">
+      <div class="container mx-auto max-w-screen-xl px-4">
+        <div class="max-w-3xl mx-auto rounded-2xl border border-border/80 bg-card/40 dark:bg-zinc-950/60 p-6 sm:p-10 shadow-sm hover:border-zinc-700 transition-all">
+          <div class="flex flex-col md:flex-row items-start md:items-center justify-between gap-6 md:gap-8">
+            <!-- Creator Info -->
+            <div class="space-y-4 max-w-md">
+              <div class="flex items-center gap-3.5">
+                <img
+                  src="https://github.com/prahladinala.png"
+                  alt="Prahlad Inala"
+                  class="h-12 w-12 rounded-full border border-border/80 object-cover shadow-xs"
+                  loading="lazy"
+                />
+                <div>
+                  <span class="text-purple-400 font-semibold text-[11px] tracking-wider uppercase block">
+                    BUILT BY
+                  </span>
+                  <h3 class="text-lg font-bold text-foreground">
+                    Prahlad Inala
+                  </h3>
+                  <p class="text-xs text-muted-foreground">
+                    Software Engineer & Open-Source Creator
+                  </p>
+                </div>
+              </div>
+              <p class="text-xs text-muted-foreground leading-relaxed">
+                Built ToolMate UI to eliminate paywalled UI kits, bloated dependencies, and broken styling. Dedicated to giving every developer clean, copy-and-paste, accessible building blocks.
+              </p>
+            </div>
+
+            <!-- Connect Links -->
+            <div class="md:border-l md:border-border/60 md:pl-8 space-y-2.5 shrink-0 w-full md:w-auto pt-4 md:pt-0 border-t md:border-t-0 border-border/40">
+              <span class="text-[10px] font-bold tracking-widest text-muted-foreground uppercase block mb-3">
+                CONNECT
+              </span>
+              <div>
+                <a
+                  href="https://github.com/prahladinala"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  class="text-xs font-semibold text-foreground hover:text-purple-400 inline-flex items-center gap-1.5 transition-colors"
+                >
+                  <span>GitHub Profile</span>
+                  <span>→</span>
+                </a>
               </div>
               <div>
-                <h3 class="font-bold text-lg">Copy & Paste</h3>
-                <p class="text-sm text-muted-foreground mt-2">Production-ready code you can drop straight into your project without fighting dependencies.</p>
+                <a
+                  href="https://linkedin.com/in/prahladinala"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  class="text-xs font-semibold text-foreground hover:text-purple-400 inline-flex items-center gap-1.5 transition-colors"
+                >
+                  <span>LinkedIn Profile</span>
+                  <span>→</span>
+                </a>
+              </div>
+              <div>
+                <a
+                  href="https://prahladinala.in"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  class="text-xs font-semibold text-foreground hover:text-purple-400 inline-flex items-center gap-1.5 transition-colors"
+                >
+                  <span>Personal Portfolio</span>
+                  <span>→</span>
+                </a>
               </div>
             </div>
           </div>
         </div>
-        <div class="group relative overflow-hidden rounded-lg border bg-background p-2 transition-transform hover:-translate-y-1 hover:shadow-lg delay-100">
-          <div class="flex h-[200px] flex-col justify-between rounded-md p-6">
-            <div class="space-y-4">
-              <div class="inline-flex h-10 w-10 items-center justify-center rounded-lg bg-primary/10 text-primary transition-colors group-hover:bg-primary group-hover:text-primary-foreground">
-                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m18 16 4-4-4-4"/><path d="m6 8-4 4 4 4"/><path d="m14.5 4-5 16"/></svg>
-              </div>
-              <div>
-                <h3 class="font-bold text-lg">Multi Framework</h3>
-                <p class="text-sm text-muted-foreground mt-2">HTML, React, Astro, Vue, Svelte, and Next.js are fully supported out of the box.</p>
-              </div>
-            </div>
-          </div>
+      </div>
+    </section>
+
+    <!-- SECTION 3: GOT QUESTIONS? FAQ (From Reference Image) -->
+    <section class="py-16 md:py-24 border-t border-border/40">
+      <div class="container mx-auto max-w-screen-xl px-4">
+        <!-- FAQ Header -->
+        <div class="text-center space-y-3 mb-12">
+          <span class="text-purple-400 font-semibold text-xs tracking-widest uppercase block">
+            GOT QUESTIONS?
+          </span>
+          <h2 class="text-3xl sm:text-4xl md:text-5xl font-black tracking-tight text-foreground">
+            Frequently Asked Questions
+          </h2>
+          <p class="text-sm sm:text-base text-muted-foreground max-w-lg mx-auto leading-relaxed">
+            Everything you need to know about licensing, customization, and framework compatibility.
+          </p>
         </div>
-        <div class="group relative overflow-hidden rounded-lg border bg-background p-2 transition-transform hover:-translate-y-1 hover:shadow-lg delay-200">
-          <div class="flex h-[200px] flex-col justify-between rounded-md p-6">
-            <div class="space-y-4">
-              <div class="inline-flex h-10 w-10 items-center justify-center rounded-lg bg-primary/10 text-primary transition-colors group-hover:bg-primary group-hover:text-primary-foreground">
-                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="4"/><path d="M12 2v2"/><path d="M12 20v2"/><path d="m4.93 4.93 1.41 1.41"/><path d="m17.66 17.66 1.41 1.41"/><path d="M2 12h2"/><path d="M20 12h2"/><path d="m6.34 17.66-1.41 1.41"/><path d="m19.07 4.93-1.41 1.41"/></svg>
-              </div>
-              <div>
-                <h3 class="font-bold text-lg">Dark Mode Ready</h3>
-                <p class="text-sm text-muted-foreground mt-2">Every component supports dark mode gracefully via our minimal CSS variable theme system.</p>
+
+        <!-- Accordion Stack -->
+        <div class="max-w-2xl mx-auto space-y-3" id="faq-accordion">
+          {faqs.map((faq, index) => (
+            <div class="faq-item rounded-xl border border-border/80 bg-card/40 dark:bg-zinc-950/50 hover:border-zinc-700 transition-all overflow-hidden">
+              <button
+                type="button"
+                class="faq-trigger w-full flex items-center justify-between p-4 sm:p-5 text-left font-semibold text-sm text-foreground transition-colors cursor-pointer"
+                aria-expanded="false"
+              >
+                <span>{faq.question}</span>
+                <ChevronDown class="faq-icon h-4 w-4 text-muted-foreground shrink-0 transition-transform duration-200 ml-3" />
+              </button>
+              <div class="faq-content hidden px-4 sm:px-5 pb-5 pt-1 text-xs sm:text-sm text-muted-foreground leading-relaxed border-t border-border/30">
+                {faq.answer}
               </div>
             </div>
-          </div>
+          ))}
         </div>
       </div>
     </section>
   </main>
 
-  <footer class="border-t border-border bg-background py-12 md:py-16">
-    <div class="container mx-auto max-w-screen-xl px-4 md:px-6">
-      <div class="grid grid-cols-2 gap-8 md:grid-cols-4 lg:grid-cols-5">
-        <div class="col-span-2 lg:col-span-2">
-          <a href="#" class="font-bold text-xl flex items-center space-x-2">
-            <span class="h-6 w-6 rounded-md bg-primary text-primary-foreground flex items-center justify-center text-xs">T</span>
-            <span>ToolMate UI</span>
-          </a>
-          <p class="text-sm text-muted-foreground mt-4 max-w-xs leading-relaxed">
-            Building the web faster with beautiful, accessible, and highly customizable UI components and templates.
-          </p>
-        </div>
-        <div>
-          <h3 class="font-semibold mb-4 text-foreground">Resources</h3>
-          <ul class="space-y-3 text-sm text-muted-foreground">
-            <li><a href="/docs" class="hover:text-foreground transition-colors">Documentation</a></li>
-            <li><a href="/components" class="hover:text-foreground transition-colors">Components</a></li>
-            <li><a href="/templates" class="hover:text-foreground transition-colors">Templates</a></li>
-          </ul>
-        </div>
-        <div>
-          <h3 class="font-semibold mb-4 text-foreground">Community</h3>
-          <ul class="space-y-3 text-sm text-muted-foreground">
-            <li><a href="#" class="hover:text-foreground transition-colors">GitHub</a></li>
-            <li><a href="#" class="hover:text-foreground transition-colors">Twitter</a></li>
-            <li><a href="#" class="hover:text-foreground transition-colors">Discord</a></li>
-          </ul>
-        </div>
-        <div>
-          <h3 class="font-semibold mb-4 text-foreground">Legal</h3>
-          <ul class="space-y-3 text-sm text-muted-foreground">
-            <li><a href="#" class="hover:text-foreground transition-colors">Privacy Policy</a></li>
-            <li><a href="#" class="hover:text-foreground transition-colors">Terms of Service</a></li>
-          </ul>
-        </div>
-      </div>
-      <div class="mt-12 border-t border-border pt-8 flex flex-col md:flex-row justify-between items-center text-sm text-muted-foreground">
-        <p>© 2026 ToolMate UI. All rights reserved.</p>
-        <p class="mt-4 md:mt-0 flex items-center space-x-1">
-          <span>Crafted with</span>
-          <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="currentColor" class="text-red-500"><path d="M19 14c1.49-1.46 3-3.21 3-5.5A5.5 5.5 0 0 0 16.5 3c-1.76 0-3 .5-4.5 2-1.5-1.5-2.74-2-4.5-2A5.5 5.5 0 0 0 2 8.5c0 2.3 1.5 4.05 3 5.5l7 7Z"/></svg>
-          <span>for developers</span>
-        </p>
-      </div>
-    </div>
-  </footer>
-
   <script>
-    // Animated Stats Counter
+    // 1. FAQ Accordion Interactive Logic (Minimal vanilla micro-script)
+    const faqItems = document.querySelectorAll('.faq-item');
+    faqItems.forEach(item => {
+      const trigger = item.querySelector('.faq-trigger');
+      const content = item.querySelector('.faq-content');
+      const icon = item.querySelector('.faq-icon');
+
+      trigger?.addEventListener('click', () => {
+        const isExpanded = trigger.getAttribute('aria-expanded') === 'true';
+
+        // Close all items
+        faqItems.forEach(other => {
+          const otherTrigger = other.querySelector('.faq-trigger');
+          const otherContent = other.querySelector('.faq-content');
+          const otherIcon = other.querySelector('.faq-icon');
+
+          otherTrigger?.setAttribute('aria-expanded', 'false');
+          otherContent?.classList.add('hidden');
+          otherIcon?.classList.remove('rotate-180');
+        });
+
+        // Toggle clicked item if it was closed
+        if (!isExpanded) {
+          trigger.setAttribute('aria-expanded', 'true');
+          content?.classList.remove('hidden');
+          icon?.classList.add('rotate-180');
+        }
+      });
+    });
+
+    // 2. Animated Stats Counter
     const counters = document.querySelectorAll('.stat-counter');
-    const speed = 200; // The lower the slower
+    const speed = 200;
 
     const animateCounters = () => {
       counters.forEach(counter => {
-        const target = +counter.getAttribute('data-target');
+        const target = +counter.getAttribute('data-target')!;
         const count = +counter.innerText.replace('+', '');
         const inc = target / speed;
 
@@ -166,7 +336,6 @@ import BaseLayout from '../layouts/BaseLayout.astro';
       });
     };
 
-    // Intersection Observer to trigger animation when in view
     const observer = new IntersectionObserver((entries) => {
       entries.forEach(entry => {
         if (entry.isIntersecting) {
