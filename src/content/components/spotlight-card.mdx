@@ -1,0 +1,28 @@
+---
+title: "Spotlight Card"
+description: "A card container that reveals a dynamic, cursor-following radial gradient glow on mouse movement."
+category: "Creative"
+---
+
+import ComponentPreview from '../../components/mdx/ComponentPreview.astro';
+
+## Cursor-Following Spotlight Card
+
+A flagship creative component popularized by modern design systems. Tracks cursor coordinates relative to the bounding box to render an elegant illumination cone without layout reflows.
+
+<ComponentPreview name="spotlight-card" registry="components" />
+
+## Props Reference
+
+| Prop | Type | Default | Description |
+| :--- | :--- | :--- | :--- |
+| `title` | `string` | `"Intelligent Autopilot"` | Primary card headline |
+| `description` | `string` | `""` | Descriptive body copy |
+| `badge` | `string` | `"Feature Spotlight"` | Category chip label |
+| `spotlightColor` | `string` | `"rgba(99, 102, 241, 0.2)"` | CSS radial color string for the illumination beam |
+
+## Performance Engineering
+
+- **GPU Acceleration:** Uses CSS radial gradients driven by pointer coordinates without touching the DOM tree layout or causing browser re-paints.
+- **Motion Template:** In the Animated variant, Framer Motion's `useMotionValue` and `useMotionTemplate` stream coordinates directly to the compositor thread for a solid 60/120 FPS experience.
+- **Pointer Fallback:** On touch devices where hover is absent, the spotlight smoothly defaults to a soft static gradient overlay.

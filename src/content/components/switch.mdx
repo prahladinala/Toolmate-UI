@@ -1,0 +1,32 @@
+---
+title: "Switch"
+description: "A control that allows the user to toggle between checked and not-checked states with fluid spring animations."
+category: "Forms"
+---
+
+import ComponentPreview from '../../components/mdx/ComponentPreview.astro';
+
+## Interactive Switch
+
+A toggle component built according to WAI-ARIA switch pattern design standards. Supports keyboard interaction, descriptions, disabled states, and spring animations.
+
+<ComponentPreview name="switch" registry="components" />
+
+## Props Reference
+
+| Prop | Type | Default | Description |
+| :--- | :--- | :--- | :--- |
+| `label` | `string` | `"Push Notifications"` | Label text displayed alongside the switch |
+| `description` | `string` | `undefined` | Secondary descriptive helper text |
+| `defaultChecked` | `boolean` | `false` | Initial boolean toggled state |
+| `disabled` | `boolean` | `false` | Whether interaction is disabled |
+| `onChange` | `(checked: boolean) => void` | `undefined` | Callback fired when the toggle state changes |
+
+## Accessibility & Keyboard Shortcuts
+
+- **Role:** Explicit `role="switch"` attribute informing screen readers of a two-state control.
+- **State:** Dynamic `aria-checked={enabled}` reflecting live state changes.
+- **Keyboard Navigation:**
+  - `Tab`: Focuses into the switch element.
+  - `Space` / `Enter`: Toggles the checked state.
+- **Reduced Motion:** Gracefully falls back when system reduces animation motion.

@@ -1,0 +1,26 @@
+---
+title: "Marquee"
+description: "An infinite looping horizontal ticker ribbon for displaying logos, tech stacks, trust badges, and testimonials."
+category: "Creative"
+---
+
+import ComponentPreview from '../../components/mdx/ComponentPreview.astro';
+
+## Infinite Ribbon Marquee
+
+Used to create momentum on landing pages by showcasing client logos, feature highlights, and integrations in a smooth, hardware-accelerated continuous scroll.
+
+<ComponentPreview name="marquee" registry="components" />
+
+## Props Reference
+
+| Prop | Type | Default | Description |
+| :--- | :--- | :--- | :--- |
+| `speed` | `number` | `25` | Duration of one full loop cycle in seconds |
+| `pauseOnHover` | `boolean` | `true` | Halts ribbon translation when cursor hovers over the track |
+
+## Modern CSS Masking Technique
+
+- **Horizontal Fade Masks:** Employs CSS `mask-image: linear-gradient(to right, transparent, black 15%, black 85%, transparent)` to create soft edge fades without messy pseudo-element overlays.
+- **Continuous Seam:** Duplicates the child items array once (`items.concat(items)`) and shifts from `0%` to `-50%` for an imperceptible infinite loop seam.
+- **Hardware Acceleration:** Leverages CSS `transform: translateX(...)` strictly off the main rendering thread.

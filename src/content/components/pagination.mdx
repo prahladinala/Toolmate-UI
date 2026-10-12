@@ -1,0 +1,27 @@
+---
+title: "Pagination"
+description: "A navigation component for chunking large datasets across multiple indexed pages."
+category: "Navigation"
+---
+
+import ComponentPreview from '../../components/mdx/ComponentPreview.astro';
+
+## Pagination Bar
+
+Enables users to navigate through segmented records, catalogs, and search queries with clean boundary indicators and fluid active indicator pill animations.
+
+<ComponentPreview name="pagination" registry="components" />
+
+## Props Reference
+
+| Prop | Type | Default | Description |
+| :--- | :--- | :--- | :--- |
+| `totalPages` | `number` | `8` | Maximum count of accessible pages |
+| `initialPage` | `number` | `1` | Starting active page index |
+| `onPageChange` | `(page: number) => void` | `undefined` | Callback invoked with the newly selected page number |
+
+## Keyboard & Screen Reader Accessibility
+
+- **Landmark Role:** Rendered within `<nav aria-label="Pagination">` to support assistive screen navigation.
+- **Active Page Semantics:** Incorporates `aria-current="page"` on the currently selected numeric button.
+- **Boundary Disablement:** Previous and Next buttons automatically receive `disabled` and visual opacity indicators when at min/max extremes.

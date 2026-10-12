@@ -1,0 +1,29 @@
+---
+title: "Combobox"
+description: "An autocomplete input and searchable dropdown menu with typeahead filtering and keyboard navigation."
+category: "Forms"
+---
+
+import ComponentPreview from '../../components/mdx/ComponentPreview.astro';
+
+## Searchable Combobox
+
+Combines the functionality of a text input and a select dropdown. Allows users to quickly filter large option sets by typing while preserving full arrow-key and enter-key keyboard traversal.
+
+<ComponentPreview name="combobox" registry="components" />
+
+## Props Reference
+
+| Prop | Type | Default | Description |
+| :--- | :--- | :--- | :--- |
+| `options` | `ComboboxOption[]` | `[...]` | Array of item objects with `value`, `label`, and optional `category` |
+| `placeholder` | `string` | `"Select technology..."` | Placeholder text shown when no value is selected |
+| `defaultValue` | `string` | `""` | Initial pre-selected item value |
+| `onChange` | `(value: string) => void` | `undefined` | Callback fired when an option is selected |
+
+## Keyboard Traversal Standards
+
+- **Arrow Down / Arrow Up:** Moves highlight focus sequentially through filtered matches with boundary wrapping.
+- **Enter:** Selects currently highlighted item and closes dropdown popup.
+- **Escape:** Immediately closes the dropdown without modifying the currently selected value.
+- **Click Outside:** Automatically dismisses the dropdown using an event listener ref.

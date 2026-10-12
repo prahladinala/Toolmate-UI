@@ -1,0 +1,26 @@
+---
+title: "Breadcrumb"
+description: "A secondary navigation pattern that displays the hierarchy of the current page relative to the website structure."
+category: "Navigation"
+---
+
+import ComponentPreview from '../../components/mdx/ComponentPreview.astro';
+
+## Breadcrumb Navigation
+
+Provides clear orientational hierarchy for deep documentation pages, dashboards, and ecommerce catalogs with customizable separator icons and truncation.
+
+<ComponentPreview name="breadcrumb" registry="components" />
+
+## Props Reference
+
+| Prop | Type | Default | Description |
+| :--- | :--- | :--- | :--- |
+| `items` | `BreadcrumbItem[]` | `[...]` | Array of path step objects containing `label` and optional `href` |
+| `separator` | `"chevron" \| "slash"` | `"chevron"` | Divider icon style placed between steps |
+
+## WAI-ARIA Navigation Guidelines
+
+- **Container Semantics:** Encapsulated in `<nav aria-label="Breadcrumb">` to provide explicit Landmark recognition.
+- **Current Page Indication:** The final node includes `aria-current="page"` to announce the active destination to screen readers.
+- **List Structure:** Uses standard ordered `<ol>` and `<li>` elements to communicate step quantity and ordinal rank.

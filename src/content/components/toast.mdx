@@ -1,0 +1,29 @@
+---
+title: "Toast"
+description: "A succinct message that is displayed temporarily to provide feedback about an operation."
+category: "Feedback"
+---
+
+import ComponentPreview from '../../components/mdx/ComponentPreview.astro';
+
+## Toast Notifications
+
+Provides unobtrusive user feedback following an interaction. Features support for multiple notification categories (success, error, information), dismiss triggers, and animated layout reordering.
+
+<ComponentPreview name="toast" registry="components" />
+
+## Props Reference
+
+| Prop | Type | Default | Description |
+| :--- | :--- | :--- | :--- |
+| `type` | `"success" \| "error" \| "info"` | `"info"` | Visual state and accent color style |
+| `title` | `string` | `""` | Primary bold summary line of the notification |
+| `message` | `string` | `""` | Detailed descriptive notification message |
+| `duration` | `number` | `4000` | Auto-dismissal timeout in milliseconds |
+| `onClose` | `() => void` | `undefined` | Callback fired when dismissed |
+
+## Screen Reader & ARIA Standards
+
+- **Live Regions:** Uses `role="alert"` and `aria-live="polite"` for non-disruptive announcements to screen reader users.
+- **Accessible Action:** Close buttons feature explicit `aria-label="Dismiss notification"` for clarity.
+- **Focus Preservation:** Opening a toast does not yank keyboard focus away from the active form or trigger element.

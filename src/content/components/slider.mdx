@@ -1,0 +1,31 @@
+---
+title: "Slider"
+description: "A continuous or stepped range input allowing users to select single numerical values with dynamic fill feedback."
+category: "Forms"
+---
+
+import ComponentPreview from '../../components/mdx/ComponentPreview.astro';
+
+## Range Slider
+
+Provides an intuitive slider control with customized track filling, numerical readout badges, step configurations, and spring interaction effects.
+
+<ComponentPreview name="slider" registry="components" />
+
+## Props Reference
+
+| Prop | Type | Default | Description |
+| :--- | :--- | :--- | :--- |
+| `label` | `string` | `"Brightness Level"` | Title header displayed above the slider control |
+| `min` | `number` | `0` | Lower numeric bound |
+| `max` | `number` | `100` | Upper numeric bound |
+| `step` | `number` | `1` | Granularity of each slider step increment |
+| `defaultValue` | `number` | `70` | Default initial slider position |
+| `unit` | `string` | `"%"` | Suffix unit appended to the displayed numeric badge |
+| `onChange` | `(val: number) => void` | `undefined` | Callback fired on value change |
+
+## Accessibility Details
+
+- **ARIA Role:** Uses native `<input type="range" />` with `aria-valuemin`, `aria-valuemax`, and `aria-valuenow` semantics.
+- **Keyboard Handling:** Standard Left/Down arrow decreases value; Right/Up arrow increases value; PageUp/PageDown moves by larger intervals; Home/End jumps to min/max.
+- **Touch-Friendly:** Expanded thumb hit-box for comfortable operation on touch displays.

@@ -1,0 +1,19 @@
+---
+title: "Bento Grid"
+description: "An asymmetric grid layout inspired by modern dashboard ergonomics, ideal for showcasing product features."
+category: "Layout"
+---
+
+import ComponentPreview from '../../components/mdx/ComponentPreview.astro';
+
+## Modern Bento Grid Layout
+
+Organizes disparate pieces of product information into a visual hierarchy using varying column spans, accent highlights, and balanced negative space.
+
+<ComponentPreview name="bento-grid" registry="components" />
+
+## Grid Layout Techniques
+
+- **CSS Grid Spanning:** Uses Tailwind classes like `md:col-span-2` and `md:col-span-1` to dynamically balance visual weight between primary flagship features and secondary attributes.
+- **Responsive Stacking:** On mobile displays (&lt;768px), the grid collapses into a clean, single-column vertical flow with full-width cards.
+- **Glassmorphism Backdrop:** Cards feature subtle translucent backgrounds (`bg-card/70 backdrop-blur-md`) for seamless blending in both light and dark modes.

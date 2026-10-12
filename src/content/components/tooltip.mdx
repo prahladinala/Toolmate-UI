@@ -1,0 +1,27 @@
+---
+title: "Tooltip"
+description: "A customized popup that displays informative text when users hover over, focus on, or tap an element."
+category: "Overlays"
+---
+
+import ComponentPreview from '../../components/mdx/ComponentPreview.astro';
+
+## Contextual Tooltip
+
+Delivers brief, helpful context for icon buttons, truncated labels, or technical telemetry data without adding visual clutter to the primary interface.
+
+<ComponentPreview name="tooltip" registry="components" />
+
+## Props Reference
+
+| Prop | Type | Default | Description |
+| :--- | :--- | :--- | :--- |
+| `content` | `string` | `"Copy API token to clipboard"` | Descriptive text string rendered inside the bubble |
+| `side` | `"top" \| "bottom"` | `"top"` | Placement position relative to the anchor trigger |
+| `children` | `React.ReactNode` | `undefined` | Interactive trigger element wrapped by the tooltip |
+
+## Accessibility & Keyboard Navigation
+
+- **Focus Accessibility:** Appears automatically on keyboard `focus` and disappears on `blur`.
+- **Escape Key:** Pressing `Escape` immediately dismisses the active tooltip without moving focus.
+- **ARIA DescribedBy:** Associates the trigger with the tooltip popup via `role="tooltip"` and matching identifiers.

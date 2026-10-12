@@ -1,0 +1,29 @@
+---
+title: "Drawer"
+description: "A panel that slides in smoothly from the edge of the screen, typically used for deep configuration, navigation drawers, or mobile menus."
+category: "Overlays"
+---
+
+import ComponentPreview from '../../components/mdx/ComponentPreview.astro';
+
+## Slide-Over Drawer
+
+An overlay sheet pattern providing contextual space for forms, detailed inspections, and navigation menus without forcing a complete route change.
+
+<ComponentPreview name="drawer" registry="components" />
+
+## Props Reference
+
+| Prop | Type | Default | Description |
+| :--- | :--- | :--- | :--- |
+| `title` | `string` | `"Project Settings"` | Header title rendered at the top of the drawer |
+| `description` | `string` | `""` | Subheading or explanatory helper text |
+| `triggerText` | `string` | `"Open Drawer Panel"` | Button label for opening the drawer |
+| `isOpen` | `boolean` | `false` | Controlled open state |
+| `onClose` | `() => void` | `undefined` | Callback fired on dismissal |
+
+## Focus Trapping & Accessibility
+
+- **Keyboard Escape:** Pressing the `Escape` key automatically closes the sheet and restores focus.
+- **Scroll Lock:** Automatically prevents background document scrolling (`body overflow: hidden`) while the drawer is open.
+- **Backdrop Clicks:** Clicking anywhere outside the content panel cleanly dismisses the drawer.

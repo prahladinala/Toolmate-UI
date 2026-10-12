@@ -1,0 +1,28 @@
+---
+title: "PIN Input"
+description: "A segmented verification code and one-time password (OTP) input with auto-advance, backspace navigation, and clipboard paste support."
+category: "Forms"
+---
+
+import ComponentPreview from '../../components/mdx/ComponentPreview.astro';
+
+## One-Time Password (OTP) Input
+
+Designed for two-factor authentication (2FA) and account verification. Handles digit validation, automatic focus stepping, backwards backspace navigation, and full-clipboard paste detection.
+
+<ComponentPreview name="pin-input" registry="components" />
+
+## Props Reference
+
+| Prop | Type | Default | Description |
+| :--- | :--- | :--- | :--- |
+| `length` | `number` | `6` | Total count of digit cells to render |
+| `autoFocus` | `boolean` | `true` | Automatically focuses the first cell upon mount |
+| `onComplete` | `(code: string) => void` | `undefined` | Callback invoked with the full string once all cells are filled |
+
+## Usability & Accessibility Features
+
+- **Keyboard Traversal:** Supports Left Arrow and Right Arrow to easily move between cells without wiping values.
+- **Backspace Ergonomics:** Pressing Backspace on an empty cell automatically shifts focus to the previous cell and deletes its content.
+- **Mobile Optimized:** Uses `inputMode="numeric"` to reliably summon the numeric keypad on iOS and Android devices.
+- **Paste Detection:** Automatically parses pasted verification SMS messages or clipboard digits across all cells in order.
