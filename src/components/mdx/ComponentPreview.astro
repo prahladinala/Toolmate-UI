@@ -1,7 +1,6 @@
 ---
-import { readFileSync } from 'node:fs';
-import { resolve } from 'node:path';
 import { Code } from 'astro:components';
+import { getComponentCodeTabs } from '../../utils/codeGenerators';
 
 interface Props {
   name: string;
@@ -10,132 +9,164 @@ interface Props {
 
 const { name, registry = 'components' } = Astro.props;
 
-const frameworks = [
-  { id: 'html', ext: 'html', label: 'HTML', lang: 'html' },
-  { id: 'react', ext: 'tsx', label: 'React', lang: 'tsx' },
-  { id: 'astro', ext: 'astro', label: 'Astro', lang: 'astro' },
-  { id: 'vue', ext: 'vue', label: 'Vue', lang: 'vue' },
-  { id: 'svelte', ext: 'svelte', label: 'Svelte', lang: 'svelte' }
-];
-
-const codes = frameworks.map(fw => {
-  try {
-    const filePath = resolve(process.cwd(), `src/registry/${registry}/${name}/${fw.id}.${fw.ext}`);
-    const code = readFileSync(filePath, 'utf-8');
-    return { ...fw, code };
-  } catch (e) {
-    return { ...fw, code: null };
-  }
-}).filter(fw => fw.code !== null);
-
-const htmlCode = codes.find(c => c.id === 'html')?.code || '';
+const codeTabs = getComponentCodeTabs(registry, name);
+const htmlCode = codeTabs.find(c => c.id === 'html')?.code || codeTabs[0]?.code || '';
 ---
 
-<div class="component-preview my-6 rounded-xl border border-border bg-card text-card-foreground shadow-xs overflow-hidden" data-preview-id={name}>
+<div class="component-preview my-8 rounded-2xl border border-border/80 bg-card text-card-foreground shadow-sm overflow-hidden" data-preview-id={name}>
   <!-- Top Bar: Tabs & Viewport Controls -->
-  <div class="flex items-center justify-between border-b border-border px-3 bg-muted/40">
+  <div class="flex items-center justify-between border-b border-border/70 px-4 py-2.5 bg-muted/40 backdrop-blur-xs">
     <!-- Preview / Code Mode Tabs -->
-    <div class="flex space-x-1 pt-1.5">
+    <div class="flex items-center space-x-1.5">
       <button
-        class="preview-tab-btn px-3 py-1.5 text-xs font-semibold rounded-t-md border-b-2 border-primary text-foreground"
+        class="preview-tab-btn px-3 py-1.5 text-xs font-semibold rounded-lg bg-background text-foreground shadow-2xs border border-border/60 transition-all cursor-pointer"
         data-tab="preview"
       >
-        Preview
+        <span class="flex items-center gap-1.5">
+          <svg xmlns="http://www.w3.org/2000/svg" width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M2 12s3-7 10-7 10 7 10 7-3 7-10 7-10-7-10-7Z"/><circle cx="12" cy="12" r="3"/></svg>
+          Preview
+        </span>
       </button>
       <button
-        class="preview-tab-btn px-3 py-1.5 text-xs font-medium rounded-t-md border-b-2 border-transparent text-muted-foreground hover:text-foreground transition-colors"
+        class="preview-tab-btn px-3 py-1.5 text-xs font-medium rounded-lg text-muted-foreground hover:text-foreground hover:bg-muted/70 transition-all cursor-pointer"
         data-tab="code"
       >
-        Code
+        <span class="flex items-center gap-1.5">
+          <svg xmlns="http://www.w3.org/2000/svg" width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="16 18 22 12 16 6"/><polyline points="8 6 2 12 8 18"/></svg>
+          Code
+        </span>
       </button>
     </div>
 
     <!-- Right Controls: Viewport Size & Quick Copy -->
-    <div class="flex items-center space-x-1.5 py-1">
+    <div class="flex items-center space-x-2">
       <!-- Responsive Viewport Resizer (Preview mode only) -->
-      <div class="viewport-controls hidden sm:flex items-center space-x-1 mr-2 bg-muted/60 p-0.5 rounded-md border border-border/40">
+      <div class="viewport-controls hidden sm:flex items-center space-x-1 bg-muted/70 p-0.5 rounded-lg border border-border/50">
         <button
           type="button"
-          class="size-btn p-1 rounded text-muted-foreground hover:text-foreground hover:bg-background transition-colors text-xs"
+          class="size-btn p-1.5 rounded-md text-muted-foreground hover:text-foreground hover:bg-background transition-colors text-xs cursor-pointer"
           data-size="375px"
-          title="Mobile preview (375px)"
+          title="Mobile viewport (375px)"
           aria-label="Mobile viewport"
         >
-          <svg xmlns="http://www.w3.org/2000/svg" width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect width="14" height="20" x="5" y="2" rx="2" ry="2"/><path d="M12 18h.01"/></svg>
+          <svg xmlns="http://www.w3.org/2000/svg" width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect width="14" height="20" x="5" y="2" rx="2" ry="2"/><path d="M12 18h.01"/></svg>
         </button>
         <button
           type="button"
-          class="size-btn p-1 rounded text-muted-foreground hover:text-foreground hover:bg-background transition-colors text-xs"
+          class="size-btn p-1.5 rounded-md text-muted-foreground hover:text-foreground hover:bg-background transition-colors text-xs cursor-pointer"
           data-size="768px"
-          title="Tablet preview (768px)"
+          title="Tablet viewport (768px)"
           aria-label="Tablet viewport"
         >
-          <svg xmlns="http://www.w3.org/2000/svg" width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect width="16" height="20" x="4" y="2" rx="2" ry="2"/><line x1="12" x2="12.01" y1="18" y2="18"/></svg>
+          <svg xmlns="http://www.w3.org/2000/svg" width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect width="16" height="20" x="4" y="2" rx="2" ry="2"/><line x1="12" x2="12.01" y1="18" y2="18"/></svg>
         </button>
         <button
           type="button"
-          class="size-btn p-1 rounded text-foreground bg-background shadow-2xs text-xs"
+          class="size-btn p-1.5 rounded-md text-foreground bg-background shadow-2xs text-xs cursor-pointer"
           data-size="100%"
-          title="Full width preview"
+          title="Full width viewport"
           aria-label="Full width viewport"
         >
-          <svg xmlns="http://www.w3.org/2000/svg" width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect width="20" height="14" x="2" y="3" rx="2" ry="2"/><line x1="8" x2="16" y1="21" y2="21"/><line x1="12" x2="12" y1="17" y2="21"/></svg>
+          <svg xmlns="http://www.w3.org/2000/svg" width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect width="20" height="14" x="2" y="3" rx="2" ry="2"/><line x1="8" x2="16" y1="21" y2="21"/><line x1="12" x2="12" y1="17" y2="21"/></svg>
         </button>
       </div>
 
       <!-- Quick Copy Button -->
       <button
         type="button"
-        class="quick-copy-btn inline-flex items-center gap-1.5 px-2.5 py-1 text-xs font-medium rounded-md border border-border/80 bg-background hover:bg-muted text-foreground transition-all shadow-2xs active:scale-95"
-        aria-label="Copy component code"
+        class="quick-copy-btn inline-flex items-center gap-1.5 px-3 py-1.5 text-xs font-semibold rounded-lg border border-border/80 bg-background hover:bg-muted text-foreground transition-all shadow-2xs active:scale-95 cursor-pointer"
+        aria-label="Copy active component code"
       >
-        <svg xmlns="http://www.w3.org/2000/svg" width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect width="14" height="14" x="8" y="8" rx="2" ry="2"/><path d="M4 16c-1.1 0-2-.9-2-2V4c0-1.1.9-2 2-2h10c1.1 0 2 .9 2 2"/></svg>
+        <svg xmlns="http://www.w3.org/2000/svg" width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect width="14" height="14" x="8" y="8" rx="2" ry="2"/><path d="M4 16c-1.1 0-2-.9-2-2V4c0-1.1.9-2 2-2h10c1.1 0 2 .9 2 2"/></svg>
         <span>Copy Code</span>
       </button>
     </div>
   </div>
 
-  <!-- Preview Container with subtle grid pattern -->
-  <div class="preview-content flex justify-center items-center p-6 sm:p-10 min-h-[260px] bg-muted/15 relative overflow-x-auto transition-all" data-content="preview">
+  <!-- Preview Container with subtle grid backdrop -->
+  <div class="preview-content flex justify-center items-center p-6 sm:p-12 min-h-[260px] bg-muted/15 relative overflow-x-auto transition-all" data-content="preview">
     <div
       class="preview-inner w-full flex justify-center items-center transition-all duration-200"
       style="max-width: 100%;"
     >
-      <div class="w-full flex justify-center items-center py-2" set:html={htmlCode} />
+      <div class="w-full flex justify-center items-center py-2 interactive-container" set:html={htmlCode} />
     </div>
   </div>
 
-  <!-- Code Tab Container with Framework Selector -->
-  <div class="preview-content hidden flex-col rounded-b-xl overflow-hidden border-t border-border bg-[#0d1117]" data-content="code">
-    {codes.length > 0 && (
-      <div class="flex items-center border-b border-white/10 px-3 py-1.5 gap-1.5 bg-black/40 text-xs overflow-x-auto">
-        <span class="text-[10px] uppercase font-bold text-muted-foreground mr-1">Framework:</span>
-        {codes.map((fw, index) => (
+  <!-- Code Tab Container with Framework & Functional Selector -->
+  <div class="preview-content hidden flex-col rounded-b-2xl overflow-hidden border-t border-border/70 bg-[#0d1117]" data-content="code">
+    <!-- Framework & Mode Tabs Bar -->
+    <div class="flex items-center justify-between border-b border-white/10 px-3 py-2 bg-black/50 text-xs overflow-x-auto gap-2">
+      <div class="flex items-center gap-1.5 shrink-0">
+        <span class="text-[10px] uppercase font-bold tracking-wider text-zinc-400 mr-1 hidden sm:inline">Format:</span>
+        {codeTabs.map((fw, index) => (
           <button
             type="button"
-            class={`fw-btn px-2.5 py-1 rounded-md text-xs font-medium transition-all ${
+            class={`fw-btn px-2.5 py-1 rounded-md text-xs font-semibold transition-all inline-flex items-center gap-1.5 cursor-pointer ${
               index === 0
-                ? 'bg-white/15 text-white shadow-2xs'
-                : 'text-zinc-400 hover:bg-white/10 hover:text-white'
+                ? 'bg-white/20 text-white shadow-2xs border border-white/20'
+                : 'text-zinc-400 hover:bg-white/10 hover:text-white border border-transparent'
             }`}
             data-fw={fw.id}
+            data-requires-install={fw.requiresInstall ? "true" : "false"}
           >
-            {fw.label}
+            <span>{fw.label}</span>
+            {fw.badge && (
+              <span class={`text-[9px] font-mono px-1.5 py-0.2 rounded-full border ${
+                fw.id === 'motion'
+                  ? 'bg-purple-500/20 text-purple-300 border-purple-500/40'
+                  : 'bg-cyan-500/20 text-cyan-300 border-cyan-500/40'
+              }`}>
+                {fw.badge}
+              </span>
+            )}
           </button>
         ))}
       </div>
-    )}
+    </div>
+
+    <!-- Animation Library Installation Banner (Shown when motion tab is selected) -->
+    <div class="install-banner hidden border-b border-purple-500/20 bg-gradient-to-r from-purple-950/40 via-zinc-900/80 to-purple-950/30 px-4 py-3 text-xs">
+      <div class="flex flex-col md:flex-row md:items-center justify-between gap-3">
+        <div class="space-y-0.5">
+          <div class="flex items-center gap-2">
+            <span class="h-2 w-2 rounded-full bg-purple-400 animate-pulse"></span>
+            <span class="font-bold text-white text-xs">Required Animation Library:</span>
+            <span class="font-mono text-purple-300 font-semibold text-xs">framer-motion</span>
+            <span class="text-zinc-400 font-mono text-[11px]">& lucide-react</span>
+          </div>
+          <p class="text-[11px] text-zinc-400">
+            Install this package in your project before importing the animated component.
+          </p>
+        </div>
+
+        <!-- Package Manager One-Click Installer -->
+        <div class="flex items-center gap-2 bg-black/70 border border-white/15 rounded-lg p-1.5 shrink-0">
+          <div class="flex gap-1 text-[10px] font-mono pm-tabs">
+            <button class="pm-btn active px-1.5 py-0.5 rounded bg-purple-500/30 text-purple-200 font-bold cursor-pointer" data-pm="npm">npm</button>
+            <button class="pm-btn px-1.5 py-0.5 rounded text-zinc-400 hover:text-white cursor-pointer" data-pm="pnpm">pnpm</button>
+            <button class="pm-btn px-1.5 py-0.5 rounded text-zinc-400 hover:text-white cursor-pointer" data-pm="yarn">yarn</button>
+            <button class="pm-btn px-1.5 py-0.5 rounded text-zinc-400 hover:text-white cursor-pointer" data-pm="bun">bun</button>
+          </div>
+          <div class="w-px h-3.5 bg-white/20"></div>
+          <code class="pm-cmd text-[11px] font-mono text-zinc-200 px-1">npm i framer-motion lucide-react</code>
+          <button class="pm-copy-btn p-1 rounded hover:bg-white/15 text-zinc-300 hover:text-white transition-colors cursor-pointer" title="Copy install command">
+            <svg xmlns="http://www.w3.org/2000/svg" width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect width="14" height="14" x="8" y="8" rx="2" ry="2"/><path d="M4 16c-1.1 0-2-.9-2-2V4c0-1.1.9-2 2-2h10c1.1 0 2 .9 2 2"/></svg>
+          </button>
+        </div>
+      </div>
+    </div>
 
     <!-- Code Render Blocks -->
     <div class="relative w-full">
-      {codes.map((fw, index) => (
+      {codeTabs.map((fw, index) => (
         <div
           class={`code-block max-h-[500px] overflow-auto text-xs [&>pre]:!bg-transparent [&>pre]:!p-4 [&>pre]:!m-0 ${
             index === 0 ? 'block' : 'hidden'
           }`}
           data-fw-content={fw.id}
         >
-          <Code code={fw.code!} lang={fw.lang as any} theme="github-dark" />
+          <Code code={fw.code} lang={fw.lang as any} theme="github-dark" />
         </div>
       ))}
     </div>
@@ -143,7 +174,7 @@ const htmlCode = codes.find(c => c.id === 'html')?.code || '';
 </div>
 
 <script>
-  // Pure vanilla script running strictly for tab switches and copy interaction
+  // Pure vanilla script running strictly for tab switches, copy interaction, and live preview controllers
   document.querySelectorAll('.component-preview').forEach(preview => {
     const tabBtns = preview.querySelectorAll('.preview-tab-btn');
     const contents = preview.querySelectorAll('.preview-content');
@@ -153,6 +184,10 @@ const htmlCode = codes.find(c => c.id === 'html')?.code || '';
     const fwBtns = preview.querySelectorAll('.fw-btn');
     const codeBlocks = preview.querySelectorAll('.code-block');
     const quickCopyBtn = preview.querySelector('.quick-copy-btn');
+    const installBanner = preview.querySelector('.install-banner');
+    const pmBtns = preview.querySelectorAll('.pm-btn');
+    const pmCmd = preview.querySelector('.pm-cmd');
+    const pmCopyBtn = preview.querySelector('.pm-copy-btn');
 
     // 1. Tab Switching (Preview vs Code)
     tabBtns.forEach(btn => {
@@ -160,11 +195,11 @@ const htmlCode = codes.find(c => c.id === 'html')?.code || '';
         const target = btn.getAttribute('data-tab');
 
         tabBtns.forEach(b => {
-          b.classList.remove('border-primary', 'text-foreground', 'font-semibold');
-          b.classList.add('border-transparent', 'text-muted-foreground', 'font-medium');
+          b.classList.remove('bg-background', 'text-foreground', 'font-semibold', 'shadow-2xs', 'border', 'border-border/60');
+          b.classList.add('text-muted-foreground', 'font-medium');
         });
-        btn.classList.add('border-primary', 'text-foreground', 'font-semibold');
-        btn.classList.remove('border-transparent', 'text-muted-foreground', 'font-medium');
+        btn.classList.add('bg-background', 'text-foreground', 'font-semibold', 'shadow-2xs', 'border', 'border-border/60');
+        btn.classList.remove('text-muted-foreground', 'font-medium');
 
         contents.forEach(content => {
           if (content.getAttribute('data-content') === target) {
@@ -203,17 +238,27 @@ const htmlCode = codes.find(c => c.id === 'html')?.code || '';
       });
     });
 
-    // 3. Framework Code Switching
+    // 3. Framework & Functional Code Switching
     fwBtns.forEach(btn => {
       btn.addEventListener('click', () => {
         const fw = btn.getAttribute('data-fw');
+        const requiresInstall = btn.getAttribute('data-requires-install') === 'true';
 
         fwBtns.forEach(b => {
-          b.classList.remove('bg-white/15', 'text-white', 'shadow-2xs');
-          b.classList.add('text-zinc-400');
+          b.classList.remove('bg-white/20', 'text-white', 'shadow-2xs', 'border-white/20');
+          b.classList.add('text-zinc-400', 'border-transparent');
         });
-        btn.classList.add('bg-white/15', 'text-white', 'shadow-2xs');
-        btn.classList.remove('text-zinc-400');
+        btn.classList.add('bg-white/20', 'text-white', 'shadow-2xs', 'border-white/20');
+        btn.classList.remove('text-zinc-400', 'border-transparent');
+
+        // Toggle install banner
+        if (installBanner) {
+          if (requiresInstall || fw === 'motion') {
+            installBanner.classList.remove('hidden');
+          } else {
+            installBanner.classList.add('hidden');
+          }
+        }
 
         codeBlocks.forEach(block => {
           if (block.getAttribute('data-fw-content') === fw) {
@@ -227,7 +272,44 @@ const htmlCode = codes.find(c => c.id === 'html')?.code || '';
       });
     });
 
-    // 4. Quick Copy Button
+    // 4. Package Manager Switcher (npm / pnpm / yarn / bun)
+    const pmCommands: Record<string, string> = {
+      npm: 'npm i framer-motion lucide-react',
+      pnpm: 'pnpm add framer-motion lucide-react',
+      yarn: 'yarn add framer-motion lucide-react',
+      bun: 'bun add framer-motion lucide-react',
+    };
+
+    pmBtns.forEach(btn => {
+      btn.addEventListener('click', () => {
+        const pm = btn.getAttribute('data-pm') || 'npm';
+        pmBtns.forEach(b => {
+          b.classList.remove('bg-purple-500/30', 'text-purple-200', 'font-bold');
+          b.classList.add('text-zinc-400');
+        });
+        btn.classList.add('bg-purple-500/30', 'text-purple-200', 'font-bold');
+        btn.classList.remove('text-zinc-400');
+
+        if (pmCmd) {
+          pmCmd.textContent = pmCommands[pm] || pmCommands.npm;
+        }
+      });
+    });
+
+    // Copy package manager command
+    if (pmCopyBtn) {
+      pmCopyBtn.addEventListener('click', async () => {
+        const cmd = pmCmd?.textContent || 'npm i framer-motion lucide-react';
+        await navigator.clipboard.writeText(cmd);
+        const originalHTML = pmCopyBtn.innerHTML;
+        pmCopyBtn.innerHTML = `<svg xmlns="http://www.w3.org/2000/svg" width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" class="text-green-400"><polyline points="20 6 9 17 4 12"/></svg>`;
+        setTimeout(() => {
+          pmCopyBtn.innerHTML = originalHTML;
+        }, 2000);
+      });
+    }
+
+    // 5. Quick Copy Button
     if (quickCopyBtn) {
       quickCopyBtn.addEventListener('click', async () => {
         const visibleBlock = Array.from(codeBlocks).find(b => !b.classList.contains('hidden')) || codeBlocks[0];
@@ -243,6 +325,26 @@ const htmlCode = codes.find(c => c.id === 'html')?.code || '';
             quickCopyBtn.innerHTML = originalHTML;
           }, 2000);
         }
+      });
+    }
+
+    // 6. Interactive Live Preview Controllers (for tabs, dialogs, buttons in preview)
+    const container = preview.querySelector('.interactive-container');
+    if (container) {
+      // Interactive tab click handler
+      container.querySelectorAll('button').forEach(btn => {
+        btn.addEventListener('click', () => {
+          // Check if parent has tab structure
+          const tabParent = btn.closest('.flex.space-x-1');
+          if (tabParent) {
+            tabParent.querySelectorAll('button').forEach(b => {
+              b.classList.remove('bg-background', 'text-foreground', 'shadow');
+              b.classList.add('text-muted-foreground');
+            });
+            btn.classList.add('bg-background', 'text-foreground', 'shadow');
+            btn.classList.remove('text-muted-foreground');
+          }
+        });
       });
     }
   });
