@@ -1,6 +1,7 @@
 ---
 import { Code } from 'astro:components';
 import { getComponentCodeTabs } from '../../utils/codeGenerators';
+import { getFunctionalPreviewHtml, getAnimatedPreviewHtml } from '../../utils/previewGenerators';
 
 interface Props {
   name: string;
@@ -10,37 +11,64 @@ interface Props {
 const { name, registry = 'components' } = Astro.props;
 
 const codeTabs = getComponentCodeTabs(registry, name);
-const htmlCode = codeTabs.find(c => c.id === 'html')?.code || codeTabs[0]?.code || '';
+const defaultHtml = codeTabs.find(c => c.id === 'html')?.code || codeTabs[0]?.code || '';
+const functionalHtml = getFunctionalPreviewHtml(name, defaultHtml, registry);
+const animatedHtml = getAnimatedPreviewHtml(name, defaultHtml, registry);
 ---
 
 <div class="component-preview my-8 rounded-2xl border border-border/80 bg-card text-card-foreground shadow-sm overflow-hidden" data-preview-id={name}>
-  <!-- Top Bar: Tabs & Viewport Controls -->
-  <div class="flex items-center justify-between border-b border-border/70 px-4 py-2.5 bg-muted/40 backdrop-blur-xs">
-    <!-- Preview / Code Mode Tabs -->
-    <div class="flex items-center space-x-1.5">
+  <!-- Top Bar: Preview Modes & Code Switcher -->
+  <div class="flex flex-wrap items-center justify-between border-b border-border/70 px-4 py-2.5 bg-muted/40 backdrop-blur-xs gap-2">
+    <!-- View Mode Switcher -->
+    <div class="flex items-center space-x-1 sm:space-x-1.5 overflow-x-auto">
+      <!-- 1. Default Preview Tab -->
       <button
-        class="preview-tab-btn px-3 py-1.5 text-xs font-semibold rounded-lg bg-background text-foreground shadow-2xs border border-border/60 transition-all cursor-pointer"
-        data-tab="preview"
+        type="button"
+        class="mode-btn px-2.5 sm:px-3 py-1.5 text-xs font-semibold rounded-lg bg-background text-foreground shadow-2xs border border-border/60 transition-all cursor-pointer inline-flex items-center gap-1.5"
+        data-mode="default"
       >
-        <span class="flex items-center gap-1.5">
-          <svg xmlns="http://www.w3.org/2000/svg" width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M2 12s3-7 10-7 10 7 10 7-3 7-10 7-10-7-10-7Z"/><circle cx="12" cy="12" r="3"/></svg>
-          Preview
-        </span>
+        <svg xmlns="http://www.w3.org/2000/svg" width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M2 12s3-7 10-7 10 7 10 7-3 7-10 7-10-7-10-7Z"/><circle cx="12" cy="12" r="3"/></svg>
+        <span>Default</span>
       </button>
+
+      <!-- 2. Functional Preview Tab (Interactive with State) -->
       <button
-        class="preview-tab-btn px-3 py-1.5 text-xs font-medium rounded-lg text-muted-foreground hover:text-foreground hover:bg-muted/70 transition-all cursor-pointer"
-        data-tab="code"
+        type="button"
+        class="mode-btn px-2.5 sm:px-3 py-1.5 text-xs font-medium rounded-lg text-muted-foreground hover:text-foreground hover:bg-muted/70 transition-all cursor-pointer inline-flex items-center gap-1.5"
+        data-mode="functional"
       >
-        <span class="flex items-center gap-1.5">
-          <svg xmlns="http://www.w3.org/2000/svg" width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="16 18 22 12 16 6"/><polyline points="8 6 2 12 8 18"/></svg>
-          Code
-        </span>
+        <span class="inline-block w-1.5 h-1.5 rounded-full bg-cyan-500 animate-pulse"></span>
+        <span>Functional Preview</span>
+        <span class="text-[9px] font-mono px-1.5 py-0.2 rounded-full bg-cyan-500/10 text-cyan-600 dark:text-cyan-400 border border-cyan-500/30 font-bold hidden sm:inline">useState ⚡</span>
+      </button>
+
+      <!-- 3. Animated Preview Tab (Motion & Physics) -->
+      <button
+        type="button"
+        class="mode-btn px-2.5 sm:px-3 py-1.5 text-xs font-medium rounded-lg text-muted-foreground hover:text-foreground hover:bg-muted/70 transition-all cursor-pointer inline-flex items-center gap-1.5"
+        data-mode="animated"
+      >
+        <span class="inline-block w-1.5 h-1.5 rounded-full bg-purple-500 animate-pulse"></span>
+        <span>Animated Preview</span>
+        <span class="text-[9px] font-mono px-1.5 py-0.2 rounded-full bg-purple-500/10 text-purple-600 dark:text-purple-400 border border-purple-500/30 font-bold hidden sm:inline">Motion ✨</span>
+      </button>
+
+      <div class="h-4 w-px bg-border/60 mx-1"></div>
+
+      <!-- 4. Code Tab -->
+      <button
+        type="button"
+        class="mode-btn px-2.5 sm:px-3 py-1.5 text-xs font-medium rounded-lg text-muted-foreground hover:text-foreground hover:bg-muted/70 transition-all cursor-pointer inline-flex items-center gap-1.5"
+        data-mode="code"
+      >
+        <svg xmlns="http://www.w3.org/2000/svg" width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="16 18 22 12 16 6"/><polyline points="8 6 2 12 8 18"/></svg>
+        <span>Code</span>
       </button>
     </div>
 
     <!-- Right Controls: Viewport Size & Quick Copy -->
     <div class="flex items-center space-x-2">
-      <!-- Responsive Viewport Resizer (Preview mode only) -->
+      <!-- Responsive Viewport Resizer (Preview modes only) -->
       <div class="viewport-controls hidden sm:flex items-center space-x-1 bg-muted/70 p-0.5 rounded-lg border border-border/50">
         <button
           type="button"
@@ -67,7 +95,7 @@ const htmlCode = codeTabs.find(c => c.id === 'html')?.code || codeTabs[0]?.code 
           title="Full width viewport"
           aria-label="Full width viewport"
         >
-          <svg xmlns="http://www.w3.org/2000/svg" width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect width="20" height="14" x="2" y="3" rx="2" ry="2"/><line x1="8" x2="16" y1="21" y2="21"/><line x1="12" x2="12" y1="17" y2="21"/></svg>
+          <svg xmlns="http://www.w3.org/2000/svg" width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect width="20" height="14" x="2" y="3" rx="2" ry="2"/><line x1="8" x2="16" y1="21" y2="21"/><line x1="12" x2="12.01" y1="17" y2="21"/></svg>
         </button>
       </div>
 
@@ -83,18 +111,43 @@ const htmlCode = codeTabs.find(c => c.id === 'html')?.code || codeTabs[0]?.code 
     </div>
   </div>
 
-  <!-- Preview Container with subtle grid backdrop -->
-  <div class="preview-content flex justify-center items-center p-6 sm:p-12 min-h-[260px] bg-muted/15 relative overflow-x-auto transition-all" data-content="preview">
-    <div
-      class="preview-inner w-full flex justify-center items-center transition-all duration-200"
-      style="max-width: 100%;"
-    >
-      <div class="w-full flex justify-center items-center py-2 interactive-container" set:html={htmlCode} />
+  <!-- VIEWPORT 1: Default Preview Content -->
+  <div class="view-panel flex flex-col justify-center items-center p-6 sm:p-12 min-h-[260px] bg-muted/15 relative overflow-x-auto transition-all" data-panel="default">
+    <div class="preview-inner w-full flex justify-center items-center transition-all duration-200" style="max-width: 100%;">
+      <div class="w-full flex justify-center items-center py-2 default-container" set:html={defaultHtml} />
     </div>
   </div>
 
-  <!-- Code Tab Container with Framework & Functional Selector -->
-  <div class="preview-content hidden flex-col rounded-b-2xl overflow-hidden border-t border-border/70 bg-[#0d1117]" data-content="code">
+  <!-- VIEWPORT 2: Functional Preview Content (Interactive with State) -->
+  <div class="view-panel hidden flex-col justify-center items-center p-6 sm:p-12 min-h-[260px] bg-cyan-500/5 relative overflow-x-auto transition-all" data-panel="functional">
+    <div class="w-full max-w-md mb-4 flex items-center justify-between text-[11px] px-3 py-1.5 rounded-lg border border-cyan-500/30 bg-cyan-500/10 text-cyan-700 dark:text-cyan-300">
+      <span class="flex items-center gap-1.5 font-semibold">
+        <span class="w-2 h-2 rounded-full bg-cyan-500 animate-ping"></span>
+        <span>Live Functional Playground</span>
+      </span>
+      <span class="font-mono text-[10px]">Interactive Hooks • useState</span>
+    </div>
+    <div class="preview-inner w-full flex justify-center items-center transition-all duration-200" style="max-width: 100%;">
+      <div class="w-full flex justify-center items-center py-2 functional-container" set:html={functionalHtml} />
+    </div>
+  </div>
+
+  <!-- VIEWPORT 3: Animated Preview Content (Motion & Physics) -->
+  <div class="view-panel hidden flex-col justify-center items-center p-6 sm:p-12 min-h-[260px] bg-purple-500/5 relative overflow-x-auto transition-all" data-panel="animated">
+    <div class="w-full max-w-md mb-4 flex items-center justify-between text-[11px] px-3 py-1.5 rounded-lg border border-purple-500/30 bg-purple-500/10 text-purple-700 dark:text-purple-300">
+      <span class="flex items-center gap-1.5 font-semibold">
+        <span class="w-2 h-2 rounded-full bg-purple-500 animate-ping"></span>
+        <span>Motion Physics & Animation Showcase</span>
+      </span>
+      <span class="font-mono text-[10px]">Framer Motion ✨</span>
+    </div>
+    <div class="preview-inner w-full flex justify-center items-center transition-all duration-200" style="max-width: 100%;">
+      <div class="w-full flex justify-center items-center py-2 animated-container" set:html={animatedHtml} />
+    </div>
+  </div>
+
+  <!-- VIEWPORT 4: Code Viewer -->
+  <div class="view-panel hidden flex-col rounded-b-2xl overflow-hidden border-t border-border/70 bg-[#0d1117]" data-panel="code">
     <!-- Framework & Mode Tabs Bar -->
     <div class="flex items-center justify-between border-b border-white/10 px-3 py-2 bg-black/50 text-xs overflow-x-auto gap-2">
       <div class="flex items-center gap-1.5 shrink-0">
@@ -123,6 +176,24 @@ const htmlCode = codeTabs.find(c => c.id === 'html')?.code || codeTabs[0]?.code 
           </button>
         ))}
       </div>
+
+      <!-- Quick Switch to Live Preview from Code Tab -->
+      <div class="flex items-center gap-1 shrink-0">
+        <button
+          type="button"
+          class="switch-to-preview text-[11px] font-semibold text-cyan-400 hover:text-cyan-300 px-2 py-0.5 rounded border border-cyan-500/30 bg-cyan-950/40 hover:bg-cyan-900/50 transition-all cursor-pointer hidden sm:inline-flex items-center gap-1"
+          data-target="functional"
+        >
+          <span>⚡ Test Functional</span>
+        </button>
+        <button
+          type="button"
+          class="switch-to-preview text-[11px] font-semibold text-purple-300 hover:text-purple-200 px-2 py-0.5 rounded border border-purple-500/30 bg-purple-950/40 hover:bg-purple-900/50 transition-all cursor-pointer hidden sm:inline-flex items-center gap-1"
+          data-target="animated"
+        >
+          <span>✨ View Animated</span>
+        </button>
+      </div>
     </div>
 
     <!-- Animation Library Installation Banner (Shown when motion tab is selected) -->
@@ -143,14 +214,14 @@ const htmlCode = codeTabs.find(c => c.id === 'html')?.code || codeTabs[0]?.code 
         <!-- Package Manager One-Click Installer -->
         <div class="flex items-center gap-2 bg-black/70 border border-white/15 rounded-lg p-1.5 shrink-0">
           <div class="flex gap-1 text-[10px] font-mono pm-tabs">
-            <button class="pm-btn active px-1.5 py-0.5 rounded bg-purple-500/30 text-purple-200 font-bold cursor-pointer" data-pm="npm">npm</button>
-            <button class="pm-btn px-1.5 py-0.5 rounded text-zinc-400 hover:text-white cursor-pointer" data-pm="pnpm">pnpm</button>
-            <button class="pm-btn px-1.5 py-0.5 rounded text-zinc-400 hover:text-white cursor-pointer" data-pm="yarn">yarn</button>
-            <button class="pm-btn px-1.5 py-0.5 rounded text-zinc-400 hover:text-white cursor-pointer" data-pm="bun">bun</button>
+            <button type="button" class="pm-btn active px-1.5 py-0.5 rounded bg-purple-500/30 text-purple-200 font-bold cursor-pointer" data-pm="npm">npm</button>
+            <button type="button" class="pm-btn px-1.5 py-0.5 rounded text-zinc-400 hover:text-white cursor-pointer" data-pm="pnpm">pnpm</button>
+            <button type="button" class="pm-btn px-1.5 py-0.5 rounded text-zinc-400 hover:text-white cursor-pointer" data-pm="yarn">yarn</button>
+            <button type="button" class="pm-btn px-1.5 py-0.5 rounded text-zinc-400 hover:text-white cursor-pointer" data-pm="bun">bun</button>
           </div>
           <div class="w-px h-3.5 bg-white/20"></div>
           <code class="pm-cmd text-[11px] font-mono text-zinc-200 px-1">npm i framer-motion lucide-react</code>
-          <button class="pm-copy-btn p-1 rounded hover:bg-white/15 text-zinc-300 hover:text-white transition-colors cursor-pointer" title="Copy install command">
+          <button type="button" class="pm-copy-btn p-1 rounded hover:bg-white/15 text-zinc-300 hover:text-white transition-colors cursor-pointer" title="Copy install command">
             <svg xmlns="http://www.w3.org/2000/svg" width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect width="14" height="14" x="8" y="8" rx="2" ry="2"/><path d="M4 16c-1.1 0-2-.9-2-2V4c0-1.1.9-2 2-2h10c1.1 0 2 .9 2 2"/></svg>
           </button>
         </div>
@@ -174,12 +245,12 @@ const htmlCode = codeTabs.find(c => c.id === 'html')?.code || codeTabs[0]?.code 
 </div>
 
 <script>
-  // Pure vanilla script running strictly for tab switches, copy interaction, and live preview controllers
+  // Pure client-side controller driving mode switching, live functional playgrounds, and animations
   document.querySelectorAll('.component-preview').forEach(preview => {
-    const tabBtns = preview.querySelectorAll('.preview-tab-btn');
-    const contents = preview.querySelectorAll('.preview-content');
+    const modeBtns = preview.querySelectorAll('.mode-btn');
+    const viewPanels = preview.querySelectorAll('.view-panel');
     const viewportControls = preview.querySelector('.viewport-controls');
-    const previewInner = preview.querySelector('.preview-inner') as HTMLElement;
+    const previewInners = preview.querySelectorAll('.preview-inner') as NodeListOf<HTMLElement>;
     const sizeBtns = preview.querySelectorAll('.size-btn');
     const fwBtns = preview.querySelectorAll('.fw-btn');
     const codeBlocks = preview.querySelectorAll('.code-block');
@@ -188,36 +259,52 @@ const htmlCode = codeTabs.find(c => c.id === 'html')?.code || codeTabs[0]?.code 
     const pmBtns = preview.querySelectorAll('.pm-btn');
     const pmCmd = preview.querySelector('.pm-cmd');
     const pmCopyBtn = preview.querySelector('.pm-copy-btn');
+    const switchToPreviewBtns = preview.querySelectorAll('.switch-to-preview');
 
-    // 1. Tab Switching (Preview vs Code)
-    tabBtns.forEach(btn => {
-      btn.addEventListener('click', () => {
-        const target = btn.getAttribute('data-tab');
-
-        tabBtns.forEach(b => {
-          b.classList.remove('bg-background', 'text-foreground', 'font-semibold', 'shadow-2xs', 'border', 'border-border/60');
-          b.classList.add('text-muted-foreground', 'font-medium');
-        });
-        btn.classList.add('bg-background', 'text-foreground', 'font-semibold', 'shadow-2xs', 'border', 'border-border/60');
-        btn.classList.remove('text-muted-foreground', 'font-medium');
-
-        contents.forEach(content => {
-          if (content.getAttribute('data-content') === target) {
-            content.classList.remove('hidden');
-            content.classList.add('flex');
-          } else {
-            content.classList.add('hidden');
-            content.classList.remove('flex');
-          }
-        });
-
-        if (viewportControls) {
-          if (target === 'preview') {
-            viewportControls.classList.remove('opacity-0', 'pointer-events-none');
-          } else {
-            viewportControls.classList.add('opacity-0', 'pointer-events-none');
-          }
+    // Function to set active view mode (default, functional, animated, code)
+    const setMode = (mode: string) => {
+      modeBtns.forEach(btn => {
+        if (btn.getAttribute('data-mode') === mode) {
+          btn.classList.add('bg-background', 'text-foreground', 'font-semibold', 'shadow-2xs', 'border', 'border-border/60');
+          btn.classList.remove('text-muted-foreground', 'font-medium');
+        } else {
+          btn.classList.remove('bg-background', 'text-foreground', 'font-semibold', 'shadow-2xs', 'border', 'border-border/60');
+          btn.classList.add('text-muted-foreground', 'font-medium');
         }
+      });
+
+      viewPanels.forEach(panel => {
+        if (panel.getAttribute('data-panel') === mode) {
+          panel.classList.remove('hidden');
+          panel.classList.add('flex');
+        } else {
+          panel.classList.add('hidden');
+          panel.classList.remove('flex');
+        }
+      });
+
+      if (viewportControls) {
+        if (mode === 'code') {
+          viewportControls.classList.add('opacity-0', 'pointer-events-none');
+        } else {
+          viewportControls.classList.remove('opacity-0', 'pointer-events-none');
+        }
+      }
+    };
+
+    // 1. Mode Switching
+    modeBtns.forEach(btn => {
+      btn.addEventListener('click', () => {
+        const mode = btn.getAttribute('data-mode') || 'default';
+        setMode(mode);
+      });
+    });
+
+    // 1b. Switch to preview from code tab shortcuts
+    switchToPreviewBtns.forEach(btn => {
+      btn.addEventListener('click', () => {
+        const target = btn.getAttribute('data-target') || 'default';
+        setMode(target);
       });
     });
 
@@ -225,9 +312,9 @@ const htmlCode = codeTabs.find(c => c.id === 'html')?.code || codeTabs[0]?.code 
     sizeBtns.forEach(btn => {
       btn.addEventListener('click', () => {
         const size = btn.getAttribute('data-size') || '100%';
-        if (previewInner) {
-          previewInner.style.maxWidth = size;
-        }
+        previewInners.forEach(inner => {
+          inner.style.maxWidth = size;
+        });
 
         sizeBtns.forEach(b => {
           b.classList.remove('text-foreground', 'bg-background', 'shadow-2xs');
@@ -238,7 +325,7 @@ const htmlCode = codeTabs.find(c => c.id === 'html')?.code || codeTabs[0]?.code 
       });
     });
 
-    // 3. Framework & Functional Code Switching
+    // 3. Framework & Format Code Switching
     fwBtns.forEach(btn => {
       btn.addEventListener('click', () => {
         const fw = btn.getAttribute('data-fw');
@@ -328,24 +415,452 @@ const htmlCode = codeTabs.find(c => c.id === 'html')?.code || codeTabs[0]?.code 
       });
     }
 
-    // 6. Interactive Live Preview Controllers (for tabs, dialogs, buttons in preview)
-    const container = preview.querySelector('.interactive-container');
-    if (container) {
-      // Interactive tab click handler
-      container.querySelectorAll('button').forEach(btn => {
-        btn.addEventListener('click', () => {
-          // Check if parent has tab structure
-          const tabParent = btn.closest('.flex.space-x-1');
-          if (tabParent) {
-            tabParent.querySelectorAll('button').forEach(b => {
-              b.classList.remove('bg-background', 'text-foreground', 'shadow');
-              b.classList.add('text-muted-foreground');
-            });
-            btn.classList.add('bg-background', 'text-foreground', 'shadow');
-            btn.classList.remove('text-muted-foreground');
+    // 6. FUNCTIONAL PLAYGROUND CONTROLLERS
+    const fnContainer = preview.querySelector('.functional-container');
+    if (fnContainer) {
+      // 6a. Switch Controller
+      const swBtn = fnContainer.querySelector('.functional-switch-btn');
+      const swStatus = fnContainer.querySelector('.functional-switch-status');
+      if (swBtn) {
+        swBtn.addEventListener('click', () => {
+          const isChecked = swBtn.getAttribute('aria-checked') === 'true';
+          const next = !isChecked;
+          swBtn.setAttribute('aria-checked', String(next));
+          const thumb = swBtn.querySelector('span');
+          if (next) {
+            swBtn.classList.remove('bg-muted');
+            swBtn.classList.add('bg-primary');
+            thumb?.classList.add('translate-x-5');
+            thumb?.classList.remove('translate-x-0');
+            if (swStatus) {
+              swStatus.textContent = 'enabled (true)';
+              swStatus.className = 'functional-switch-status font-bold text-green-500';
+            }
+          } else {
+            swBtn.classList.remove('bg-primary');
+            swBtn.classList.add('bg-muted');
+            thumb?.classList.remove('translate-x-5');
+            thumb?.classList.add('translate-x-0');
+            if (swStatus) {
+              swStatus.textContent = 'disabled (false)';
+              swStatus.className = 'functional-switch-status font-bold text-zinc-400';
+            }
+          }
+        });
+      }
+
+      // 6b. PIN Input Controller
+      const pinDigits = fnContainer.querySelectorAll<HTMLInputElement>('.pin-digit');
+      const pinStatus = fnContainer.querySelector('.pin-status');
+      const pinResetBtn = fnContainer.querySelector('.pin-reset-btn');
+
+      pinDigits.forEach((input, index) => {
+        input.addEventListener('input', (e: any) => {
+          const val = input.value.slice(-1);
+          input.value = val;
+          if (val && index < pinDigits.length - 1) {
+            pinDigits[index + 1]?.focus();
+          }
+          const filled = Array.from(pinDigits).filter(p => p.value !== '').length;
+          if (pinStatus) {
+            if (filled === pinDigits.length) {
+              pinStatus.innerHTML = '<span class="text-green-500 font-bold">✓ 6-digit PIN Verified!</span>';
+            } else {
+              pinStatus.textContent = `Status: ${filled} of ${pinDigits.length} digits`;
+            }
+          }
+        });
+
+        input.addEventListener('keydown', (e: KeyboardEvent) => {
+          if (e.key === 'Backspace' && !input.value && index > 0) {
+            pinDigits[index - 1]?.focus();
           }
         });
       });
+
+      if (pinResetBtn) {
+        pinResetBtn.addEventListener('click', () => {
+          pinDigits.forEach(p => (p.value = ''));
+          pinDigits[0]?.focus();
+          if (pinStatus) pinStatus.textContent = 'Status: 0 of 6 digits';
+        });
+      }
+
+      // 6c. Combobox Controller
+      const comboInput = fnContainer.querySelector<HTMLInputElement>('.combobox-input');
+      const comboDropdown = fnContainer.querySelector('.combobox-dropdown');
+      const comboSelected = fnContainer.querySelector('.combobox-selected');
+      const comboClear = fnContainer.querySelector('.combobox-clear');
+      const comboItems = fnContainer.querySelectorAll('.combobox-item');
+
+      if (comboInput && comboDropdown) {
+        comboInput.addEventListener('focus', () => comboDropdown.classList.remove('hidden'));
+        comboInput.addEventListener('input', () => {
+          const q = comboInput.value.toLowerCase();
+          comboDropdown.classList.remove('hidden');
+          comboItems.forEach(item => {
+            const txt = item.textContent?.toLowerCase() || '';
+            (item as HTMLElement).style.display = txt.includes(q) ? 'flex' : 'none';
+          });
+        });
+
+        comboItems.forEach(item => {
+          item.addEventListener('click', () => {
+            const val = item.querySelector('span')?.textContent || '';
+            comboInput.value = val;
+            if (comboSelected) comboSelected.textContent = val;
+            comboDropdown.classList.add('hidden');
+          });
+        });
+
+        if (comboClear) {
+          comboClear.addEventListener('click', () => {
+            comboInput.value = '';
+            if (comboSelected) comboSelected.textContent = 'None';
+            comboItems.forEach(item => ((item as HTMLElement).style.display = 'flex'));
+          });
+        }
+      }
+
+      // 6d. Slider Controller
+      const sliderInput = fnContainer.querySelector<HTMLInputElement>('.functional-range-input');
+      const sliderBadge = fnContainer.querySelector('.slider-badge');
+      const sliderPresets = fnContainer.querySelectorAll('.slider-preset');
+
+      if (sliderInput && sliderBadge) {
+        sliderInput.addEventListener('input', () => {
+          sliderBadge.textContent = `${sliderInput.value}%`;
+        });
+
+        sliderPresets.forEach(preset => {
+          preset.addEventListener('click', () => {
+            const val = preset.getAttribute('data-val') || '50';
+            sliderInput.value = val;
+            sliderBadge.textContent = `${val}%`;
+          });
+        });
+      }
+
+      // 6e. Toast Controller
+      const spawnBtns = fnContainer.querySelectorAll('.spawn-toast-btn');
+      const toastStack = fnContainer.querySelector('.toast-stack');
+
+      spawnBtns.forEach(btn => {
+        btn.addEventListener('click', () => {
+          const type = btn.getAttribute('data-type') || 'success';
+          const toast = document.createElement('div');
+          toast.className = 'toast-item flex items-center justify-between p-3.5 rounded-xl border border-border bg-card shadow-lg animate-in fade-in slide-in-from-top-2 duration-200';
+          toast.innerHTML = `
+            <div class="flex items-center gap-2.5">
+              <span class="w-2 h-2 rounded-full ${type === 'success' ? 'bg-green-500' : 'bg-destructive'}"></span>
+              <div>
+                <h5 class="text-xs font-bold text-foreground">${type === 'success' ? 'Operation Completed' : 'Action Failed'}</h5>
+                <p class="text-[11px] text-muted-foreground">${type === 'success' ? 'Instant state updated in memory.' : 'Network connection simulated timeout.'}</p>
+              </div>
+            </div>
+            <button type="button" class="toast-dismiss text-muted-foreground hover:text-foreground text-xs p-1">✕</button>
+          `;
+          toastStack?.prepend(toast);
+
+          toast.querySelector('.toast-dismiss')?.addEventListener('click', () => toast.remove());
+          setTimeout(() => toast.remove(), 4000);
+        });
+      });
+
+      fnContainer.querySelectorAll('.toast-dismiss').forEach(btn => {
+        btn.addEventListener('click', () => btn.closest('.toast-item')?.remove());
+      });
+
+      // 6f. Drawer Controller
+      const openDrawerBtn = fnContainer.querySelector('.open-drawer-btn');
+      const drawerOverlay = fnContainer.querySelector('.drawer-overlay');
+      const closeDrawerBtns = fnContainer.querySelectorAll('.close-drawer-btn');
+
+      if (openDrawerBtn && drawerOverlay) {
+        openDrawerBtn.addEventListener('click', () => drawerOverlay.classList.remove('hidden'));
+        closeDrawerBtns.forEach(b => b.addEventListener('click', () => drawerOverlay.classList.add('hidden')));
+        drawerOverlay.addEventListener('click', (e) => {
+          if (e.target === drawerOverlay) drawerOverlay.classList.add('hidden');
+        });
+      }
+
+      // 6g. Dialog Controller
+      const openDialogBtn = fnContainer.querySelector('.open-dialog-btn');
+      const dialogOverlay = fnContainer.querySelector('.dialog-overlay');
+      const closeDialogBtns = fnContainer.querySelectorAll('.close-dialog-btn');
+      const confirmDialogBtn = fnContainer.querySelector('.confirm-dialog-btn');
+
+      if (openDialogBtn && dialogOverlay) {
+        openDialogBtn.addEventListener('click', () => dialogOverlay.classList.remove('hidden'));
+        closeDialogBtns.forEach(b => b.addEventListener('click', () => dialogOverlay.classList.add('hidden')));
+        dialogOverlay.addEventListener('click', (e) => {
+          if (e.target === dialogOverlay) dialogOverlay.classList.add('hidden');
+        });
+        if (confirmDialogBtn) {
+          confirmDialogBtn.addEventListener('click', () => {
+            confirmDialogBtn.textContent = 'Deploying...';
+            setTimeout(() => {
+              confirmDialogBtn.textContent = 'Deployed! ✓';
+              setTimeout(() => dialogOverlay.classList.add('hidden'), 500);
+            }, 600);
+          });
+        }
+      }
+
+      // 6h. Tabs Controller
+      const fnTabItems = fnContainer.querySelectorAll('.functional-tab-item');
+      const fnTabPanel = fnContainer.querySelector('.tab-panel-box');
+      const tabData: Record<string, { title: string; desc: string }> = {
+        '1': { title: 'Overview Dashboard', desc: 'Real-time metrics, active cloud nodes, and edge worker health telemetry.' },
+        '2': { title: 'Analytics Insights', desc: 'Traffic throughput averaged 48k req/sec with 99.98% uptime SLA.' },
+        '3': { title: 'Workspace Settings', desc: 'Manage deployment environments, webhook secrets, and team RBAC permissions.' },
+      };
+
+      fnTabItems.forEach(tab => {
+        tab.addEventListener('click', () => {
+          const tabId = tab.getAttribute('data-tab-id') || '1';
+          fnTabItems.forEach(t => {
+            t.classList.remove('active', 'bg-background', 'text-foreground', 'shadow-xs', 'font-semibold');
+            t.classList.add('text-muted-foreground', 'font-medium');
+          });
+          tab.classList.add('active', 'bg-background', 'text-foreground', 'shadow-xs', 'font-semibold');
+          tab.classList.remove('text-muted-foreground', 'font-medium');
+
+          if (fnTabPanel && tabData[tabId]) {
+            fnTabPanel.innerHTML = `<span class="font-bold text-foreground block mb-1">${tabData[tabId].title}</span>${tabData[tabId].desc}`;
+          }
+        });
+      });
+
+      // 6i. Accordion Controller
+      const accRows = fnContainer.querySelectorAll('.accordion-row');
+      accRows.forEach(row => {
+        const header = row.querySelector('button');
+        const body = row.querySelector('.acc-body');
+        const chevron = row.querySelector('.acc-chevron');
+        header?.addEventListener('click', () => {
+          const isOpen = !body?.classList.contains('hidden');
+          if (isOpen) {
+            body?.classList.add('hidden');
+            chevron?.classList.remove('rotate-180');
+          } else {
+            body?.classList.remove('hidden');
+            chevron?.classList.add('rotate-180');
+          }
+        });
+      });
+
+      // 6j. Button Async & Counter
+      const asyncBtn = fnContainer.querySelector('.async-btn');
+      if (asyncBtn) {
+        asyncBtn.addEventListener('click', () => {
+          asyncBtn.innerHTML = `
+            <svg class="animate-spin h-3.5 w-3.5" viewBox="0 0 24 24" fill="none" stroke="currentColor"><circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"></circle><path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8v8H4z"></path></svg>
+            <span>Processing API Request...</span>
+          `;
+          setTimeout(() => {
+            asyncBtn.innerHTML = `<span>Success! ✓ Done</span>`;
+            setTimeout(() => {
+              asyncBtn.innerHTML = `<span>Click to Simulate Async Action</span>`;
+            }, 1500);
+          }, 1200);
+        });
+      }
+
+      const counterBtn = fnContainer.querySelector('.counter-btn');
+      const clickCount = fnContainer.querySelector('.click-count');
+      if (counterBtn && clickCount) {
+        let count = 0;
+        counterBtn.addEventListener('click', () => {
+          count++;
+          clickCount.textContent = String(count);
+        });
+      }
+
+      // 6k. Tooltip Controller
+      const tooltipTrigger = fnContainer.querySelector('.tooltip-trigger');
+      const tooltipPopup = fnContainer.querySelector('.tooltip-popup');
+      if (tooltipTrigger && tooltipPopup) {
+        tooltipTrigger.addEventListener('mouseenter', () => tooltipPopup.classList.remove('hidden'));
+        tooltipTrigger.addEventListener('mouseleave', () => tooltipPopup.classList.add('hidden'));
+        tooltipTrigger.addEventListener('focus', () => tooltipPopup.classList.remove('hidden'));
+        tooltipTrigger.addEventListener('blur', () => tooltipPopup.classList.add('hidden'));
+      }
+
+      // 6l. Pagination Controller
+      const pageNums = fnContainer.querySelectorAll('.page-num');
+      const currentPageText = fnContainer.querySelector('.current-page-text');
+      pageNums.forEach(p => {
+        p.addEventListener('click', () => {
+          const page = p.getAttribute('data-page') || '1';
+          pageNums.forEach(n => {
+            n.classList.remove('active', 'bg-primary', 'text-primary-foreground', 'font-bold');
+            n.classList.add('text-muted-foreground');
+          });
+          p.classList.add('active', 'bg-primary', 'text-primary-foreground', 'font-bold');
+          p.classList.remove('text-muted-foreground');
+          if (currentPageText) currentPageText.textContent = page;
+        });
+      });
+
+      // 6m. Checkbox Counter
+      const chkItems = fnContainer.querySelectorAll<HTMLInputElement>('.chk-item');
+      const chkCounter = fnContainer.querySelector('.chk-counter');
+      if (chkCounter && chkItems.length) {
+        chkItems.forEach(chk => {
+          chk.addEventListener('change', () => {
+            const checked = Array.from(chkItems).filter(c => c.checked).length;
+            chkCounter.textContent = `${checked} / ${chkItems.length} done`;
+          });
+        });
+      }
+
+      // 6n. Input live validation
+      const liveInput = fnContainer.querySelector<HTMLInputElement>('.live-input');
+      const inputStatus = fnContainer.querySelector('.input-val-status');
+      const inputCharCount = fnContainer.querySelector('.input-char-count');
+      const clearInputBtn = fnContainer.querySelector('.clear-input-btn');
+      if (liveInput) {
+        liveInput.addEventListener('input', () => {
+          const val = liveInput.value;
+          if (inputCharCount) inputCharCount.textContent = `${val.length} chars`;
+          if (clearInputBtn) {
+            if (val) clearInputBtn.classList.remove('hidden');
+            else clearInputBtn.classList.add('hidden');
+          }
+          if (inputStatus) {
+            if (!val) inputStatus.textContent = 'Type to validate';
+            else if (val.includes('@') && val.includes('.')) {
+              inputStatus.innerHTML = '<span class="text-green-500 font-bold">Valid email ✓</span>';
+            } else {
+              inputStatus.innerHTML = '<span class="text-amber-500">Needs valid email format</span>';
+            }
+          }
+        });
+
+        if (clearInputBtn) {
+          clearInputBtn.addEventListener('click', () => {
+            liveInput.value = '';
+            clearInputBtn.classList.add('hidden');
+            if (inputStatus) inputStatus.textContent = 'Type to validate';
+            if (inputCharCount) inputCharCount.textContent = '0 chars';
+            liveInput.focus();
+          });
+        }
+      }
+    }
+
+    // 7. ANIMATED MOTION CONTROLLERS
+    const animContainer = preview.querySelector('.animated-container');
+    if (animContainer) {
+      // 7a. Spotlight Card Pointer Follow
+      const spotCard = animContainer.querySelector<HTMLElement>('.animated-spotlight-card');
+      const spotGlow = animContainer.querySelector<HTMLElement>('.spotlight-glow');
+      const cursorCoords = animContainer.querySelector('.cursor-coords');
+      if (spotCard && spotGlow) {
+        spotCard.addEventListener('mousemove', (e) => {
+          const rect = spotCard.getBoundingClientRect();
+          const x = e.clientX - rect.left;
+          const y = e.clientY - rect.top;
+          spotGlow.style.background = `radial-gradient(350px circle at ${x}px ${y}px, rgba(168, 85, 247, 0.28), transparent 75%)`;
+          if (cursorCoords) cursorCoords.textContent = `X: ${Math.round(x)}px Y: ${Math.round(y)}px`;
+        });
+      }
+
+      // 7b. Animated Tabs with Sliding Pill
+      const animTabItems = animContainer.querySelectorAll('.anim-tab-item');
+      const animPill = animContainer.querySelector<HTMLElement>('.anim-pill-indicator');
+      const animTabContent = animContainer.querySelector('.anim-tab-content');
+      animTabItems.forEach((tab, index) => {
+        tab.addEventListener('click', () => {
+          animTabItems.forEach(t => {
+            t.classList.remove('text-primary-foreground');
+            t.classList.add('text-muted-foreground');
+          });
+          tab.classList.add('text-primary-foreground');
+          tab.classList.remove('text-muted-foreground');
+
+          if (animPill) {
+            animPill.style.left = `calc(${index * 33.33}% + 4px)`;
+          }
+
+          if (animTabContent) {
+            animTabContent.style.opacity = '0';
+            setTimeout(() => {
+              animTabContent.innerHTML = `<b class="text-foreground block mb-0.5">${tab.textContent} Panel</b>Watch the background pill glide with physical spring inertia when you switch tabs!`;
+              animTabContent.style.opacity = '1';
+            }, 150);
+          }
+        });
+      });
+
+      // 7c. Animated Switch
+      const animSwBtn = animContainer.querySelector('.anim-switch-btn');
+      const animSwThumb = animContainer.querySelector('.anim-switch-thumb');
+      if (animSwBtn && animSwThumb) {
+        let isOn = true;
+        animSwBtn.addEventListener('click', () => {
+          isOn = !isOn;
+          if (isOn) {
+            animSwBtn.classList.remove('bg-muted');
+            animSwBtn.classList.add('bg-primary');
+            animSwThumb.classList.remove('mr-auto');
+            animSwThumb.classList.add('ml-auto');
+            animSwThumb.innerHTML = '<span class="text-[10px] text-primary font-bold">✓</span>';
+          } else {
+            animSwBtn.classList.remove('bg-primary');
+            animSwBtn.classList.add('bg-muted');
+            animSwThumb.classList.remove('ml-auto');
+            animSwThumb.classList.add('mr-auto');
+            animSwThumb.innerHTML = '<span class="text-[10px] text-zinc-400 font-bold">✕</span>';
+          }
+        });
+      }
+
+      // 7d. Animated Pagination Pill
+      const animPageNums = animContainer.querySelectorAll('.anim-page-num');
+      const animPagePill = animContainer.querySelector<HTMLElement>('.anim-page-pill');
+      animPageNums.forEach((pageBtn, idx) => {
+        pageBtn.addEventListener('click', () => {
+          animPageNums.forEach(p => {
+            p.classList.remove('text-primary-foreground', 'font-bold');
+            p.classList.add('text-muted-foreground', 'font-semibold');
+          });
+          pageBtn.classList.add('text-primary-foreground', 'font-bold');
+          pageBtn.classList.remove('text-muted-foreground');
+
+          if (animPagePill) {
+            animPagePill.style.left = `${idx * 40}px`;
+          }
+        });
+      });
+
+      // 7e. Animated Dialog
+      const animOpenDlgBtn = animContainer.querySelector('.anim-open-dialog-btn');
+      const animDlgOverlay = animContainer.querySelector('.anim-dialog-overlay');
+      const animDlgBox = animContainer.querySelector('.anim-dialog-box');
+      const animCloseDlgBtn = animContainer.querySelector('.anim-close-dialog-btn');
+
+      if (animOpenDlgBtn && animDlgOverlay && animDlgBox) {
+        animOpenDlgBtn.addEventListener('click', () => {
+          animDlgOverlay.classList.remove('hidden');
+          setTimeout(() => {
+            animDlgBox.classList.remove('scale-95', 'opacity-0');
+            animDlgBox.classList.add('scale-100', 'opacity-100');
+          }, 10);
+        });
+
+        const closeAnimDlg = () => {
+          animDlgBox.classList.remove('scale-100', 'opacity-100');
+          animDlgBox.classList.add('scale-95', 'opacity-0');
+          setTimeout(() => animDlgOverlay.classList.add('hidden'), 200);
+        };
+
+        animCloseDlgBtn?.addEventListener('click', closeAnimDlg);
+        animDlgOverlay.addEventListener('click', (e) => {
+          if (e.target === animDlgOverlay) closeAnimDlg();
+        });
+      }
     }
   });
 </script>
